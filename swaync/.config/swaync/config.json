@@ -1,0 +1,116 @@
+{
+  "$schema": "/etc/xdg/swaync/configSchema.json",
+  "positionX": "right",
+  "positionY": "top",
+  "control-center-margin-top": 5,
+  "control-center-margin-bottom": 5,
+  "control-center-margin-right": 5,
+  "control-center-margin-left": 0,
+  "notification-icon-size": 64,
+  "notification-body-image-height": 100,
+  "notification-body-image-width": 200,
+  "timeout": 10,
+  "timeout-low": 5,
+  "timeout-critical": 0,
+  "fit-to-screen": true,
+  "control-center-width": 500,
+  "control-center-height": 600,
+  "notification-window-width": 500,
+  "keyboard-shortcuts": true,
+  "image-visibility": "when-available",
+  "transition-time": 200,
+  "hide-on-clear": false,
+  "hide-on-action": true,
+  "script-fail-notify": true,
+  "scripts": {
+    "example-script": {
+      "exec": "echo 'Do something...'",
+      "urgency": "Normal"
+    }
+  },
+  "notification-visibility": {
+    "example-name": {
+      "state": "muted",
+      "urgency": "Low",
+      "app-name": "Spotify"
+    }
+  },
+  "widgets": [
+    "menubar#label",
+    "mpris",
+    "title",
+    "dnd",
+    "notifications",
+    "buttons-grid",
+    "backlight#intel_backlight",
+    "backlight#ddcci18",
+    "volume"
+  ],
+  "widget-config": {
+    "menubar#label": {
+      "menu#power-buttons": {
+        "label": "⏻   Power",
+        "position": "left",
+        "actions": [
+          {
+            "label": " Reboot",
+            "command": "systemctl reboot"
+          },
+          {
+            "label": " Lock",
+            "command": "hyprlock"
+          },
+          {
+            "label": "󰍃 Logout",
+            "command": "hyprctl dispatch exit"
+          },
+          {
+            "label": "⏻ Shut down",
+            "command": "systemctl poweroff"
+          }
+        ]
+      }
+    },
+    "mpris": {
+      "image-size": 96,
+      "image-radius": 4
+    },
+    "title": {
+      "text": "Notifications",
+      "clear-all-button": true,
+      "button-text": "Clear All"
+    },
+    "dnd": {
+      "text": "Do Not Disturb"
+    },
+    "buttons-grid": {
+      "actions": [
+        {
+          "label": "󰖩",
+          "command": "kitty sh -c 'swaync-client -cp && sleep 0.1 && nmtui'"
+        },
+        {
+          "label": "",
+          "command": "sh -c 'swaync-client -cp && pavucontrol'"
+        },
+        {
+          "label": "󱟧",
+          "command": "notify-send -u critical 'Battery Saver' 'Please implement me!'"
+        }
+      ]
+    },
+    "backlight#intel_backlight": {
+      "label": " 󰃟",
+      "device": "intel_backlight",
+      "min": 0
+    },
+    "backlight#ddcci18": {
+      "label": "󰍹 󰃟",
+      "device": "ddcci18",
+      "min": 0
+    },
+    "volume": {
+      "label": ""
+    }
+  }
+}
