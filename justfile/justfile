@@ -1,0 +1,55 @@
+@_default:
+  just --choose
+
+# update all system & aur & flatpak packages
+update:
+  rustup default stable && arch-update
+
+# remove all unused dependencies from system
+cleanup-all:
+  flatpak uninstall --unused
+  paru -Sccd --quiet --noconfirm
+  paru -Scd --quiet --noconfirm
+  paru -Rsn $(paru -Qdtq) || echo "No packages need to be removed"
+
+# screen brightness min
+@dark-mode:
+  /home/wixaxis/scripts/brightness.rb min
+
+# screen brightness max
+@light-mode:
+  /home/wixaxis/scripts/brightness.rb max
+
+# reload all configs (waybar)
+@reload-waybar:
+  echo $(killall waybar)
+  echo $(waybar > /dev/null & disown > /dev/null &)
+
+@change-theme:
+  /home/wixaxis/scripts/theme_switcher.rb init
+
+# reload and run swaync config
+@reload-swaync:
+  swaync-client -R
+  swaync-client -rs
+  swaync-client -t
+
+# Test notifications
+@test-notifications:
+  notify-send --urgency=low --icon=dialog-information "Low urgency notification" "This is a low urgency notification without actions"
+  notify-send --urgency=normal --icon=dialog-information "Normal urgency notification" "This is a normal urgency notification without actions"
+  notify-send --urgency=critical --icon=dialog-error "Critical urgency notification" "This is a critical urgency notification without actions"
+  notify-send --urgency=low --icon=dialog-information --action="Action 1" "Low urgency notification with Action 1" "This is a low urgency notification with Action 1"
+  notify-send --urgency=normal --icon=dialog-information --action="Action 2" "Normal urgency notification with Action 2" "This is a normal urgency notification with Action 2"
+  notify-send --urgency=critical --icon=dialog-error --action="Action 3" "Critical urgency notification with Action 3" "This is a critical urgency notification with Action 3"
+  notify-send --urgency=low "Another Low urgency notification" "This is another low urgency notification without icon"
+  notify-send --urgency=normal "Another Normal urgency notification" "This is another normal urgency notification without icon"
+  notify-send --urgency=critical "Another Critical urgency notification" "This is another critical urgency notification without icon"
+
+# list all system fonts
+list-fonts:
+  fc-list -b | grep fullname:
+
+# randomize wallpapers
+@randomize-wallpaper:
+  /home/wixaxis/scripts/randomize_wallpaper.rb
