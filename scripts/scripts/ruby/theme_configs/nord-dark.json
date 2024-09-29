@@ -1,0 +1,22 @@
+{
+	"name": "Nord Dark",
+	"colorScheme": "prefer-dark",
+	"steps": {
+		"gradience": {
+			"themeName": "Nord Dark"
+		},
+		"waybar": {
+			"themeName": "nord",
+			"colorscheme": "dark"
+		},
+		"kitty": {
+			"themeName": "Nord"
+		},
+		"rofi": {
+			"themeName": "nord-dark-sidebar-wixaxis"
+		},
+		"wallpapers": {
+			"cmd": "/home/wixaxis/scripts/randomize_wallpaper.rb"
+		}
+	}
+}
