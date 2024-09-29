@@ -1,0 +1,11 @@
+@import url("nord-colors.css");
+
+/* LIGHT MODE */
+@define-color panel-bg transparent;
+@define-color tile-bg @nord6;
+@define-color tile-bg-active @nord8;
+@define-color tile-bg-hover @nord4;
+@define-color tile-bg-urgent @nord11;
+@define-color tile-contents @nord0;
+@define-color tooltip-bg @tile-bg;
+@define-color tooltip-contents @tile-contents;
