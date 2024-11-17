@@ -2,9 +2,8 @@
 # frozen_string_literal: true
 
 store_file_path = '/home/wixaxis/scripts/stored_brightness.txt'
-curr = -> { `lux -G`.to_i }
-sync = -> { `ddcutil -d 1 setvcp 10 #{curr.call} --noverify --disable-dynamic-sleep --sleep-multiplier .2` }
-set = ->(value) { `lux -S #{value}%` and sync.call }
+curr = -> { /current value\s*=\s*(\d+)/.match(`ddcutil -d 1 getvcp 10`)[1].to_i }
+set = ->(value) { `ddcutil -d 1 setvcp 10 #{value} --noverify --disable-dynamic-sleep --sleep-multiplier .2` }
 store = -> { File.write(store_file_path, curr.call.to_s) }
 restore = -> { set.call(File.read(store_file_path).to_i) if File.exist?(store_file_path) }
 my_clamp = ->(value, min: 0, max: 100) { [min, [value, max].min].max }

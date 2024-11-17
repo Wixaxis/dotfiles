@@ -14,10 +14,12 @@ cleanup-all:
 
 # screen brightness min
 @dark-mode:
+  # ddcutil -d 1 setvcp 10 0
   /home/wixaxis/scripts/brightness.rb min
 
 # screen brightness max
 @light-mode:
+  # ddcutil -d 1 setvcp 10 100
   /home/wixaxis/scripts/brightness.rb max
 
 # reload all configs (waybar)
@@ -53,3 +55,7 @@ list-fonts:
 # randomize wallpapers
 @randomize-wallpaper:
   /home/wixaxis/scripts/randomize_wallpaper.rb
+
+# ssh into home server
+ssh-server:
+  kitten ssh wixaxis@hp-mini-ubuntu-server
