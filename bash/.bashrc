@@ -109,11 +109,12 @@ alias gradience-cli="flatpak run --command=gradience-cli com.github.GradienceTea
 alias go_nord="python ~/scripts/python/image-go-nord-cli.py $@"
 
 eval "$(rbenv init - bash)"
-eval "$(rbenv rehash)"
+# eval "$(rbenv rehash)"
 
 export QT_STYLE_OVERRIDE=kvantum
 # export ICON_THEME=Tela-nord-dark
 # export GTK_THEME=Nordic-darker-v40
+# export GTK_THEME=Adwaita-dark-nord
 
 export PATH=$XDG_CONFIG_HOME/emacs/bin:$PATH
 export PATH=/var/lib/flatpak/exports/bin:$PATH
