@@ -3,10 +3,12 @@
 name: default
 root: ~/
 windows:
-  - editor:
-      layout: main-vertical
-      panes:
-        - vim
-        - guard
-  - server: bundle exec rails s
-  - logs: tail -f log/development.log
+  - main_terminal: neofetch
+  - files: yazi
+  - auxiliary_terminal: neofetch
+  - ollama:
+    layout: main-horizontal
+    panes:
+      - "ollama run llama3.2"
+      - "ollama serve"
+  - updates: just update
