@@ -3,7 +3,10 @@
 
 # update all system & aur & flatpak packages
 update:
-  rustup default stable && arch-update && hyprpm update
+  rustup default stable
+  arch-update
+  hyprpm update
+  git -C ~/HyprPanel pull
 
 # remove all unused dependencies from system
 cleanup-all:
