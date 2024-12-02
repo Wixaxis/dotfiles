@@ -6,4 +6,4 @@ export SOLARGRAPH_CACHE="$XDG_CACHE_HOME/solargraph"
 
 
 eval "$(rbenv init - bash)"
-eval "$(rbenv rehash)"
+# eval "$(rbenv rehash)"
