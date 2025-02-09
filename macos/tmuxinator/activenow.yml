@@ -1,0 +1,20 @@
+# /Users/wixaxis/.config/tmuxinator/activenow.yml
+
+name: activenow
+root: ~/work/activenow
+
+windows:
+  - editor: nvim
+  - notes: cd ~/Notes ; nvim work/dash.md
+  - general_terminal: neofetch
+  - runtime_build:
+      layout: main-vertical
+      options:
+        pane-border-status: top
+        pane-border-format: |
+          #{?#{==:#{pane_index},1},1 - bin/dev,#{?#{==:#{pane_index},2},2 - sidekiq,3 - rails s}}
+      panes:
+        - rails s
+        - bundle exec sidekiq
+        - bin/dev
+  - auxiliary_terminal: []
