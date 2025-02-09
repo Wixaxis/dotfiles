@@ -1,0 +1,15 @@
+theme = nord
+macos-option-as-alt=left
+macos-titlebar-style=hidden
+keybind = global:ctrl+t=toggle_quick_terminal
+keybind = super+equal=increase_font_size:0.25
+keybind = super+minus=decrease_font_size:0.25
+font-family = "Hack Nerd Font"
+# font-family = "Fira Code"
+font-thicken = true
+quick-terminal-position = right
+quick-terminal-autohide = false
+quick-terminal-screen = mouse
+quick-terminal-animation-duration = 0
+background-opacity = 0.7
+background-blur = 50
