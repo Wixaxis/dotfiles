@@ -1,2 +1,0 @@
-export NUGET_PACKAGES="$XDG_CACHE_HOME/NuGetPackages"
-export DOTNET_CLI_HOME="$XDG_DATA_HOME/dotnet"
