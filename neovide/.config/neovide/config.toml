@@ -1,0 +1,9 @@
+vsync = true
+maximized = false
+srgb = false
+idle = true
+title-hidden = true
+# frame = "full"
+# frame = "none"
+# frame = "transparent"
+frame = "buttonless"
