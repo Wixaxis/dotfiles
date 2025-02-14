@@ -1,6 +1,0 @@
-[manager]
-prepend_keymap = [
-  { on = [ ".", "s" ], run = "plugin what-size",       desc = "Calc size of selection or cwd" },
-  { on = ["'"],        run = "plugin bunny",           desc = "Bunny bookmarked directories"  },
-  { on = ["C"],        run = "plugin ouch --args=zip", desc = "Compress with ouch (ZIP)"  }
-]
