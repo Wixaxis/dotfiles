@@ -2,17 +2,15 @@
 
 <!--toc:start-->
 
-- [mediainfo.yazi](#mediainfoyazi)
+- [mediainfo.yazi](#mediainfo-yazi)
   - [Installation](#installation)
   <!--toc:end-->
 
 This is a Yazi plugin for previewing media files. The preview shows thumbnail
 using `ffmpeg` if available and media metadata using `mediainfo`.
-Only for yazi stable/shipped version >= 0.4
 
-> [!IMPORTANT]  
-> For nightly version, use this repo:
-> [mediainfo-nightly.yazi](https://github.com/boydaihungst/mediainfo-nightly.yazi)
+> [!IMPORTANT]
+> Minimum version: yazi v25.2.7.
 
 ## Installation
 
@@ -28,6 +26,7 @@ Create `~/.config/yazi/yazi.toml` and add:
 [plugin]
 prepend_previewers = [
     { mime = "{image,audio,video}/*", run = "mediainfo"},
-    { mime = "application/subrip", run = "mediainfo"},
+    # It's highly recommended to use "code" previewer instead of this plugin
+    # { mime = "application/subrip", run = "mediainfo"},
 ]
 ```
