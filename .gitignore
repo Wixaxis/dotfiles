@@ -1,2 +1,4 @@
 githubcli/.config/gh/hosts.yml
 .DS_Store
+nushell/.config/nushell/envs/anthropic_claude.nu
+nushell/.config/nushell/history.txt
