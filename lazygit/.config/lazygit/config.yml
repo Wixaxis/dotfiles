@@ -1,0 +1,8 @@
+os:
+  edit: "nvr {{filename}}"
+  editAtLine: "nvr +{{line}} {{filename}}"
+  editAtLineAndWait: "nvr -cc tabnew --remote-wait +'set bufhidden=wipe' +{{line}} {{filename}}"
+  openDirInEditor: "nvr {{filename}}"
+gui:
+  language: 'en'
+  filterMode: 'fuzzy'
