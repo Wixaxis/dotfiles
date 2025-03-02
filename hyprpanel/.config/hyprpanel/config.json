@@ -10,7 +10,7 @@
   "menus.clock.time.hideSeconds": false,
   "theme.bar.floating": true,
   "theme.bar.menus.monochrome": true,
-  "wallpaper.enable": true,
+  "wallpaper.enable": false,
   "theme.bar.transparent": true,
   "theme.bar.background": "#2e3440",
   "theme.bar.opacity": 100,
@@ -508,5 +508,6 @@
   "theme.bar.buttons.modules.cpuTemp.text": "#8fbcbb",
   "theme.bar.buttons.modules.cpuTemp.icon": "#21252b",
   "theme.bar.buttons.modules.cpuTemp.icon_background": "#8fbcbb",
-  "theme.bar.buttons.modules.cpuTemp.border": "#8fbcbb"
+  "theme.bar.buttons.modules.cpuTemp.border": "#8fbcbb",
+  "bar.customModules.ram.icon": ""
 }
