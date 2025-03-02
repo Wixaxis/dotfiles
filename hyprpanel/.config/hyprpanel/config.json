@@ -453,10 +453,10 @@
   "theme.bar.menus.card_radius": "0.4em",
   "theme.bar.menus.border.size": "0.13em",
   "theme.bar.menus.popover.radius": "0.4em",
-  "bar.customModules.cpuTemp.sensor": "/sys/devices/pci0000:00/0000:00:18.3/hwmon/hwmon1/temp1_input",
+  "bar.customModules.cpuTemp.sensor": "/sys/devices/pci0000:00/0000:00:18.3/hwmon/hwmon3/temp1_input",
   "bar.customModules.cpuTemp.round": true,
   "bar.customModules.netstat.dynamicIcon": false,
-  "theme.bar.buttons.modules.cpuTemp.background": "#242438",
+  "theme.bar.buttons.modules.cpuTemp.background": "#3b4252",
   "theme.bar.buttons.borderSize": "0.1em",
   "menus.transition": "crossfade",
   "theme.bar.buttons.monochrome": true,
@@ -504,5 +504,9 @@
     "volumectl"
   ],
   "bar.customModules.updates.leftClick": "kitty --hold -e just -f /home/wixaxis/justfile update",
-  "menus.bluetooth.batteryIcon": "󰥉"
+  "menus.bluetooth.batteryIcon": "󰥉",
+  "theme.bar.buttons.modules.cpuTemp.text": "#8fbcbb",
+  "theme.bar.buttons.modules.cpuTemp.icon": "#21252b",
+  "theme.bar.buttons.modules.cpuTemp.icon_background": "#8fbcbb",
+  "theme.bar.buttons.modules.cpuTemp.border": "#8fbcbb"
 }
