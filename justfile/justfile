@@ -3,7 +3,7 @@
 
 # update all system & aur & flatpak packages
 update:
-  rustup default stable
+  # rustup default stable
   arch-update
   hyprpm update
   git -C ~/HyprPanel pull
