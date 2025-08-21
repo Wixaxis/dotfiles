@@ -55,4 +55,3 @@ def --env mise_hook [] {
     | parse vars
     | update-env
 }
-
