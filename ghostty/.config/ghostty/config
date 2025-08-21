@@ -15,5 +15,7 @@ quick-terminal-position = right
 quick-terminal-autohide = false
 quick-terminal-screen = mouse
 quick-terminal-animation-duration = 0
-background-opacity = 0.7
+background-opacity = 0.9
 background-blur = 50
+
+
