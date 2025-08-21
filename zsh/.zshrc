@@ -76,3 +76,4 @@ qa() {
   env BW_SESSION="$BW_SESSION" QA_HOST_NAME="qa-$host_number" kamal "$@"
 }
 
+eval "$(mise activate zsh)"
