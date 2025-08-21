@@ -1,0 +1,1569 @@
+lsa
+ls
+ls | sort size
+ls | sort -size
+ls | sort 
+ls | sort --help
+ls | sort
+ls --help
+nvim
+ls | sort-by size
+ls | sort-by size -r
+ls | sort-by type size -r
+bat yarn.lock
+cat yarn.lock
+ls
+ls -t
+ls --help
+ls | where type == dir
+ls | where type == dir | sort-by size
+ls | where type == dir | sort-by modified
+ls | where type == dir | sort-by modified -r 
+nvim -v
+nvim -v | parse
+parse --help
+echo $PATH
+echo $env.PATH
+reload
+fd
+clear
+neofetch
+just
+just upload-to-testing 2
+exit
+cd ~
+cd .config/nvim/
+lsa
+ls
+cd .config/
+lsa
+ls
+ls -a
+cd ..
+ls
+ls -a
+cd .config/
+ls
+cd ghostty/
+ls
+nvim config
+exit
+clear
+ls
+ls -a
+exit
+eza
+esa
+bat .zshrc
+nvim .zshrc
+exit
+nvim
+exit
+nvim .zshrc
+bat .zshrc
+cat .zshrc
+echo .zshrc
+print .zshrc
+open .zshrc
+$env.config.buffer_editor = "nvim"
+clear
+nvim
+zsh
+exit
+nvim
+exit
+clear
+brew
+nvim --version
+clear
+cd .config/
+lsa
+ls
+config nu
+lsa
+ls
+cd nu
+lsa
+ls
+nvim config.nu
+ls
+nvim config.nu
+config reload
+config --help
+exit
+config --help
+config flatten
+config nu
+exit
+cd .config/nu/
+lsa
+ls
+nvim .
+exit
+starship
+starship completions
+starship completions --help
+cd .config/nvim
+lsa
+ls 
+ls | sort modified
+ls | sort-by modified
+ls | sort-by modified | reverse
+nvim 
+lsa
+ls 
+nvim .
+zsh
+ls
+cd ..
+ls
+cd ..
+ls
+ls -a
+ls -a | grep zsh
+ls -a | where name ~= zsh
+ls -a | where name~=zsh
+ls -a | where name =~ zsh
+ls -a | where name =~ zsh | each { bat $it.name }
+ls -a | where name =~ "zsh" | each { bat (get name $it) }<\n>
+ls -a | where name =~ "zsh" | each { |filename| bat filename }<\n>
+ls -a | where name =~ "zsh" | each { |filename| bat $filename }<\n>
+ls -a | where name =~ "zsh" | each { |filename| bat $filename.name }<\n>
+ls -a | where name =~ "zsh" 
+ls -a | where name =~ "zsh" type = file
+ls -a | where name =~ "zsh" type == file
+ls -a | where name =~ "zsh" type == "file"
+ls -a | where name =~ "zsh" and type == "file"
+ls -a | where name =~ "zsh" and type = file | each { |filename| bat $filename.name }<\n>
+ls -a | where name =~ "zsh" and type == file | each { |filename| bat $filename.name }<\n>
+ls -a | where name =~ "zsh" and type == file 
+bat .zshrc
+open .zshrc
+ls -a | where name =~ "zsh" and type == file 
+open .zshenv
+config env 
+cd .config/nu/
+lsa
+ls a
+ls -a
+$env.EDITOR
+$env.VISUAL
+$env.PATH
+cd ..
+lsa
+ls -a
+cd ghostty/
+nvim config
+exit
+$env.PATH
+nvim
+$env.EDITOR
+config_data 
+nvim --version
+$env.EDITOR
+$env.PATH
+nvim
+ruby -v
+open .zshenv
+open .zshrc
+bat .zshrc
+rbenv init -
+rbenv init --help
+rbenv init
+rbenv rehash
+ruby -v
+rbenv rehash
+ruby -v
+rbenv --help
+rbenv local
+rbenv global
+rbenv shell
+cd .config/nu/
+lsa
+ls -a
+ls modules
+ls modules | where type = file and name =~ .nu
+ls modules | where type = file and name =~ '.nu'
+ls modules | where type = 'file' and name =~ '.nu'
+ls modules | where type == 'file' and name =~ '.nu'
+ls modules | where type == 'file' and name =~ '.nu' | each { |module| source $module }
+ls modules | where type == 'file' and name =~ '.nu' | each { |module| open $module }
+ls modules | where type == 'file' and name =~ '.nu' | each { |module| open $module.name }
+ls modules | where type == 'file' and name =~ '.nu' | each { |module| source $module.name }
+const ls modules | where type == 'file' and name =~ '.nu' | each { |module| source $module.name }
+for file in modules/*.nu {<\n>    source $file<\n>}<\n>
+for file in modules/*.nu {<\n>    open $file<\n>}<\n>
+for file in modules/ {<\n>    open $file<\n>}<\n>
+for file in modules/* {<\n>    open $file<\n>}<\n>
+for file in modules/* {<\n>    print bat $file<\n>}<\n>
+for file in modules/* {<\n>    print (bat $file)<\n>}<\n>
+for file in modules/*.nu {<\n>    print (bat $file)<\n>}<\n>
+ruby -v
+rbenv rehash
+ruby -v
+rbenv list
+rbenv 
+rbenv versions
+clear
+rbeenv shell
+rbenv shell
+rbenv
+rbenv local
+rbenv global
+rbenv shell 3.3.5
+ruby -v
+rbenv shell 3.3.6
+clear
+ruby -v
+bat .zshrc
+bat .zshenv
+fzf
+just
+cd work/activenow/
+lsa
+ls -a
+lsa
+lsa | where type == file
+lsa | where type == file and size > 50kb
+lsa | where type == file and size < 50kb
+lsa | sort-by size
+lsa | sort-by size | reversed
+lsa | sort-by size | reverse
+lsa | sort-by size | reverse | limit 10
+lsa | sort-by size | reverse | take 10
+cd work/activenow/
+clear
+just
+ls -t
+ls -t --help
+^ls -t
+exa
+^exa
+eza
+cd ~
+clear
+lsa
+bat .zshenv
+bat .zshrc
+def "find in" [<\n>	glob: glob, # the glob expression<\n>	...rest: any # terms to search<\n>]: nothing -> table<path: string, line: int, data: string> {<\n>	glob --no-dir $glob<\n>		| par-each {|e|<\n>			open $e | lines | enumerate | rename line data |<\n>			find --columns [data] ...$rest |<\n>			each {|match| {path: ($e | path relative-to $env.PWD), ...$match}}<\n>	} | flatten<\n>}
+find in
+find in Desktop/
+clear
+find in work
+find in work bin
+find in work Gemfile
+find in work 
+find in work/*
+find in work/* gemfile
+find in work/* gem
+find in work/Gemfile
+find in work/Gemfile gem
+# Evaluates the top 5 most used commands present in `nushell/history.txt`.<\n>if $nu.history-enabled { open $nu.history-path | lines | uniq --count | sort-by --reverse count | first 5 | rename command amount } else { print --stderr "History is disabled!" }
+clear
+carapace
+caparace
+carapace
+clear
+carapace
+carapace git
+clear
+carapace git
+carapace git nushell
+carapace git nushell carapace 
+exit
+sudo sh -c 'echo /opt/homebrew/bin/nu >> /etc/shells'
+chsh -s /opt/homebrew/bin/nu
+clear
+exit
+tmux
+exit
+mux list
+neofetch
+clear
+bundle
+lsa
+^ls -t
+^ls -t 3
+^ls -t -L3
+^ls -t -l 3
+^ls -t -l3
+clear
+cd ~
+lsa
+cd .config/
+lsa
+rm flameshot/
+rm -rf flameshot
+lsa
+rm nvim.zip
+lsa
+rm -rf helix
+lsa
+rm -rf slack-term
+lsa
+rm -rf goneovim
+lsa
+rm -rf linearmouse
+lsa
+rm -rf NvChad/
+lsa
+cd jgit/
+lsa
+bat config 
+cd ..
+lsa
+rm -rf jgit/
+lsa
+rm -rf sketchybar/
+rm -rf secondary_bar
+rm -rf main_bar/
+lsa
+tf heroku
+thefuck heroku
+thefuck gh
+hrku
+thefuck
+man thefuck
+thefuck --help
+lsa
+cd ..
+lsa
+cd Public/
+lsa
+cd ..
+lsa
+bat .zprofile 
+clear
+cmatrix
+brew install cmatrix
+cmatrix
+lsa
+cd .config/
+lsa
+starship preset bracketed-segments -o ~/.config/starship.toml
+lsa
+nvim starship.toml 
+exit
+cd nu/
+lsa
+starship prompt
+cd ~/.config/
+nvim starship.toml 
+exit
+clear
+lsa
+clear
+rbenv
+just
+lsa
+hello
+open Gemfile
+exit
+nvim .
+cd ~/Notes ; nvim work/dash.md
+nvim
+rails s
+bin/dev
+bundle exec sidekiq
+mux activenow
+clear
+lsa
+cd Downloads/
+lsa
+lsa | sort-by size
+lsa | sort-by size | reverse
+lsa | sort-by size | reverse | table 
+lsa | sort-by size | reverse | take 10
+lsa | sort-by size | reverse | take 20
+cd ..
+lsa
+cd ..
+lsa
+cd wixaxis/
+lsa
+cd projects/
+lsa
+cd ActiveNow/
+lsa
+ls
+ls -a
+cd ..
+rm ActiveNow/
+lsa
+cd railschad_config/
+lsa
+bat README.md 
+cd ..
+lsa
+rm -rf railschad_config/
+lsa
+cd ..
+rm projects/
+rm -rf projects/
+lsa
+cd Projekty/
+lsa
+cd snippetship/
+lsa
+cd ..
+lsa
+cd ..
+lsa
+bat .bashrc 
+rm .bashrc
+lsa
+bat .zshrc.pre-oh-my-zsh 
+rm .zshrc.pre-oh-my-zsh
+lsa
+bat wezterm_cheatsheet.txt 
+cd .cocoapods/
+lsa
+cd ..
+lsa
+rm -rf .cocoapods/
+lsa
+bat .terminfo/
+bat .terminfo
+cd .terminfo/
+lsa
+bat 61/
+cd 61/
+lsa
+cxd ..
+cd ..
+rm -rf .terminfo/
+lsa
+bat dump.rdb 
+bat ".zcompdump-MacBook Air (Wiktor)-5.8.1" 
+bat .fzf.bash 
+rm .fzf.bash
+lsa
+cd scripts/
+lsa
+cd saved/
+lsa
+cd prod/
+lsa
+lsa | sort-by size | reverse | take 20
+lsa | sort-by size 
+lsa | sort-by size | last
+lsa | sort-by size | last | open
+lsa | sort-by size | last { |file| open $file.name }
+lsa | sort-by size | reverse 
+lsa | sort-by size | reverse | take 1
+lsa | sort-by size | reverse | first 
+lsa | sort-by size | reverse | take 1
+lsa 
+lsa | reverse 
+lsa | reverse | where type == file
+lsa | reverse | where type == file | last
+lsa | reverse | where type == file | last | name
+lsa | reverse | where type == file | last | $.name
+lsa | reverse | where type == file | last
+lsa | reverse | where type == file | last.name
+lsa | reverse | where type == file | last
+lsa | reverse | where type == file | last | get name
+lsa | reverse | where type == file | last | (bat get name)
+lsa | reverse | where type == file | last | (bat $(get name))
+lsa | reverse | where type == file | last | get name
+bat lsa | reverse | where type == file | last | get name
+bat (lsa | reverse | where type == file | last | get name)
+bat (lsa | reverse | where type == file | first | get name)
+bat (lsa | first | get name)
+bat (lsa | get nth 2 | get name)
+bat (lsa | nth 2 | get name)
+bat (lsa | get 2 | get name)
+bat (lsa | get 4 | get name)
+open (lsa | get 4 | get name)
+cat (lsa | get 4 | get name)
+clear
+lsa
+reset
+lsa
+reset
+zsh
+lsa
+zsh -c reset && exit
+zsh -c 'reset && exit'
+lsa
+zsh -c 'reset && exit'
+reload
+history
+open (lsa | get 4 | get name)
+open (lsa | get 4 | get name) | lines
+open (lsa | get 4 | get name) | lines | where contains nil
+open (lsa | get 4 | get name) | lines | where contains 'nil'
+open (lsa | get 4 | get name) | lines | where contains == 'nil'
+open (lsa | get 4 | get name) | lines | contains == nil
+open (lsa | get 4 | get name) | lines | where get nil
+open (lsa | get 4 | get name) | lines | where contains $it 'nil'
+open (lsa | get 4 | get name) | lines | where str contains 'nil'
+open (lsa | get 4 | get name) | lines | where str has 'nil'
+open (lsa | get 4 | get name) | lines | where has 'nil'
+open (lsa | get 4 | get name) | lines | where str has 'nil'
+open (lsa | get 4 | get name) | lines | str contains 'nil'
+open (lsa | get 4 | get name) | lines | where (str contains 'nil')
+open (lsa | get 4 | get name) | where str contains 'nil'
+open (lsa | get 4 | get name) | where str 'nil'
+clear
+exit
+tmux
+clear
+cd ~
+lsa
+cd .config/
+lsa
+cd nu/sources/
+lsa
+nvim aliases.nu 
+reset
+lsa
+zsh -c 'reset && exit'
+lsa
+clear
+lsa
+clear
+neofetch
+cd ~
+cd .config/
+exit
+nvim starship.toml 
+clear
+reset
+lsa
+clear
+just local-console
+cd ~/work/activenow/
+lsa
+clear
+just local-console 
+clear
+just local-console-history 
+rails c
+exit
+asciinema rec example.txt
+lsa
+bat example.txt 
+asciinema  cat example.txt 
+asciinema play example.txt 
+print $env.SHELL
+$env.ANTHROPIC_API_KEY
+clear
+exit
+nvim
+nvim jus
+lsa
+rm jus
+lsa
+clear
+nvim justfile 
+cp justfile justfile_old
+nvim justfile 
+just
+nvim justfile 
+just local-console 
+nvim justfile 
+just local-console 
+nvim justfile 
+git status
+just upload-to-testing 2
+nvim justfile 
+just upload-to-testing 2
+nvim justfile 
+just upload-to-testing 2
+nvim justfile_old
+nvim justfile 
+just upload-to-testing 2
+nvim justfile 
+just upload-to-testing 2
+nvim justfile 
+just upload-to-testing 2
+nvim justfile 
+just upload-to-testing 2
+nvim justfile 
+just upload-to-testing 2
+cd /usr/bin
+lsa
+cd env
+exit
+/usr/bin/env nu
+exit
+just upload-to-testing 2
+mv justfile justfile_new
+mv justfile_old justfile
+just upload-to-testing 2
+mv justfile_new justfile
+lsa
+lsa | where name =~ just
+just migrate
+just upload-to-testing 2
+nvim justfile 
+just upload-to-testing 2
+cwd
+dir
+pwd
+just upload-to-testing 2
+cd ~
+lsa
+cd work/
+lsa
+mkdir saved_console_sessions
+cd saved_console_sessions/
+lsa
+mkdir local
+mkdir production
+cd local/
+cd ~/work/activenow/
+lsa
+mkdir ~/work/saved_console_sessions/tmp
+exit
+asciinema rec tmp_file
+asciinema play tmp_file 
+asciinema cat tmp_file 
+asciinema cat tmp_file | lines
+asciinema cat tmp_file | lines | count
+asciinema cat tmp_file | lines | length
+asciinema cat tmp_file | lines | first
+asciinema cat tmp_file | lines | last
+just local-console 
+exit
+asciinema rec ~/work/tmp
+just local-console 
+asciinema rec --help
+just local-console 
+exit
+asciinema rec tmp_file -c rails console
+asciinema rec tmp_file -c 'rails console'
+asciinema rec --overwrite tmp_file -c 'rails console'
+open tmp_file
+asciinema play tmp_file 
+asciinema cat tmp_file 
+just local-console 
+cd ~/work/saved_console_sessions/
+lsa
+cd tmp/
+lsa
+cd ..
+lsa
+cd production/
+lsa
+cd ..
+lsa
+cd local/
+lsa
+open rails_console_local_25_02_11_15_52_38.txt
+bat rails_console_local_25_02_11_15_52_38.txt 
+cd ..
+lsa
+ls -t
+ls | get name | each { |name| ls $name }
+cd ../activenow/
+lsa
+just local-console 
+cd ../saved_console_sessions/
+lsa
+cd tmp
+lsa
+rm *
+lsa
+cd ..
+lsa
+cd local
+lsa
+bat rails_console_local_25_02_11_15_52_38.txt 
+cat rails_console_local_25_02_11_15_52_38.txt 
+clear
+cat rails_console_local_25_02_11_15_56_27.txt 
+exit
+cd ../saved_console_sessions/
+lsa
+cd local/
+lsa
+cat rails_console_local_25_02_11_15_56_27.txt 
+bat rails_console_local_25_02_11_15_56_27.txt 
+reset
+bat rails_console_local_25_02_11_15_56_27.txt 
+exit
+cd ..
+cd saved_console_sessions/
+lsa
+bat local/rails_console_local_25_02_11_15_56_27.txt 
+bat tmp_file 
+just local-console 
+bat ~/work/saved_console_sessions/local/rails_console_local_25_02_11_16_00_35 
+asciinema cat ~/work/saved_console_sessions/tmp/tmp_rails_console_local_25_02_11_16_00_35 
+asciinema cat ~/work/saved_console_sessions/tmp/tmp_rails_console_local_25_02_11_16_00_35 | print $it
+asciinema cat ~/work/saved_console_sessions/tmp/tmp_rails_console_local_25_02_11_16_00_35 | print 
+asciinema cat ~/work/saved_console_sessions/tmp/tmp_rails_console_local_25_02_11_16_00_35 | save tmp | open tmp
+asciinema cat ~/work/saved_console_sessions/tmp/tmp_rails_console_local_25_02_11_16_00_35 | save tmp_hehe | open tmp_hehe
+asciinema cat ~/work/saved_console_sessions/tmp/tmp_rails_console_local_25_02_11_16_00_35 | save tmp_hehe | bat tmp_hehe
+asciinema cat ~/work/saved_console_sessions/tmp/tmp_rails_console_local_25_02_11_16_00_35 | save -f tmp_hehe | bat tmp_hehe
+asciinema cat ~/work/saved_console_sessions/tmp/tmp_rails_console_local_25_02_11_16_00_35 | save -f tmp_hehe | open tmp_hehe
+asciinema cat ~/work/saved_console_sessions/tmp/tmp_rails_console_local_25_02_11_16_00_35 | save -f tmp_hehe | cat tmp_hehe
+asciinema cat ~/work/saved_console_sessions/tmp/tmp_rails_console_local_25_02_11_16_00_35 | save -f tmp_hehe | open tmp_hehe
+asciinema cat ~/work/saved_console_sessions/tmp/tmp_rails_console_local_25_02_11_16_00_35 | save -f tmp_hehe | bat tmp_hehe
+asciinema cat ~/work/saved_console_sessions/tmp/tmp_rails_console_local_25_02_11_16_00_35 | save -f tmp_hehe | open tmp_hehe
+cd ../saved_console_sessions/
+lsa
+cd local/
+lsa
+lsa | get name | each { |fname| cat fname }
+lsa | get name | each { |fname| cat $fname }
+cat (lsa | get name | get 0)
+cat (lsa | get name | get 1)
+cat (lsa | get name | get 2)
+open (lsa | get name | get 2)
+open (lsa | get name | get 1)
+open (lsa | get name | get 0)
+bat --help
+bat (lsa | get name | get 0)
+bat -u (lsa | get name | get 0)
+bat -p (lsa | get name | get 0)
+bat --binary=as-text (lsa | get name | get 0)
+open (lsa | get name | get 0)
+open (lsa | get name | get 0) | bat
+asciinema cat --help
+open (lsa | get name | get 0)
+open (lsa | get name | get 0) | bat
+open (lsa | get name | get 0) | less
+open (lsa | get name | get 0) | less -R
+open (lsa | get name | get 0) | ansi strip | bat
+open (lsa | get name | get 0) | cat
+open (lsa | get name | get 0) | ansi strip | cat
+open (lsa | get name | get 0) | script -q /dev/null | bat
+script --help
+man script
+cd ..
+cd tmp/
+lsa
+asciinema cat tmp_rails_console_local_25_02_11_16_00_35 
+asciinema play -s 1 tmp_rails_console_local_25_02_11_16_00_35 
+asciinema play -s 0 tmp_rails_console_local_25_02_11_16_00_35 
+asciinema play -s 100 tmp_rails_console_local_25_02_11_16_00_35 
+asciinema play -s 1000 tmp_rails_console_local_25_02_11_16_00_35 
+asciinema play -s inf tmp_rails_console_local_25_02_11_16_00_35 
+asciinema play -s inf tmp_rails_console_local_25_02_11_16_00_35 | page
+exit
+tmux rename session personal
+tmux rename-session personal
+clear
+cd ~/.config/
+lsa
+cd nu
+lsa
+cd ..
+lsa
+cd ..
+lsa
+cd .config/nu/
+lsa
+$env
+$env.config
+exit
+print $env.NU_CUSTOM_CONFIG_PATH
+ansi_compile
+modules/scripts.nu
+./modules/scripts.nu
+exit
+ansi_compile
+scripts ansi_compile 
+clear
+cd ../saved_console_sessions/
+lsa
+cd tmp
+lsa
+cat tmp_rails_console_local_25_02_11_16_00_35 
+asciinema cat tmp_rails_console_local_25_02_11_16_00_35 
+asciinema cat tmp_rails_console_local_25_02_11_16_00_35 | CAT
+asciinema cat tmp_rails_console_local_25_02_11_16_00_35 | cat
+asciinema cat tmp_rails_console_local_25_02_11_16_00_35 | bat
+asciinema cat tmp_rails_console_local_25_02_11_16_00_35 | scripts ansi_compile | cat
+asciinema cat tmp_rails_console_local_25_02_11_16_00_35 | scripts ansi_compile | bat
+asciinema cat tmp_rails_console_local_25_02_11_16_00_35 | cat
+asciinema cat tmp_rails_console_local_25_02_11_16_00_35 | scripts ansi_compile 
+asciinema cat tmp_rails_console_local_25_02_11_16_00_35 | scripts ansi_compile | bat
+date
+date now
+date now humanize
+date humanize
+date now | date humanize
+date now | format date
+fd
+cd ..
+fd
+fd -f
+fd -- -f
+fd --file
+tldr fd
+man fd
+fd -a
+fd 
+exit
+clear
+brew install trash-cli
+trash-cli --help
+trash --help
+man trash
+exit
+trash --help
+trash-cli --help
+$env.PATH
+ls /opt/homebrew/opt/trash-cli/bin
+trash-list
+which trash-list
+which trash
+exit
+trash
+trash --help
+rm
+exit
+rm
+rm --help
+^rm
+mv --help
+lsa
+touch hello
+mv -ip hello hello_new
+lsa
+exit
+mv
+exit
+cd ../
+cd saved_console_sessions/
+lsa
+cd local/
+rm *
+lsa
+cd ..
+lsa
+cd tmp/
+lsa
+rm *
+cd ..
+lsa
+rm tmp/
+lsa
+cd production/
+lsa
+cd ../../
+lsa
+cd activenow/
+lsa
+clear
+cd ../
+cd saved_console_sessions/
+lsa
+cd local/
+mkdir raw
+cd ..
+cd production/
+mkdir raw
+lsa
+tree
+tee
+exa
+lsa
+cd ..
+lsa
+lsa | each { |f| lsa $f.name } | flatten
+lsa | each { |f| ls $f.name } | flatten
+lsa | each { |f| ls $f.name }
+lsa | each { |f| ls $f.name } | flatten
+lsa | each { |f| ls $f.name } | to_json
+lsa | each { |f| ls $f.name } | to json
+lsa | each { |f| ls $f.name } | get name | flatten
+lsa | each { |f| ls $f.name } | flatten
+lsa | each { |f| ls $f.name } | flatten | get name
+cd ..
+cd activenow/
+lsa | each { |f| ls $f.name } | flatten | get name
+brew install tree
+tree
+tree --help
+tree -l 3
+tree -l3
+tree -L 3
+tree -L 2
+clear
+lsa
+just local-console 
+exit
+scripts ansi_compile 
+just local-console 
+e
+just local-console 
+exit
+just local-console 
+ansi_compile 
+clear
+exit
+ansi_compile 
+just local-console 
+exit
+ansi_compile 
+exit
+ansi_compile 
+just local-console 
+exit
+just local-console 
+exit
+just local-console 
+which ansi_compile
+exit
+just local-console 
+which ansi_compile
+just local-console 
+exit
+just local-console 
+clear
+scripts ansi_compile 
+clear
+cd ../saved_console_sessions/
+lsa
+cd local/
+lsa
+cd raw/
+las
+lsa
+rm *
+lsa
+cd ..
+lsa
+cd ..
+lsa
+cd ..
+lsa
+cd activenow/
+lsa
+clear
+just local-console 
+cd ..
+lsa
+cd saved_console_sessions/
+lsa
+cd local/
+lsa
+cat rails_console_local_25_02_11_18_18_56 
+bat rails_console_local_25_02_11_18_18_56 
+cd ..
+lsa
+cd ..
+lsa
+cd saved_console_sessions/
+lsa
+clear
+exit
+just local-history-cat 
+open --help
+ls | get name | input list
+ls | get name | input list -f
+ls | input list -f
+ls | get name modified | input list -f
+ls | get name modified
+ls | get name,modified
+ls | get name, modified
+ls | get name modified
+ls 
+clear
+just production-console 
+config flatten 
+config flatten | grep env
+$env
+$env | flatten
+$env | to json 
+just production-console 
+asciinema --help
+asciinema rec --help
+clear
+just local-console 
+clear
+just local-console 
+man echo
+echo -n 'Saving'
+^echo -n 'Saving'
+echo --help
+print --help
+just local-console 
+bat ~/work/saved_console_sessions/local/rails_console_local_25_02_12_23_39_30 
+cd ~/.config/nu
+lsa
+cd scripts/ruby/
+lsa
+exit
+nvim justfile 
+cd ~/.config/nu/
+lsa
+cd scripts/ruby/
+lsa
+lsa
+cd local/
+lsa
+cd raw/
+lsa
+open rails_console_local_25_02_12_23_39_30 | length
+open rails_console_local_25_02_12_23_39_30 | lines | length
+cd ..
+open rails_console_local_25_02_12_23_39_30 | lines | length
+cd raw/
+lsa
+asciinema cat rails_console_local_25_02_12_23_39_30 | lines | length
+asciinema cat rails_console_local_25_02_12_23_39_30
+asciinema cat rails_console_local_25_02_12_23_39_30 | lines
+asciinema cat rails_console_local_25_02_12_23_39_30 | lines | length
+asciinema cat rails_console_local_25_02_12_23_39_30 | scripts ansi_compile | lines | length
+asciinema cat rails_console_local_25_02_12_23_39_30 | scripts ansi_compile | lines
+asciinema cat rails_console_local_25_02_12_23_39_30 | scripts ansi_compile 
+asciinema cat rails_console_local_25_02_12_23_39_30 | scripts ansi_compile | lines | length
+asciinema cat rails_console_local_25_02_12_23_39_30 | scripts ansi_compile 
+nvim ansi_compile.rb 
+rails s
+bin/dev
+bundle exec sidekiq
+nvim justfile 
+nvim .
+mux activenow
+tmux a
+lsa
+cd Music/
+lsa
+cd ..
+lsa
+rm .anydesk/
+lsa
+cat .lesshst 
+rm .lesshst 
+lsa
+cd .Trash/
+lsa
+sudo lsa
+ls
+sudo ls
+cd ..
+lsa
+mkdir dotfiles
+lsa
+cd dotfiles/
+lsa
+cd ..
+lsa
+cd tmp/
+lsa
+cd dotfiles/
+lsa
+git status
+mv * ~/dotfiles/
+lsa
+cd ~/dotfiles/
+lsa
+git status 
+cd macos/
+lsa
+cd ..
+lsa
+rm arch-update/
+rm bash
+rm btop
+rm dunst
+rm githubcli/
+rm hyprland/
+lsa
+rm macos
+rm yazi
+rm waybar
+rm tmuxinator/
+rm tmux
+rm themes
+lsa
+rm swaync
+rm scripts/
+rm rofi
+rm qimgv/
+rm neovide/
+rm neofetch/
+rm lazygit/
+lsa
+rm kvantum/
+rm hyprpanel/
+rm kitty/
+lsa
+rm justfile/
+lsa
+git status
+git branch --show-current 
+git add .
+git commit -m 'starting blank point for macos configs'
+git push
+clear
+git status 
+lsa
+cd papes/
+lsa
+cd Pictures/
+lsa
+cd nord-papes/
+lsa
+cd dark/
+lsa
+cd ..
+yazi
+cd ..
+lsa
+cd .config/
+lsa
+mkdir nu
+lsa
+cd nu/
+lsa
+mkdir .config
+cd .config/
+lsa
+mv nu ~/dotfiles/nu/.config/
+cd ..
+stow nu
+lsa
+cd nu
+lsa
+cd ..
+lsa
+cd asciinema/
+lsa
+cd ..
+lsa
+mkdir starship/.config
+cd starship/.config/
+lsa
+mv starship.toml ~/dotfiles/starship/.config/
+lsa
+cd ../..
+lsa
+stow starship
+cd iterm2/
+lsa
+cd ..
+lsa
+lsa
+mkdir ghostty/.config/
+cd ghostty/.config/
+mv ghostty ~/dotfiles/ghostty/.config/
+lsa
+cd ../..
+stow ghostty
+lsa
+mkdir yazi/.config
+mv yazi ~/dotfiles/yazi/.config/
+stow yazi/
+lsa
+ls yazi
+mkdir neofetch/.config/
+mv neofetch ~/dotfiles/neofetch/.config/
+stow neofetch/
+ls neofetch
+lsa
+mkdir tmux/.config/
+mv tmux ~/dotfiles/tmux/.config/
+stow tmux
+ls tmux
+lsa
+cd thefuck/
+lsa
+cd ..
+lsa
+mkdir neovide/.config/
+mv neovide ~/dotfiles/neovide/.config/
+stow neovide
+lsa
+lsa
+git status 
+lazygit
+yazi
+ya pack -m
+yazi
+tmux
+clear
+neofetch
+nvim
+exit
+bundle
+just migrate 
+exit
+nvim
+yazi
+ya pack --help
+ya pack -u
+yazi
+exit
+rails s
+bundle
+bundle exec sidekiq
+bin/dev
+yazi
+btop
+lsa
+cd dotfiles/
+clear
+git status
+git pull
+lazygit
+cd .config/
+cd ~/.config/
+lsa
+cd nu
+lsa
+exit
+nvim .
+clear
+lazygit
+nvr
+nvr -cc tabnew
+exit
+yazi
+lazygit
+clear
+cd ~/work/activenow/
+lsa
+clear
+nvim
+just migrate
+clear
+cd ~/dotfiles/
+lsa
+stow -d nu
+stow -D nu
+mv nu nushell
+lsa
+cd nushell/
+lsa
+cd 
+cd dotfiles/nushell/.config/
+lsa
+mv nu nushell
+cd nushell/
+lsa
+cd ~/.config/
+lsa
+cd nushell/
+lsa
+cd ..
+rm nushell/
+cd ~/dotfiles/
+stow nushell/
+cd ~/.config/
+lsa
+cd nushell
+lsa
+cat hello_new 
+rm hello_new 
+lsa
+cd `~/Library/Application Support/nushell/`
+lsa
+cat history.txt 
+lsa
+bat config.nu 
+bat env.nu 
+nvim .
+rm ~/.config/nushell/history.txt 
+cp history.txt ~/.config/nushell/history.txt
+cd ~/.config/
+cd nush
+cd nushell
+lsa
+open history.txt | lines | take 10
+open history.txt | lines | reverse | take 10
+clear
+cd ~/dotfiles/
+lsa
+lazygit
+clear
+cd ~/work/activenow/
+bundle
+just migrate
+clear
+git status
+nvim justfile 
+just release-production 
+nvim
+tmux rename-session personal
+cd ~/dotfiles/
+lsa
+cd ghostty/
+lsa
+cd .config/ghostty/
+lsa
+yarn bundlephobia install sortablejs
+finder .
+open .
+^finder .
+^open .
+clear
+heroku list apps
+heroku --help
+heroku --help | grep list
+heroku apps
+heroku pg:info --app activenow-testing-2
+heroku pg:info --app activenowpl
+heroku pg:info --help
+heroku pg --help
+heroku pg:info --app activenow-testing-2
+heroku pg:upgrade --help
+heroku pg:upgrade --app activenow-testing-2
+heroku pg:wait
+heroku pg:wait --app activenow-testing-2
+heroku pg:info --app activenow-testing-2
+heroku pg:info --app activenow-testing
+heroku pg:info --app activenow-testing-3
+heroku pg:info --app activenow-testing-4
+heroku pg:info --app activenow-testing-5
+heroku pg:info --app activenow-testing-6
+heroku pg:info --app activenow-testing-7
+heroku pg:info --app activenow-testing-8
+heroku apps
+heroku pg:info --app activenowpl
+nvim
+clear
+just release-production 
+just production-console 
+nvim justfile 
+just production-console 
+exit
+clear
+heroku pg:info --app activenowpl
+asciinema rec --help
+asciinema rec heroku_upgrade_recording
+nvim
+nvim config 
+yazi
+cd ../nvim
+cd ..
+lsa
+cd ~/.config/
+lsa
+cd nvim
+bin/dev
+nvim 
+bin/dev
+cd ~/Notes ; nvim work/dash.md
+clear
+asciinema rec heroku_upgrade_recording
+lsa
+nvim justfile 
+just testing-6-console 
+clear
+lsa
+mv heroku_upgrade_recording ~/work/saved_console_sessions/
+ls ~/work/saved_console_sessions/
+clear
+just migrate
+nvim
+bundle
+just migrate
+clear
+:qa
+clear
+exit
+tmux a
+cd ~
+clear
+tmux session-rename personal
+tmux rename-session personal
+yazi
+cd /Volumes/SlimLighty/
+lsa
+cd work_dump_for_move/
+lsa
+lsa
+cd Downloads/
+lsa
+exit
+cd ~
+cd /Volumes/SlimLighty/
+lsa
+cd work_dump_for_move/
+lsa
+cd `Other things/`
+lsa
+brew list
+brew list --help
+brew list -1
+brew list -1 | lines
+brew list -1 | lines | save brew_list.txt
+lsa
+bat brew_list.txt 
+ls /Applications/
+ls /Applications/ | save applications.txt
+ls /Applications/ | lines
+ls /Applications/ | to_string
+ls /Applications/ | into string
+ls /Applications/ | to nuon
+ls /Applications/ | take name
+ls /Applications/ | get name
+ls /Applications/ | get name | save applications.txt
+lsa
+bat applications.txt 
+ls /Applications/
+lsa
+bat "zen bookmarks.html" 
+yazi
+chsh -l
+chsh --help
+chsh -s /bin/zsh
+tmux a
+random
+mux activenow
+tmux a
+exit
+clear
+mux activenow
+tmux a
+mux activenow
+clear
+ollama
+ollama list
+ollama rm -h
+ollama rm codellama:latest
+ollama rm codellama:7b
+ollama rm llama3:latest
+ollama list
+mux activenow
+nvim
+exit
+nvim
+cd work/activenow/
+rails db:drop
+rails db:create
+rails db:migrate
+clear
+mux activenow
+mux list
+mux default
+tmux create-session personal
+tmux session-create personal
+tmux 
+tmux a
+exit
+tmux a
+exit
+tmux a
+mux activenow
+tmux a
+mux --help
+mux commands
+mux start --help
+mux --help start
+tmux a
+mux activenow
+clear
+tmux
+mux activenow
+tmux a
+mux activenow
+exit
+tmux
+mux activenow
+exit
+mux activenow
+gem install tmuxinator
+mux activenow
+exit
+mux activenow
+mux acitvenow
+mux activenow
+exit
+mux activenow
+exit
+nvim
+cd ~/tmp/
+cd avante.nvim/
+lsa
+nvim
+exit
+nvim .
+exit
+cd .config/tmuxinator/
+lsa
+nvim .
+exit
+mux activenow
+ssh wixaxis@ssh.wixaxis.dev
+ping ssh.wixaxis.dev
+ssh wixaxis@ssh.wixaxis.dev
+ping ssh.wixaxis.dev
+ssh wixaxis@ssh.wixaxis.dev
+nvim
+nvim 
+tmux a
+yazi
+mux activenow
+exit
+brew update
+brew untap homebrew/homebrew-cask-fonts
+brew update
+brew upgrade
+nvim
+mux activenow
+tmux
+clear
+exit
+mux activenow
+cd ~/.config/tmuxinator/
+lsa
+nvim activenow.yml 
+cd ~
+mux activenow
+brew update
+brew upgrade
+mux activenow
+ruby -v
+gem install tmuxinator
+gem update --system 3.7.1
+clear
+mux activenow
+zsh
+exit
+mux activenow
+exit
+mux activenow
+exit
+mux activenow
+APP_NAME=notes nvim
+nvim .zshrc 
+NVIM_APPNAME=notes nvim
+cd ~/.config/
+lsa
+mkdir nvnote
+brew list --versions neovim
+brew info neovim
+brew install neovim-nightly
+bob
+bob list
+cd nvim/
+lsa
+nvim
+nvim .
+brew uninstall neovim
+brew uninstall --ignore-dependencies neovim
+lsa
+bob list
+bob
+bob install --help
+bob install nightly
+nvim
+bob use nightly
+nu
+exit
+nvim
+zsh
+exit
+nvim
+nvim -v
+cd ~/.config/
+lsa
+cd nushell
+clear
+lsa
+nvim .
+cd ..
+lsa
+cd nvnote/
+yazi
+exit
+mux activenow
