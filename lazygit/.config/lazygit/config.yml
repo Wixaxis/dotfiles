@@ -3,6 +3,13 @@ os:
   editAtLine: "nvr +{{line}} {{filename}}"
   editAtLineAndWait: "nvr -cc tabnew --remote-wait +'set bufhidden=wipe' +{{line}} {{filename}}"
   openDirInEditor: "nvr {{filename}}"
+  openLink: "^open {{link}}"
 gui:
   language: 'en'
   filterMode: 'fuzzy'
+git:
+  fetchAll: false
+  autoStageResolvedConflicts: false
+  paging:
+    pager: diff-so-fancy
+notARepository: quit
