@@ -1,4 +1,3 @@
-use ./modules/rbenv.nu
 use ./modules/scripts.nu
 use ./modules/mise.nu
 source ./sources/base.nu
