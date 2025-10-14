@@ -1,8 +1,9 @@
 # Path for existing tools
-$env.PATH = ($env.PATH 
-    | split row (char esep) 
-    | append '/opt/homebrew/bin' 
-    | append $"($env.HOME)/.rbenv/shims"
-    | append '/opt/homebrew/opt/trash-cli/bin'
-    | append $"($env.HOME)/.cache/.bun/bin"
-    | append $"($env.HOME)/.local/share/bob/nvim-bin")
+$env.PATH = ([
+    '/opt/homebrew/bin'
+    '/opt/homebrew/sbin'
+    '/opt/homebrew/opt/trash-cli/bin'
+    $"($env.HOME)/.cache/.bun/bin"
+    $"($env.HOME)/.local/bin"
+    $"($env.HOME)/.local/share/bob/nvim-bin"
+] | append ($env.PATH | split row (char esep)))
