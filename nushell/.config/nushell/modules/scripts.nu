@@ -70,7 +70,7 @@ export def ensure_kamal_ready [] {
 export def qa [host_number: int, ...rest: string] {
     if not (pwd | str contains 'activenow') { error make --unspanned { msg: "Not in activenow rails project!" }}
     ensure_kamal_ready
-    with-env { BW_SESSION: $env.BW_SESSION, QA_HOST_NAME: ($"qa-" + $"($host_number)") } { kamal ...$rest }
+    with-env { BW_SESSION: $env.BW_SESSION, QA_NUMBER: $host_number } { bundle exec kamal ...$rest -d qa }
 }
 
 export def nvnote [...params: string] {
