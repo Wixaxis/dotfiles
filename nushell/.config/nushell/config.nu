@@ -5,4 +5,5 @@ source ./sources/completions.nu
 
 use ./modules/rbenv.nu
 use ./modules/scripts.nu
+use ./modules/mise.nu
 
