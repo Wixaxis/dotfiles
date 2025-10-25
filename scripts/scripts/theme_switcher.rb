@@ -9,7 +9,7 @@ class MissingOptionError < StandardError
 end
 
 require 'json'
-require '/home/wixaxis/scripts/ruby/rofi_base'
+require '/home/wixaxis/scripts/ruby/handle_dmenu.rb'
 
 THEMES_CONFIGS_PATH = '/home/wixaxis/scripts/ruby/theme_configs/'
 GRADIENCE_CLI = 'flatpak run --command=gradience-cli com.github.GradienceTeam.Gradience'
@@ -69,4 +69,4 @@ def configs_from_path(path = THEMES_CONFIGS_PATH)
      .reduce({}) { |all, new| all.merge! new }
 end
 
-handle_rofi opts: configs_from_path, modename: 'themes', path: '/home/wixaxis/scripts/theme_switcher.rb'
+handle_dmenu opts: configs_from_path, modename: 'themes', path: '/home/wixaxis/scripts/theme_switcher.rb'
