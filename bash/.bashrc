@@ -12,3 +12,8 @@ esac
 if [ -f ~/.config/bash/bashrc ]; then
   source ~/.config/bash/bashrc
 fi
+
+# Added by LM Studio CLI (lms)
+export PATH="$PATH:/home/wixaxis/.lmstudio/bin"
+# End of LM Studio CLI section
+
