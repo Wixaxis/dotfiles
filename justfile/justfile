@@ -3,10 +3,7 @@
 
 # update all system & aur & flatpak packages
 update:
-  # rustup default stable
   arch-update
-  hyprpm update
-  git -C ~/HyprPanel pull
 
 # remove all unused dependencies from system
 cleanup-all:
@@ -60,5 +57,8 @@ list-fonts:
   /home/wixaxis/scripts/randomize_wallpaper.rb
 
 # ssh into home server
-ssh-server:
-  kitten ssh wixaxis@hp-mini-ubuntu-server
+ssh-server-local:
+  ssh wixaxis@hp-mini-ubuntu-server
+
+ssh-server-cloud:
+  ssh -o "ProxyCommand=cloudflared access ssh --hostname %h" wixaxis@ssh.wixaxis.dev

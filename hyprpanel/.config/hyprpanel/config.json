@@ -411,6 +411,7 @@
     "*": {
       "left": [
         "power",
+        "submap",
         "workspaces",
         "media"
       ],
@@ -426,6 +427,7 @@
         "volume",
         "network",
         "bluetooth",
+        "hypridle",
         "weather",
         "clock",
         "notifications"
@@ -449,7 +451,7 @@
   "menus.clock.weather.key": "1452b419d73a4d90889214816241211",
   "menus.clock.weather.unit": "metric",
   "bar.customModules.weather.unit": "metric",
-  "bar.customModules.hypridle.label": true,
+  "bar.customModules.hypridle.label": false,
   "theme.bar.menus.card_radius": "0.4em",
   "theme.bar.menus.border.size": "0.13em",
   "theme.bar.menus.popover.radius": "0.4em",
@@ -468,7 +470,7 @@
   "menus.dashboard.shortcuts.enabled": false,
   "theme.bar.menus.menu.dashboard.profile.size": "15em",
   "theme.bar.buttons.clock.enableBorder": false,
-  "bar.media.show_active_only": true,
+  "bar.media.show_active_only": false,
   "bar.battery.label": false,
   "theme.bar.buttons.network.enableBorder": false,
   "bar.network.showWifiInfo": true,
@@ -514,5 +516,8 @@
   "theme.bar.margin_top": "0.3em",
   "bar.scrollSpeed": 5,
   "theme.bar.margin_sides": "0.2em",
-  "theme.bar.dropdownGap": "2.5em"
+  "theme.bar.dropdownGap": "2.5em",
+  "bar.customModules.storage.paths": [
+    "/"
+  ]
 }
