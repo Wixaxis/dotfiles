@@ -2,7 +2,7 @@
 # command = nu
 # command = tmux
 
-theme = nord
+theme = Nord
 macos-option-as-alt=left
 macos-titlebar-style=hidden
 keybind = global:ctrl+t=toggle_quick_terminal
