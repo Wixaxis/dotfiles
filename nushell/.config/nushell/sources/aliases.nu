@@ -10,3 +10,4 @@ alias ensure_unlocked_ssh = scripts ensure_unlocked_ssh
 alias ensure_kamal_ready = scripts ensure_kamal_ready
 alias qa = scripts qa
 alias notes = scripts nvnote
+alias mr = mise r
