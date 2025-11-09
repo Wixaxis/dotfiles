@@ -1,5 +1,6 @@
 export-env {
-  
+  $env.__CF_USER_TEXT_ENCODING = ($env.__CF_USER_TEXT_ENCODING | prepend r#'/opt/homebrew/bin'#)
+
   $env.MISE_SHELL = "nu"
   let mise_hook = {
     condition: { "MISE_SHELL" in $env }
