@@ -10,6 +10,6 @@ gui:
 git:
   fetchAll: false
   autoStageResolvedConflicts: false
-  paging:
-    pager: diff-so-fancy
+  pagers:
+    - pager: diff-so-fancy
 notARepository: quit
