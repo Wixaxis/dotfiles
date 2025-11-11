@@ -1,7 +1,8 @@
-#!/home/wixaxis/.local/share/rbenv/shims/ruby
+#!/usr/bin/env ruby
 # frozen_string_literal: true
 
 require 'json'
+require '/home/wixaxis/scripts/ruby/ensure_process_up'
 
 DAEMON = 'hyprpaper'
 # DAEMON = 'swww'
@@ -28,6 +29,8 @@ use_wallpaper = case DAEMON
                     `hyprctl hyprpaper unload unused`
                   }
                 end
-# `killall hyprpaper && hyprctl dispatch exec hyprpaper` if DAEMON == 'hyprpaper'
-JSON.parse(`wlr-randr --json`).map { |monitor| monitor['name'] }
-    .each { |name| use_wallpaper.call(name, all_papes.call(CURR_THEME).sample) }
+
+if ensure_running('hyprpaper', 'hyprctl dispatch exec hyprpaper')
+  JSON.parse(`wlr-randr --json`).map { |monitor| monitor['name'] }
+      .each { |name| use_wallpaper.call(name, all_papes.call(CURR_THEME).sample) }
+end
