@@ -5,5 +5,6 @@ export BUNDLE_USER_PLUGIN="$XDG_DATA_HOME/bundle"
 export SOLARGRAPH_CACHE="$XDG_CACHE_HOME/solargraph"
 
 
-eval "$(rbenv init - bash)"
+# eval "$(rbenv init - bash)"
+eval "$(mise activate bash)"
 # eval "$(rbenv rehash)"
