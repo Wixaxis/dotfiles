@@ -519,5 +519,6 @@
   "theme.bar.dropdownGap": "2.5em",
   "bar.customModules.storage.paths": [
     "/"
-  ]
+  ],
+  "theme.bar.menus.popover.scaling": 75
 }
