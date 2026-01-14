@@ -1,21 +1,21 @@
 [[plugin.deps]]
 use = "pirafrank/what-size"
-rev = "0a4904c"
-hash = "fca231a128488a554823374f8f6d5241"
+rev = "d896656"
+hash = "62251f94eb67648d42cdfcfb8be0fad2"
 
 [[plugin.deps]]
 use = "stelcodes/bunny"
-rev = "059fe22"
-hash = "3983af0cc7d944cce0eb9654831bdbf9"
+rev = "bd8a767"
+hash = "5dded0f0f40142f99dda23aedd76b2bf"
 
 [[plugin.deps]]
 use = "ndtoan96/ouch"
-rev = "10b4627"
-hash = "3ec6a973d506665f1570a9fe08343fd8"
+rev = "0742fff"
+hash = "2bd799b42b8e42b8ef100310be71f8d1"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:full-border"
-rev = "63f9650"
+rev = "d7588f6"
 hash = "3996fc74044bc44144b323686f887e1"
 
 [[plugin.deps]]
@@ -25,13 +25,13 @@ hash = "40c20e6c1085d1f45309b9f148bf4f6e"
 
 [[plugin.deps]]
 use = "Reledia/glow"
-rev = "2da96e3"
-hash = "f9ee1436e3b853508d87f7d49dce56e6"
+rev = "bd3eaa5"
+hash = "92b5c58159a51c567f82b618cee2b78"
 
 [[plugin.deps]]
 use = "boydaihungst/mediainfo"
-rev = "c6d0de7"
-hash = "7b024fc14b462235068400207cbe7bf0"
+rev = "0e2ae47"
+hash = "6656f2869ae2274a0e1860876f15186f"
 
 [flavor]
 deps = []

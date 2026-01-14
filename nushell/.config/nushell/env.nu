@@ -7,4 +7,4 @@ source ./envs/open_ai.nu
 source ./envs/openrouter.nu
 source ./envs/tavily.nu
 source ./envs/xdg.nu
-source ./envs/mise.nu
+# source ./envs/mise.nu
