@@ -4,4 +4,9 @@ source ./envs/path.nu
 source ./envs/editor.nu
 source ./envs/anthropic_claude.nu
 source ./envs/xdg.nu
-source ./envs/mise.nu
+
+
+if ($env.MISE_SET_ENV? | is-empty) {
+	source ./envs/mise.nu
+	$env.MISE_SET_ENV = "1"
+}

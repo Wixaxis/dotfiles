@@ -7,3 +7,8 @@ use ./modules/rbenv.nu
 use ./modules/scripts.nu
 use ./modules/mise.nu
 
+if ($env.MISE_SET_MODULE? | is-empty) {
+	use ./modules/mise.nu
+	$env.MISE_SET_MODULE = "1"
+}
+
