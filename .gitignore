@@ -3,3 +3,4 @@ githubcli/.config/gh/hosts.yml
 nushell/.config/nushell/envs/anthropic_claude.nu
 nushell/.config/nushell/history.txt
 nushell/Library/Application Support/nushell/history.txt
+nushell/.config/nushell/envs
