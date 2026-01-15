@@ -1,5 +1,9 @@
+# Neovim configuration
+# Ported from nushell editor.nu
+
 alias vim=nvim
 export EDITOR=nvim
+export VISUAL=nvim
 export DIFFPROG="nvim -d $1"
 
 # TODO: Not sure if works, fix if does not
