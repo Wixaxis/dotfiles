@@ -1,4 +1,4 @@
-#!/home/wixaxis/.local/share/rbenv/shims/ruby
+#!/usr/bin/env -S mise exec ruby@latest -- ruby
 # frozen_string_literal: true
 
 `hyprctl keyword monitor DSI-1,disable`
