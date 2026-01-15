@@ -1,64 +1,162 @@
 @_default:
   just --choose
 
-# update all system & aur & flatpak packages
+# OS detection - default to Linux, can be overridden with OS=macOS just <command>
+OS := env_var_or_default("OS", "Linux")
+
+# update all system & aur & flatpak packages (Linux only)
 update:
-  arch-update
+  #!/usr/bin/env bash
+  if [[ "$OS" == "Linux" ]] || [[ -z "$OS" ]]; then
+    if command -v rustup &> /dev/null; then
+      rustup default stable
+    fi
+    if command -v arch-update &> /dev/null; then
+      arch-update
+    else
+      echo "arch-update not found. Skipping system update."
+    fi
+  else
+    echo "Update command is Linux-specific. Use system package manager on macOS."
+  fi
 
-# remove all unused dependencies from system
+# remove all unused dependencies from system (Linux only)
 cleanup-all:
-  flatpak uninstall --unused
-  paru -Sccd --quiet --noconfirm
-  paru -Scd --quiet --noconfirm
-  paru -Rsn $(paru -Qdtq) || echo "No packages need to be removed"
+  #!/usr/bin/env bash
+  if [[ "$OS" == "Linux" ]] || [[ -z "$OS" ]]; then
+    if command -v flatpak &> /dev/null; then
+      flatpak uninstall --unused
+    fi
+    if command -v paru &> /dev/null; then
+      paru -Sccd --quiet --noconfirm
+      paru -Scd --quiet --noconfirm
+      paru -Rsn $(paru -Qdtq) || echo "No packages need to be removed"
+    else
+      echo "paru not found. Skipping AUR cleanup."
+    fi
+  else
+    echo "Cleanup command is Linux-specific."
+  fi
 
-# screen brightness min
+# screen brightness min (Linux only)
 @dark-mode:
-  # ddcutil -d 1 setvcp 10 0
-  /home/wixaxis/scripts/brightness.rb min
+  #!/usr/bin/env bash
+  if [[ "$OS" == "Linux" ]] || [[ -z "$OS" ]]; then
+    if [ -f /home/wixaxis/scripts/brightness.rb ]; then
+      /home/wixaxis/scripts/brightness.rb min
+    else
+      echo "brightness.rb not found"
+    fi
+  else
+    echo "Brightness control is Linux-specific. Use macOS brightness controls."
+  fi
 
-# screen brightness max
+# screen brightness max (Linux only)
 @light-mode:
-  # ddcutil -d 1 setvcp 10 100
-  /home/wixaxis/scripts/brightness.rb max
+  #!/usr/bin/env bash
+  if [[ "$OS" == "Linux" ]] || [[ -z "$OS" ]]; then
+    if [ -f /home/wixaxis/scripts/brightness.rb ]; then
+      /home/wixaxis/scripts/brightness.rb max
+    else
+      echo "brightness.rb not found"
+    fi
+  else
+    echo "Brightness control is Linux-specific. Use macOS brightness controls."
+  fi
 
-# reload all configs (waybar)
+# reload all configs (waybar) - Linux/Wayland only
 @reload-waybar:
-  echo $(killall waybar)
-  echo $(waybar > /dev/null & disown > /dev/null &)
+  #!/usr/bin/env bash
+  if [[ "$OS" == "Linux" ]] || [[ -z "$OS" ]]; then
+    if command -v waybar &> /dev/null; then
+      killall waybar 2>/dev/null || true
+      waybar > /dev/null & disown > /dev/null &
+    else
+      echo "waybar not found"
+    fi
+  else
+    echo "Waybar is Linux/Wayland-specific"
+  fi
 
 @change-theme:
-  /home/wixaxis/scripts/theme_switcher.rb init
+  #!/usr/bin/env bash
+  if [ -f /home/wixaxis/scripts/theme_switcher.rb ]; then
+    /home/wixaxis/scripts/theme_switcher.rb init
+  else
+    echo "theme_switcher.rb not found"
+  fi
 
-# reload and run swaync config
+# reload and run swaync config - Linux/Wayland only
 @reload-swaync:
-  swaync-client -R
-  swaync-client -rs
-  swaync-client -t
+  #!/usr/bin/env bash
+  if [[ "$OS" == "Linux" ]] || [[ -z "$OS" ]]; then
+    if command -v swaync-client &> /dev/null; then
+      swaync-client -R
+      swaync-client -rs
+      swaync-client -t
+    else
+      echo "swaync-client not found"
+    fi
+  else
+    echo "SwayNC is Linux/Wayland-specific"
+  fi
 
-# Test notifications
+# Test notifications - Linux only
 @test-notifications:
-  notify-send --urgency=low --icon=dialog-information "Low urgency notification" "This is a low urgency notification without actions"
-  notify-send --urgency=normal --icon=dialog-information "Normal urgency notification" "This is a normal urgency notification without actions"
-  notify-send --urgency=critical --icon=dialog-error "Critical urgency notification" "This is a critical urgency notification without actions"
-  notify-send --urgency=low --icon=dialog-information --action="Action 1" "Low urgency notification with Action 1" "This is a low urgency notification with Action 1"
-  notify-send --urgency=normal --icon=dialog-information --action="Action 2" "Normal urgency notification with Action 2" "This is a normal urgency notification with Action 2"
-  notify-send --urgency=critical --icon=dialog-error --action="Action 3" "Critical urgency notification with Action 3" "This is a critical urgency notification with Action 3"
-  notify-send --urgency=low "Another Low urgency notification" "This is another low urgency notification without icon"
-  notify-send --urgency=normal "Another Normal urgency notification" "This is another normal urgency notification without icon"
-  notify-send --urgency=critical "Another Critical urgency notification" "This is another critical urgency notification without icon"
+  #!/usr/bin/env bash
+  if [[ "$OS" == "Linux" ]] || [[ -z "$OS" ]]; then
+    if command -v notify-send &> /dev/null; then
+      notify-send --urgency=low --icon=dialog-information "Low urgency notification" "This is a low urgency notification without actions"
+      notify-send --urgency=normal --icon=dialog-information "Normal urgency notification" "This is a normal urgency notification without actions"
+      notify-send --urgency=critical --icon=dialog-error "Critical urgency notification" "This is a critical urgency notification without actions"
+      notify-send --urgency=low --icon=dialog-information --action="Action 1" "Low urgency notification with Action 1" "This is a low urgency notification with Action 1"
+      notify-send --urgency=normal --icon=dialog-information --action="Action 2" "Normal urgency notification with Action 2" "This is a normal urgency notification with Action 2"
+      notify-send --urgency=critical --icon=dialog-error --action="Action 3" "Critical urgency notification with Action 3" "This is a critical urgency notification with Action 3"
+      notify-send --urgency=low "Another Low urgency notification" "This is another low urgency notification without icon"
+      notify-send --urgency=normal "Another Normal urgency notification" "This is another normal urgency notification without icon"
+      notify-send --urgency=critical "Another Critical urgency notification" "This is another critical urgency notification without icon"
+    else
+      echo "notify-send not found"
+    fi
+  else
+    echo "notify-send is Linux-specific. Use osascript on macOS."
+  fi
 
-# list all system fonts
+# list all system fonts - Linux only
 list-fonts:
-  fc-list -b | grep fullname:
+  #!/usr/bin/env bash
+  if [[ "$OS" == "Linux" ]] || [[ -z "$OS" ]]; then
+    if command -v fc-list &> /dev/null; then
+      fc-list -b | grep fullname:
+    else
+      echo "fc-list not found"
+    fi
+  else
+    echo "fc-list is Linux-specific. Use system_profiler SPFontsDataType on macOS."
+  fi
 
-# randomize wallpapers
+# randomize wallpapers - Linux/Wayland only
 @randomize-wallpaper:
-  /home/wixaxis/scripts/randomize_wallpaper.rb
+  #!/usr/bin/env bash
+  if [ -f /home/wixaxis/scripts/randomize_wallpaper.rb ]; then
+    /home/wixaxis/scripts/randomize_wallpaper.rb
+  else
+    echo "randomize_wallpaper.rb not found"
+  fi
 
-# ssh into home server
+# ssh into home server (optional - customize for your setup)
 ssh-server-local:
-  ssh wixaxis@hp-mini-ubuntu-server
+  #!/usr/bin/env bash
+  if command -v ssh &> /dev/null; then
+    ssh wixaxis@hp-mini-ubuntu-server
+  else
+    echo "ssh not found"
+  fi
 
 ssh-server-cloud:
-  ssh -o "ProxyCommand=cloudflared access ssh --hostname %h" wixaxis@ssh.wixaxis.dev
+  #!/usr/bin/env bash
+  if command -v ssh &> /dev/null && command -v cloudflared &> /dev/null; then
+    ssh -o "ProxyCommand=cloudflared access ssh --hostname %h" wixaxis@ssh.wixaxis.dev
+  else
+    echo "ssh or cloudflared not found"
+  fi
