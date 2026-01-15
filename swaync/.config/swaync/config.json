@@ -33,6 +33,16 @@
       "state": "muted",
       "urgency": "Low",
       "app-name": "Spotify"
+    },
+    "volumectl-notifications": {
+      "state": "muted",
+      "urgency": "Low",
+      "summary": ".*"
+    },
+    "Volume": {
+      "state": "muted",
+      "urgency": "Low",
+      "summary": ".*"
     }
   },
   "widgets": [
