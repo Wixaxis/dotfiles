@@ -2,4 +2,10 @@ githubcli/.config/gh/hosts.yml
 bash/.config/bash/modules/0-system/1-secret_keys.bash
 papes/Pictures/screenshots
 nushell/.config/nushell/history.txt
+nushell/Library/Application Support/nushell/history.txt
 scripts/scripts/debug.log
+
+# macOS-specific
+.DS_Store
+**/.DS_Store
+*.DS_Store
