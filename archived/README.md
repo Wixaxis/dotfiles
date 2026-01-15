@@ -14,6 +14,11 @@ This directory contains configuration packages that are not currently in use but
 - **Reason archived**: Using Ghostty as the primary terminal
 - **Date archived**: 2025-01-15
 
+### `githubcli/`
+- **Purpose**: GitHub CLI configuration
+- **Reason**: Contains sensitive data (hosts.yml) and should not be in dotfiles
+- **Status**: Archived - use local config only
+
 ### `kvantum/`
 - **Purpose**: Kvantum Qt theme engine configuration
 - **Reason archived**: Not currently installed or used

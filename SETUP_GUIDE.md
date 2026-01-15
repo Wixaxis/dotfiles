@@ -35,9 +35,25 @@ git branch
 # Should show: * main
 ```
 
-### 3. Run Platform-Aware Installation
+### 3. Run Comprehensive Setup Script (Recommended)
 
-The `stow-platform.sh` script automatically detects your platform and stows only relevant packages:
+The `setup.sh` script is an interactive, idempotent setup script that will:
+- Check and install prerequisites (git, stow, mise, paru/brew)
+- Verify dotfiles are properly stowed
+- Check and install required packages
+- Verify mise and Ruby setup
+- Check shell configuration
+- Guide you through any missing setup
+
+```bash
+./setup.sh
+```
+
+This script is **idempotent** - you can run it multiple times safely. It will show what's already set up and guide you through what needs to be done.
+
+### 4. Alternative: Run Platform-Aware Installation
+
+If you prefer a simpler, non-interactive approach, use `stow-platform.sh`:
 
 ```bash
 ./stow-platform.sh

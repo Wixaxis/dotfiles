@@ -1,0 +1,192 @@
+# Cursor Rules for Dotfiles Repository
+
+## Core Principles
+
+### 1. Conciseness and Brevity
+- Keep code/configs minimal and clean
+- Remove redundant comments and unused code
+- Prefer clear, self-documenting code over verbose explanations
+- Eliminate duplicates and consolidate related functionality
+
+### 2. Modularity and Organization
+- Keep related things together - changes should be in one place
+- Use modular structure (like bash modules, separate config files)
+- Group related settings logically with clear section headers
+- Ensure toggling/configuring requires changes in minimal locations
+
+### 3. Structure and Beauty
+- Code/configs should be well-organized and readable
+- Use consistent formatting, spacing, and indentation
+- Add clear section separators and logical grouping
+- Make it work first, then make it pretty, then optimize (if needed)
+
+### 4. Idempotency
+- Scripts should be safe to run multiple times
+- Check before modifying, verify after changes
+- Use conditional logic to avoid duplicate operations
+- Show status clearly (what's done, what needs doing)
+
+## Workflow Preferences
+
+### Propose Before Applying
+- **Always propose changes first** for significant modifications
+- Explain what will change and why
+- Wait for approval before applying changes
+- For small, obvious fixes, you can apply directly but explain what you did
+
+### Platform Awareness
+- Support both Arch Linux (pacman/paru) and macOS (brew)
+- Use platform detection (`uname -s`, environment variables)
+- Make scripts/platform configs work on both systems
+- Document platform-specific requirements clearly
+
+### Documentation for AI
+- Create reference markdown files for complex topics (like window rules, theming)
+- Include examples, common patterns, and troubleshooting
+- Make it easy for future AI assistants to understand and modify
+- Update README when adding significant features
+
+## Code Style
+
+### Bash/Shell Scripts
+- Use `set -euo pipefail` for safety
+- Check for command existence before using
+- Provide clear error messages
+- Use colors for output (info, success, warning, error)
+- Make scripts interactive when appropriate (ask before installing)
+
+### Configuration Files
+- Group related settings together
+- Use clear section headers with visual separators
+- Remove commented-out alternatives (or move to end)
+- Keep active config clean and organized
+- Use consistent naming conventions
+
+### File Organization
+- Mirror target filesystem structure in dotfiles
+- One package = one top-level directory
+- Use `.config/` subdirectories appropriately
+- Archive unused configs properly (move to `archived/` with explanation)
+
+## Tool Preferences
+
+### Version Management
+- Use **mise** (not rbenv) for tool version management
+- Use `mise exec <tool>@latest -- <command>` in shebangs
+- Ensure mise is activated in shell configs
+
+### Package Management
+- Arch: Assume `paru` is available (scream if not)
+- macOS: Use `brew`
+- Check for packages before installing
+- Provide clear installation instructions
+
+## Sensitive Data
+
+### Never Track
+- Authentication tokens, API keys, passwords
+- Application-specific sensitive configs (like `gh hosts.yml`)
+- User-specific data that shouldn't be shared
+- Large cache/data directories
+
+### Gitignore
+- Keep `.gitignore` up to date
+- Add patterns for sensitive files
+- Document why files are ignored
+
+## Testing and Verification
+
+### Before Committing
+- Test that changes work (run commands, check syntax)
+- Verify symlinks are correct after stowing
+- Check for syntax errors in configs
+- Ensure platform detection works correctly
+
+### After Changes
+- Show verification output
+- Explain what was changed and why
+- Note any manual steps required
+- Mention if restart/reload is needed
+
+## Communication Style
+
+### Be Direct and Clear
+- Explain what you're doing and why
+- Show what changed (diffs when helpful)
+- Provide actionable next steps
+- Use checkmarks (✓) for completed items
+- Use warnings (⚠) for things to note
+
+### When Uncertain
+- Ask for clarification rather than guessing
+- Propose multiple options if appropriate
+- Explain trade-offs clearly
+- Respect user's decisions
+
+## Specific Patterns
+
+### Dotfiles Structure
+- Use GNU Stow for symlink management
+- Keep packages in repository root
+- Mirror target paths in package structure
+- Use `stow-platform.sh` for automatic platform detection
+
+### Script Organization
+- Ruby scripts in `scripts/scripts/`
+- Use common base libraries in `scripts/scripts/ruby/`
+- Make scripts executable and use proper shebangs
+- Keep helper scripts organized by function
+
+### Configuration Updates
+- Update related files together (e.g., README + actual config)
+- Keep documentation in sync with code
+- Update `stow-platform.sh` when adding packages
+- Update `check-installed-packages.sh` when relevant
+
+## Examples of Good Practices
+
+### Good: Proposing Changes
+"Here's what I propose:
+1. Remove X because Y
+2. Add Z to improve W
+3. Update documentation
+
+Should I proceed?"
+
+### Good: Clear Explanations
+"Updated the config to use mise instead of rbenv. Changed:
+- All Ruby script shebangs
+- Bash PATH configuration
+- Documentation
+
+The scripts will now use mise for Ruby version management."
+
+### Good: Verification
+"✓ Created qt6ct package
+✓ Stowed successfully
+✓ Updated stow-platform.sh
+✓ Updated README.md
+
+Verification: `~/.config/qt6ct/` is now symlinked to dotfiles."
+
+## Anti-Patterns to Avoid
+
+- Don't apply major changes without proposing first
+- Don't create redundant files or duplicate functionality
+- Don't leave commented-out code without reason
+- Don't assume platform-specific tools are available
+- Don't track sensitive data or large cache directories
+- Don't make changes without explaining what and why
+- Don't skip verification steps
+
+## Remember
+
+The user values:
+- **Clean, organized, beautiful configs**
+- **Things that work reliably**
+- **Clear communication and documentation**
+- **Practical solutions over theoretical perfection**
+- **Modular, maintainable structure**
+- **Proactive but careful changes**
+
+When in doubt: propose, explain, verify, and keep it clean.

@@ -25,7 +25,19 @@ This dotfiles repository uses GNU Stow to manage symbolic links, allowing each c
    cd ~/dotfiles
    ```
 
-2. **Recommended**: Use the platform-aware installation script:
+2. **Recommended**: Use the comprehensive setup script:
+   ```bash
+   ./setup.sh
+   ```
+   This interactive script will:
+   - Check and install prerequisites
+   - Verify dotfiles are stowed
+   - Check and install required packages
+   - Verify mise/Ruby setup
+   - Check shell configuration
+   - Guide you through any missing setup
+   
+   **Alternative**: Use the platform-aware installation script:
    ```bash
    ./stow-platform.sh
    ```
@@ -55,7 +67,7 @@ The `stow-platform.sh` script automatically:
 - Stows platform-specific packages only when appropriate
 
 **Package Categories:**
-- **Common packages**: Work on all platforms (ghostty, neovide, nushell, rofi, starship, tmux, yazi, etc.)
+- **Common packages**: Work on all platforms (ghostty, mise, neovide, nushell, qt6ct, rofi, starship, tmux, yazi, etc.)
 - **Linux packages**: Arch-specific (arch-update, btop, etc.)
 - **Wayland packages**: Hyprland, Waybar, SwayNC (require Wayland session)
 - **macOS packages**: zsh configuration
@@ -121,10 +133,18 @@ Some configuration packages have been moved to the `archived/` directory. These 
 - **Files**: `~/.config/ghostty/config`
 - **Description**: Terminal emulator settings
 
-#### `githubcli/`
-- **Purpose**: GitHub CLI configuration
-- **Files**: `~/.config/gh/config.yml`
-- **Note**: `hosts.yml` is gitignored (contains sensitive data)
+#### `mise/`
+- **Purpose**: mise (formerly rtx) version manager configuration
+- **Files**: `~/.config/mise/config.toml`
+- **Description**: Configuration for mise tool version management
+
+#### `qt6ct/`
+- **Purpose**: Qt6 Configuration Tool settings
+- **Files**: `~/.config/qt6ct/` containing:
+  - `qt6ct.conf` - Main configuration
+  - `colors/` - Color scheme files
+  - `palettes/` - Color palette files
+- **Description**: Qt application theming and configuration
 
 #### `hyprland/`
 - **Purpose**: Hyprland window manager configuration
@@ -358,7 +378,6 @@ Theme configurations are stored in `scripts/scripts/ruby/theme_configs/` as JSON
 
 The following files/directories are gitignored (see `.gitignore`):
 
-- `githubcli/.config/gh/hosts.yml` - GitHub CLI hosts (sensitive)
 - `bash/.config/bash/modules/0-system/1-secret_keys.bash` - Secret keys
 - `papes/Pictures/screenshots` - Screenshots directory
 - `nushell/.config/nushell/history.txt` - Shell history

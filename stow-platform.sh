@@ -30,14 +30,15 @@ echo ""
 
 # Common packages (work on all platforms)
 COMMON_PACKAGES=(
-  "githubcli"
   "kitty"
   "lazygit"
+  "mise"
   "neofetch"
   "neovide"
   "nushell"
   "papes"
   "qimgv"
+  "qt6ct"
   "rofi"
   "scripts"
   "starship"
