@@ -11,8 +11,10 @@ window#waybar {
   background-color: @panel-bg;
   transition-property: background-color;
   transition-duration: 0.5s;
-  margin-left: 6px;
-  margin-right: 6px;
+  margin-left: 5px;
+  margin-right: 5px;
+  margin-top: 0px;
+  margin-bottom: 0px;
 }
 
 window#waybar.hidden {
