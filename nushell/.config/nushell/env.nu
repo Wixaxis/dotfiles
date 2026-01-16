@@ -2,6 +2,10 @@ $env.NU_CUSTOM_CONFIG_PATH = $"($env.HOME)/.config/nushell"
 $env.TERMINAL = 'ghostty'
 source ./envs/path.nu
 source ./envs/editor.nu
+
+# Optional AI service configs
+# Note: Nushell requires constant paths for 'source' at parse time, so these
+# files must exist (even if empty). Placeholder files are created for optional configs.
 source ./envs/anthropic_claude.nu
 
 # XDG Base Directory setup (Linux only)
@@ -10,7 +14,7 @@ if ($nu.os-info.name == "linux") {
     source ./envs/xdg.nu
 }
 
-# AI-related env files (optional - comment out if not needed)
+# AI-related env files (optional - add your API keys/configs to these files)
 # These provide API keys and configurations for various AI services
 source ./envs/gemini.nu
 source ./envs/open_ai.nu

@@ -1,0 +1,6 @@
+# Ignore content of optional AI service config files (track empty files only)
+nushell/.config/nushell/envs/gemini.nu filter=empty-content
+nushell/.config/nushell/envs/open_ai.nu filter=empty-content
+nushell/.config/nushell/envs/openrouter.nu filter=empty-content
+nushell/.config/nushell/envs/tavily.nu filter=empty-content
+nushell/.config/nushell/envs/anthropic_claude.nu filter=empty-content
