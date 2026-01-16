@@ -33,7 +33,7 @@ System-level configurations that should load early:
 - `bash.bash` - Bash-specific settings
 - `fzf.bash` - Fuzzy finder configuration
 - `path.bash` - PATH management
-- `starship.bash` - Starship prompt setup
+- `z-starship.bash` - Starship prompt setup (loads after oh-my-bash to avoid conflicts)
 - `terminal.bash` - Terminal configuration
 - `theming.bash` - Theme-related settings
 

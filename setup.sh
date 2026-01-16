@@ -156,19 +156,44 @@ install_macos() {
 # EXA/EZA CONFLICT CHECK
 # ============================================================================
 check_exa_eza_conflict() {
-    if has_command exa; then
+    if ! has_command exa; then
+        return 0  # No exa found, nothing to check
+    fi
+    
+    # Check if exa is a symlink to eza (compatibility symlink from eza package)
+    local exa_path
+    exa_path=$(command -v exa)
+    if [[ -L "$exa_path" ]]; then
+        local link_target
+        link_target=$(readlink -f "$exa_path" 2>/dev/null || readlink "$exa_path")
+        if [[ "$link_target" == *"/eza" ]] || [[ "$(basename "$link_target")" == "eza" ]]; then
+            # exa is a symlink to eza - this is fine, skip conflict check
+            return 0
+        fi
+    fi
+    
+    # exa exists and is not a symlink to eza - check if it's installed via package manager
+    local exa_installed=false
+    if [[ "$PLATFORM" == "arch" ]]; then
+        if is_installed_arch exa; then
+            exa_installed=true
+        fi
+    elif [[ "$PLATFORM" == "macos" ]]; then
+        if is_installed_macos exa; then
+            exa_installed=true
+        fi
+    fi
+    
+    # Only warn if exa is actually installed via package manager
+    if [[ "$exa_installed" == "true" ]]; then
         warning "exa is installed, but we use eza instead"
         if gum confirm "Remove exa and ensure eza is installed?"; then
             if [[ "$PLATFORM" == "arch" ]]; then
-                if is_installed_arch exa; then
-                    info "Removing exa..."
-                    sudo pacman -Rns --noconfirm exa 2>/dev/null || paru -Rns --noconfirm exa 2>/dev/null || true
-                fi
+                info "Removing exa..."
+                sudo pacman -Rns --noconfirm exa 2>/dev/null || paru -Rns --noconfirm exa 2>/dev/null || true
             elif [[ "$PLATFORM" == "macos" ]]; then
-                if is_installed_macos exa; then
-                    info "Removing exa..."
-                    brew uninstall exa 2>/dev/null || true
-                fi
+                info "Removing exa..."
+                brew uninstall exa 2>/dev/null || true
             fi
             success "exa removed"
             
@@ -265,36 +290,37 @@ check_stowed() {
     local home_dir="$HOME"
     
     # Platform-aware package list
+    # Common packages (installed on all platforms) should be checked on all platforms
     local packages=()
+    
+    # Common packages (available on all platforms)
+    local common_stowed=(
+        "ghostty:.config/ghostty"
+        "tmux:.config/tmux"
+        "yazi:.config/yazi"
+        "starship:.config/starship.toml"
+        "zsh:.zshrc"
+        "mise:.config/mise/config.toml"
+        "lazygit:.config/lazygit/config.yml"
+    )
     
     if [[ "$PLATFORM" == "arch" ]]; then
         packages=(
+            "${common_stowed[@]}"
             "bash:.bashrc"
-            "ghostty:.config/ghostty"
             "hyprland:.config/hypr"
             "waybar:.config/waybar"
             "swaync:.config/swaync"
-            "tmux:.config/tmux"
-            "yazi:.config/yazi"
-            "starship:.config/starship.toml"
         )
     elif [[ "$PLATFORM" == "macos" ]]; then
         packages=(
-            "ghostty:.config/ghostty"
-            "tmux:.config/tmux"
-            "yazi:.config/yazi"
-            "starship:.config/starship.toml"
-            "zsh:.zshrc"
+            "${common_stowed[@]}"
             "nushell:.config/nushell"
-            "mise:.config/mise/config.toml"
         )
     else
         # Common packages for unknown platform
         packages=(
-            "ghostty:.config/ghostty"
-            "tmux:.config/tmux"
-            "yazi:.config/yazi"
-            "starship:.config/starship.toml"
+            "${common_stowed[@]}"
         )
     fi
     
@@ -335,14 +361,8 @@ check_stowed() {
     
     if [[ ${#not_stowed[@]} -gt 0 ]]; then
         warning "Some packages are not stowed: ${not_stowed[*]}"
-        if gum confirm "Stow missing packages?"; then
-            cd "$dotfiles_dir"
-            for package in "${not_stowed[@]}"; do
-                info "Stowing $package..."
-                stow -t ~ "$package" || warning "Failed to stow $package"
-            done
-            success "Packages stowed"
-        fi
+        info "Please stow them manually with: stow -t ~ <package-name>"
+        info "For packages with existing files, use: stow -t ~ --adopt <package-name>"
     fi
 }
 
@@ -360,6 +380,7 @@ check_packages() {
         "tmux"
         "ghostty"
         "yazi"
+        "zsh"        # Shell (has advanced configs in dotfiles)
         "eza"        # Enhanced ls replacement (used in bash/zsh)
         "nvim"       # Editor (aliased as vim in all shells)
         "gum"        # Beautiful CLI output (used by this script)
@@ -391,7 +412,7 @@ check_packages() {
     
     # macOS-specific packages
     local macos_packages=(
-        "zsh"
+        # (none currently - zsh moved to common packages)
     )
     
     local missing=()
@@ -405,6 +426,14 @@ check_packages() {
             else
                 missing+=("ripgrep")
                 warning "ripgrep (rg) is not installed"
+            fi
+        # Handle trash-cli - command is 'trash' but package is 'trash-cli'
+        elif [[ "$pkg" == "trash-cli" ]]; then
+            if has_command trash; then
+                success "trash-cli (trash) is installed"
+            else
+                missing+=("trash-cli")
+                warning "trash-cli (trash) is not installed"
             fi
         else
             if has_command "$pkg"; then

@@ -204,3 +204,7 @@ unknown_indicator = '???'
 format = '\([$indicator]($style)\) '
 style = "bold italic red"
 disabled = false
+# Custom indicators for full shell names
+bash_indicator = "bash"
+zsh_indicator = "zsh"
+fish_indicator = "fish"
