@@ -3,7 +3,12 @@ $env.TERMINAL = 'ghostty'
 source ./envs/path.nu
 source ./envs/editor.nu
 source ./envs/anthropic_claude.nu
-source ./envs/xdg.nu
+
+# XDG Base Directory setup (Linux only)
+# macOS uses ~/Library paths, so XDG is only configured on Linux
+if ($nu.os-info.name == "linux") {
+    source ./envs/xdg.nu
+}
 
 # AI-related env files (optional - comment out if not needed)
 # These provide API keys and configurations for various AI services

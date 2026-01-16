@@ -3,7 +3,6 @@ source ./sources/prompt.nu
 source ./sources/aliases.nu
 source ./sources/completions.nu
 
-use ./modules/scripts.nu
 use ./modules/mise.nu
 
 if ($env.MISE_SET_MODULE? | is-empty) {

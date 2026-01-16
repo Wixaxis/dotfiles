@@ -113,10 +113,18 @@ Some configuration packages have been moved to the `archived/` directory. These 
 - **Purpose**: Zsh shell configuration with Oh My Zsh and Powerlevel10k
 - **Platform**: macOS (can work on Linux if zsh is your shell)
 - **Files**:
-  - `~/.zshrc` - Main zsh configuration
+  - `~/.zshrc` - Main entry point (sources modular configuration)
+  - `~/.config/zsh/zshrc` - Modular configuration loader
+  - `~/.config/zsh/modules/` - Modular configuration files organized by category:
+    - `0-system/` - System-level configurations (Oh My Zsh, p10k, FZF, PATH, mise, aliases, functions)
+    - `1-lang/` - Language-specific configurations (ready for future modules)
+    - `2-editor/` - Editor configurations (ready for future modules)
   - `~/.p10k.zsh` - Powerlevel10k theme configuration
-  - `~/.fzf.zsh` - FZF integration (platform-aware paths)
-- **Note**: Platform-aware FZF paths (Homebrew on macOS, standard paths on Linux)
+  - `~/.fzf.zsh` - Legacy FZF config (functionality also in modules)
+- **Note**: 
+  - Uses modular structure matching the bash configuration
+  - Platform-aware FZF paths (Homebrew on macOS, standard paths on Linux)
+  - See `zsh/.config/zsh/README.md` for detailed module documentation
 
 #### `btop/`
 - **Purpose**: System monitor configuration
@@ -434,9 +442,12 @@ Each package directory mirrors the target filesystem structure. For example:
 ### Modular Configuration
 
 Several packages use modular configuration:
-- **Bash**: Modular files in `~/.config/bash/modules/` organized by category
+- **Bash**: Modular files in `~/.config/bash/modules/` organized by category (0-system, 1-lang, 2-editor)
+- **Zsh**: Modular files in `~/.config/zsh/modules/` organized by category (0-system, 1-lang, 2-editor)
 - **Tmux**: Modular files in `~/.config/tmux/conf.d/`
 - **Nushell**: Modular files in `~/.config/nushell/envs/`, `modules/`, and `sources/`
+
+**For detailed information about the modular configuration system, see [CONFIG_STRUCTURE.md](CONFIG_STRUCTURE.md)**
 
 ### Script Organization
 
