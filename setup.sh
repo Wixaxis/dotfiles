@@ -609,6 +609,35 @@ check_wayland() {
 }
 
 # ============================================================================
+# CHECK GIT FILTER CONFIGURATION
+# ============================================================================
+check_git_filter() {
+    section "Checking Git Filter Configuration"
+    
+    local dotfiles_dir
+    dotfiles_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+    
+    # Check if we're in the dotfiles repository
+    if [[ ! -d "$dotfiles_dir/.git" ]]; then
+        info "Not in a git repository, skipping git filter setup"
+        return 0
+    fi
+    
+    # Check if git filter is configured
+    if git config --get filter.empty-content.clean &> /dev/null; then
+        success "Git empty-content filter is configured"
+    else
+        warning "Git empty-content filter is not configured"
+        if gum confirm "Configure git filter for optional AI config files?"; then
+            git config filter.empty-content.clean 'cat /dev/null'
+            git config filter.empty-content.smudge 'cat'
+            success "Git filter configured"
+            info "This ensures optional AI config files are tracked as empty in git"
+        fi
+    fi
+}
+
+# ============================================================================
 # MAIN FUNCTION
 # ============================================================================
 main() {
@@ -632,6 +661,7 @@ main() {
     check_packages
     check_mise
     check_shell
+    check_git_filter
     check_wayland
     
     section "Setup Complete"
