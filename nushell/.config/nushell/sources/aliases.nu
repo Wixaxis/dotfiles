@@ -65,6 +65,9 @@ alias mux = tmuxinator
 # LazyGit shortcut
 alias lg = lazygit
 
+# Cursor Agent shortcut
+alias ca = cursor-agent
+
 # File finding functions (using fzf)
 if (which fzf | is-not-empty) {
   # Find files in current directory
