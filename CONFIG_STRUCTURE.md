@@ -72,8 +72,8 @@ Modules are organized into numbered directories to ensure proper load order:
 For zsh, modules load in this order:
 ```
 0-system/0-oh-my-zsh.zsh    # First: Shell framework
-0-system/1-p10k.zsh          # Second: Theme (depends on Oh My Zsh)
-0-system/2-fzf.zsh           # Third: Tools
+0-system/1-starship.zsh     # Second: Prompt (cross-shell, consistent with Nushell)
+0-system/2-fzf.zsh          # Third: Tools
 0-system/3-path.zsh          # Fourth: PATH setup
 0-system/4-mise.zsh          # Fifth: Version manager
 0-system/5-aliases.zsh        # Sixth: Aliases
@@ -94,7 +94,7 @@ For zsh, modules load in this order:
 
 Use descriptive names with optional numeric prefixes for ordering:
 - `0-oh-my-zsh.zsh` (loads first)
-- `1-p10k.zsh` (loads second)
+- `1-starship.zsh` (loads second)
 - `aliases.zsh` (loads alphabetically)
 
 ### Step 3: Write the Module
@@ -158,7 +158,7 @@ source ~/.zshrc
 This will output:
 ```
 Sourcing /Users/wixaxis/.config/zsh/modules/0-system/0-oh-my-zsh.zsh
-Sourcing /Users/wixaxis/.config/zsh/modules/0-system/1-p10k.zsh
+Sourcing /Users/wixaxis/.config/zsh/modules/0-system/1-starship.zsh
 ...
 ```
 

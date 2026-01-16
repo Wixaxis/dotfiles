@@ -96,7 +96,7 @@ Based on symlink analysis, these packages are currently stowed:
 - ✅ yazi
 - ✅ tmux
 - ✅ ghostty
-- ✅ zsh (`.zshrc`, `.p10k.zsh`, `.fzf.zsh`)
+- ✅ zsh (`.zshrc`, `.fzf.zsh`)
 - ✅ papes (wallpapers)
 
 ## Safety Assessment for Switching to main

@@ -27,7 +27,7 @@ This directory contains the modular zsh configuration system.
 System-level configurations that should load early:
 
 - `0-oh-my-zsh.zsh` - Oh My Zsh framework initialization
-- `1-p10k.zsh` - Powerlevel10k theme (depends on Oh My Zsh)
+- `1-starship.zsh` - Starship prompt (cross-shell, consistent with Nushell)
 - `2-fzf.zsh` - Fuzzy finder configuration (platform-aware)
 - `3-path.zsh` - PATH management
 - `4-mise.zsh` - mise version manager activation
@@ -52,7 +52,7 @@ Editor and development tool configs (currently empty, ready for future modules):
 Modules in `0-system/` load in this order:
 
 1. `0-oh-my-zsh.zsh` - Must load first (shell framework)
-2. `1-p10k.zsh` - Loads after Oh My Zsh (theme depends on it)
+2. `1-starship.zsh` - Loads after Oh My Zsh (prompt initialization)
 3. `2-fzf.zsh` - Tools can load after framework
 4. `3-path.zsh` - PATH setup
 5. `4-mise.zsh` - Version manager (may modify PATH)
@@ -105,7 +105,6 @@ fi
 ## Related Files
 
 - `.zshrc` - Entry point (sources this directory)
-- `.p10k.zsh` - Powerlevel10k theme config (sourced by `1-p10k.zsh`)
 - `.fzf.zsh` - Legacy FZF config (functionality moved to `2-fzf.zsh`)
 
 ## See Also
