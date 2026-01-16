@@ -14,10 +14,12 @@ ZSH_CONFIG_DIR="$HOME/.config/zsh"
 
 _is_valid_zsh_module() { [[ -f "$1" && "$1" == *.zsh && -r "$1" ]] }
 
-_debug_echo() { [ "$DEBUG" == "true" ] && echo "$1"; }
+_debug_echo() { [[ "$DEBUG" == "true" ]] && echo "$1"; }
 
 _source_all_recursively() {                     # Source all zsh modules in directory recursively
     if [ -d "$1" ]; then                          # Check if the passed dir is a valid directory
+        # Use NULL_GLOB to handle empty directories gracefully
+        setopt NULL_GLOB 2>/dev/null || true
         for entry in "$1"/*; do                     # For each entry in the directory
             if _is_valid_zsh_module "$entry"; then   # IF entry is a valid zsh module file
                 _debug_echo "Sourcing $entry"           # DEBUG: output the sourced file
@@ -27,6 +29,7 @@ _source_all_recursively() {                     # Source all zsh modules in dire
               _source_all_recursively "$entry"          # Recurse into subdirectory
             fi
         done
+        unsetopt NULL_GLOB 2>/dev/null || true
     fi
 }
 
