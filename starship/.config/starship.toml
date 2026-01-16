@@ -1,6 +1,8 @@
 add_newline = false
 
-format = """$directory\n$right_prompt"""
+format = """
+($shell)\
+$directory\n$right_prompt"""
 
 right_format = """$cmd_duration$git_branch$git_status$aws$bun$c$cmake$cobol$conda$crystal$daml$dart$deno$docker_context$dotnet$elixir$elm$erlang$fennel$fossil_branch$gcloud$golang$gradle$guix_shell$haskell$haxe$helm$hg_branch$java$julia$kotlin$kubernetes$lua$memory_usage$meson$nim$nix_shell$ocaml$opa$openstack$os$package$perl$php$pijul_channel$pulumi$purescript$python$raku$red$ruby$rust$scala$spack$sudo$swift$terraform$time$username$vagrant$vlang$zig$solidity"""
 
@@ -195,3 +197,10 @@ format = '\[[$symbol($version)]($style)\]'
 
 [solidity]
 format = '\[[$symbol($version)]($style)\]'
+
+# Shell indicator using env_var module
+[shell]
+unknown_indicator = '???'
+format = '\([$indicator]($style)\) '
+style = "bold italic red"
+disabled = false

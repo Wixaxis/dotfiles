@@ -33,7 +33,7 @@
 
 **Retained (as requested):**
 - **Carapace completions** - Nushell-specific completer, kept in nushell config
-- **Starship prompt** - Nushell uses Starship, zsh uses p10k (both work well)
+- **Starship prompt** - Both Nushell and Zsh use Starship (consistent across shells)
 
 **Reasoning:**
 - Carapace is designed for nushell's completion system

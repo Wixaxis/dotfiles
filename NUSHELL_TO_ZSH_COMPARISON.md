@@ -10,7 +10,7 @@ This document compares the nushell configuration with the current zsh setup to i
 | **Environment Variables** | 3 vars | 0 vars | ⚠️ Missing 3 |
 | **Functions** | 3 functions | 2 functions | ⚠️ Missing 1 |
 | **XDG Setup** | Full XDG | None | ⚠️ Missing |
-| **Prompt** | Starship | p10k | ✅ Different (both work) |
+| **Prompt** | Starship | Starship | ✅ Same (consistent across shells) |
 | **Completions** | Carapace | Oh My Zsh | ✅ Different (both work) |
 
 ## Detailed Comparison
@@ -118,10 +118,10 @@ Nushell has comprehensive XDG Base Directory setup:
 - Platform-aware
 
 #### Zsh
-- Uses **Powerlevel10k** (p10k)
-- Different system but equally functional
+- Uses **Starship** (same as Nushell)
+- Consistent prompt experience across shells
 
-**Recommendation**: ✅ **Keep as-is** - Both are good, p10k is already configured
+**Recommendation**: ✅ **Keep as-is** - Both shells use Starship for consistency
 
 ### 6. Completions
 

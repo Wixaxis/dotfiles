@@ -110,16 +110,15 @@ Some configuration packages have been moved to the `archived/` directory. These 
 - **Note**: The `.bashrc` sources the modular configuration from `~/.config/bash/bashrc`
 
 #### `zsh/`
-- **Purpose**: Zsh shell configuration with Oh My Zsh and Powerlevel10k
+- **Purpose**: Zsh shell configuration with Oh My Zsh and Starship prompt
 - **Platform**: macOS (can work on Linux if zsh is your shell)
 - **Files**:
   - `~/.zshrc` - Main entry point (sources modular configuration)
   - `~/.config/zsh/zshrc` - Modular configuration loader
   - `~/.config/zsh/modules/` - Modular configuration files organized by category:
-    - `0-system/` - System-level configurations (Oh My Zsh, p10k, FZF, PATH, mise, aliases, functions)
+    - `0-system/` - System-level configurations (Oh My Zsh, Starship, FZF, PATH, mise, aliases, functions)
     - `1-lang/` - Language-specific configurations (ready for future modules)
     - `2-editor/` - Editor configurations (ready for future modules)
-  - `~/.p10k.zsh` - Powerlevel10k theme configuration
   - `~/.fzf.zsh` - Legacy FZF config (functionality also in modules)
 - **Note**: 
   - Uses modular structure matching the bash configuration
@@ -418,7 +417,7 @@ This repository uses a **single unified branch** (`main`) that works on all plat
 - `waybar/` - Wayland status bar
 
 **macOS-only packages:**
-- `zsh/` - Zsh configuration with Oh My Zsh and Powerlevel10k
+- `zsh/` - Zsh configuration with Oh My Zsh and Starship prompt
 
 **Cross-platform packages:**
 - All other packages work on both Linux and macOS
