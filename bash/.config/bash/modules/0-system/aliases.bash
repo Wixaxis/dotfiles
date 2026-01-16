@@ -49,6 +49,9 @@ alias mux=tmuxinator
 # LazyGit shortcut
 alias lg=lazygit
 
+# Cursor Agent shortcut
+alias ca=cursor-agent
+
 # File finding aliases (using fzf)
 if command -v fzf &> /dev/null; then
     # Find files in current directory
