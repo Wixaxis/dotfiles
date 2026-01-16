@@ -1,0 +1,10 @@
+# /Users/wixaxis/.config/tmuxinator/dotfiles.yml
+
+name: dotfiles
+root: ~/dotfiles
+
+windows:
+  - cursor_agent: cursor-agent
+  - testing_shell: zsh
+  - lazygit: lazygit
+  - editor: nvim
