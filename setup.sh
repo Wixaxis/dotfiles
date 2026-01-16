@@ -301,7 +301,7 @@ check_stowed() {
         "starship:.config/starship.toml"
         "zsh:.zshrc"
         "mise:.config/mise/config.toml"
-        "lazygit:.config/lazygit/config.yml"
+        "lazygit:.config/lazygit"
     )
     
     if [[ "$PLATFORM" == "arch" ]]; then
@@ -331,27 +331,38 @@ check_stowed() {
         local package_dir="$dotfiles_dir/$package"
         local target_path="$home_dir/$target"
         
+        # Check if package directory or target file exists in dotfiles
         if [[ -d "$package_dir" ]] || [[ -f "$package_dir/$target" ]]; then
-            if [[ -f "$target_path" ]] && [[ -L "$target_path" ]]; then
+            # Check if target is a symlink (file or directory)
+            if [[ -L "$target_path" ]]; then
                 local link_target
                 link_target=$(readlink -f "$target_path" 2>/dev/null || readlink "$target_path")
                 local expected_target
                 expected_target=$(readlink -f "$package_dir/$target" 2>/dev/null || echo "$package_dir/$target")
-                if [[ "$link_target" == "$expected_target" ]]; then
+                
+                # Handle relative symlinks (like ../dotfiles/...)
+                if [[ "$link_target" == *"$package_dir/$target"* ]] || [[ "$link_target" == "$expected_target" ]]; then
+                    success "$package is stowed"
+                elif [[ "$link_target" == *"$package"* ]] && [[ "$link_target" == *"$target"* ]]; then
+                    # Check if symlink points to the package directory
                     success "$package is stowed"
                 else
                     not_stowed+=("$package")
                     warning "$package is not stowed (target: $target)"
                 fi
-            elif [[ -d "$target_path" ]] && [[ -L "$target_path" ]]; then
-                if is_stowed "$target_path" "$package_dir/$target"; then
+            # Check if target directory exists and contains the expected file (for directory stows)
+            elif [[ -d "$target_path" ]] && [[ -f "$target_path/$(basename "$target")" ]]; then
+                # Directory exists and contains the file - might be stowed as directory
+                local parent_dir
+                parent_dir=$(dirname "$target_path")
+                local dir_name
+                dir_name=$(basename "$target_path")
+                if [[ -L "$parent_dir/$dir_name" ]]; then
                     success "$package is stowed"
                 else
                     not_stowed+=("$package")
                     warning "$package is not stowed (target: $target)"
                 fi
-            elif [[ -L "$target_path" ]]; then
-                success "$package is stowed"
             else
                 not_stowed+=("$package")
                 warning "$package is not stowed (target: $target)"
