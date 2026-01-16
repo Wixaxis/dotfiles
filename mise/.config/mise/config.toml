@@ -3,7 +3,8 @@ idiomatic_version_file_enable_tools = ["ruby", "node"]
 experimental = true
 
 [settings.ruby]
-compile = true
+# Ruby compilation is enabled by default, no need to specify
+# Use ruby_install_opts for custom compilation options if needed
 
 [tools]
 pnpm = "latest"
