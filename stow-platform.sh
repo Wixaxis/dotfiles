@@ -30,6 +30,8 @@ echo ""
 
 # Common packages (work on all platforms)
 COMMON_PACKAGES=(
+  "fastfetch"
+  "glow"
   "kitty"
   "lazygit"
   "mise"

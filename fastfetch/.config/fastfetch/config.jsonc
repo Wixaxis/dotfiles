@@ -1,0 +1,17 @@
+{
+  "modules": [
+    {"type":"os","key":"╭─🍎","showArchitecture":false,"kernelShorthand":true},
+    {"type":"kernel","key":"├─📍","shorthand":true},
+    {"type":"users","key":"├─👤","format":"current"},
+    {"type":"packages","key":"├─📦"},
+    {"type":"shell","key":"╰─🐚","shellVersion":true},
+    {"type":"de","key":"╭─🪟","version":true},
+    {"type":"terminal","key":"╰─🤖"},
+    {"type":"host","key":"╭─💻"},
+    {"type":"cpu","key":"├─🧠","showSpeed":true,"temp":{"unit":"C"}},
+    {"type":"display","key":"├─🖥️","showRefreshRate":true},
+    {"type":"memory","key":"├─🤯","unit":"GiB","percent":{"text":true}},
+    {"type":"battery","key":"├─🔋"},
+    {"type":"uptime","key":"╰─🕙","compact":true}
+  ]
+}

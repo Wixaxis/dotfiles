@@ -4,6 +4,13 @@ nushell/.config/nushell/history.txt
 nushell/Library/Application Support/nushell/history.txt
 scripts/scripts/debug.log
 
+# API keys and secrets - DO NOT COMMIT
+nushell/.config/nushell/envs/gemini.nu
+nushell/.config/nushell/envs/open_ai.nu
+nushell/.config/nushell/envs/openrouter.nu
+nushell/.config/nushell/envs/tavily.nu
+nushell/.config/nushell/envs/anthropic_claude.nu
+
 # macOS-specific
 .DS_Store
 **/.DS_Store
