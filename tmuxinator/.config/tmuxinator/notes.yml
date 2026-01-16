@@ -1,0 +1,8 @@
+# /Users/wixaxis/.config/tmuxinator/notes.yml
+
+name: notes
+root: ~/Notes/Obsidian/Główny Sejf
+
+windows:
+  - AI: cursor-agent
+  - editor: nvim .
