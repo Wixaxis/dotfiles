@@ -1,12 +1,5 @@
-# Platform-aware command setting
-# Linux: bash (default shell)
-# macOS: zsh (default shell)
-# Note: Ghostty doesn't support conditionals, so set this manually per platform
-# On Linux, use: command = /bin/bash
-# On macOS, use: command = /bin/zsh
-command = /bin/zsh
-# command = /bin/bash  # Uncomment for Linux
-# command = tmux
+# Ghostty uses the user's default shell by default
+# No need to specify command - it will use $SHELL automatically
 
 theme = Nord
 macos-option-as-alt=left
