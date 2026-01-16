@@ -5,6 +5,12 @@ source ./envs/editor.nu
 source ./envs/anthropic_claude.nu
 source ./envs/xdg.nu
 
+# AI-related env files (optional - comment out if not needed)
+# These provide API keys and configurations for various AI services
+source ./envs/gemini.nu
+source ./envs/open_ai.nu
+source ./envs/openrouter.nu
+source ./envs/tavily.nu
 
 if ($env.MISE_SET_ENV? | is-empty) {
 	source ./envs/mise.nu

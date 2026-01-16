@@ -1,2 +1,11 @@
+[settings]
+idiomatic_version_file_enable_tools = ["ruby", "node"]
+experimental = true
+
+[settings.ruby]
+compile = true
+
 [tools]
+pnpm = "latest"
+python = "latest"
 ruby = "3.4.8"

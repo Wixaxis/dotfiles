@@ -20,19 +20,35 @@ def "parse vars" [] {
   $in | from csv --noheaders --no-infer | rename 'op' 'name' 'value'
 }
 
+# Detect mise path based on platform
+def "get mise path" [] {
+  # Check macOS Homebrew path first
+  if ("/opt/homebrew/bin/mise" | path exists) {
+    "/opt/homebrew/bin/mise"
+  } else if ("/usr/sbin/mise" | path exists) {
+    "/usr/sbin/mise"
+  } else if ("/usr/bin/mise" | path exists) {
+    "/usr/bin/mise"
+  } else {
+    # Fallback to PATH
+    "mise"
+  }
+}
+
 export def --env --wrapped main [command?: string, --help, ...rest: string] {
   let commands = ["deactivate", "shell", "sh"]
+  let mise_bin = (get mise path)
 
   if ($command == null) {
-    ^"/usr/sbin/mise"
+    ^$mise_bin
   } else if ($command == "activate") {
     $env.MISE_SHELL = "nu"
   } else if ($command in $commands) {
-    ^"/usr/sbin/mise" $command ...$rest
+    ^$mise_bin $command ...$rest
     | parse vars
     | update-env
   } else {
-    ^"/usr/sbin/mise" $command ...$rest
+    ^$mise_bin $command ...$rest
   }
 }
 
@@ -51,7 +67,8 @@ def --env "update-env" [] {
 }
 
 def --env mise_hook [] {
-  ^"/usr/sbin/mise" hook-env -s nu
+  let mise_bin = (get mise path)
+  ^$mise_bin hook-env -s nu
     | parse vars
     | update-env
 }

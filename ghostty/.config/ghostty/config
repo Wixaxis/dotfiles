@@ -1,4 +1,7 @@
-# command = /opt/homebrew/bin/nu
+# Platform-aware command setting
+# On macOS with Homebrew, use the full path to nushell
+# On Linux, you can uncomment "command = nu" or "command = tmux" as needed
+command = /opt/homebrew/bin/nu
 # command = nu
 # command = tmux
 

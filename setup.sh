@@ -162,16 +162,39 @@ check_stowed() {
     dotfiles_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
     local home_dir="$HOME"
     
-    local packages=(
-        "bash:.bashrc"
-        "ghostty:.config/ghostty"
-        "hyprland:.config/hypr"
-        "waybar:.config/waybar"
-        "swaync:.config/swaync"
-        "tmux:.config/tmux"
-        "yazi:.config/yazi"
-        "starship:.config/starship.toml"
-    )
+    # Platform-aware package list
+    local packages=()
+    
+    if [[ "$PLATFORM" == "arch" ]]; then
+        packages=(
+            "bash:.bashrc"
+            "ghostty:.config/ghostty"
+            "hyprland:.config/hypr"
+            "waybar:.config/waybar"
+            "swaync:.config/swaync"
+            "tmux:.config/tmux"
+            "yazi:.config/yazi"
+            "starship:.config/starship.toml"
+        )
+    elif [[ "$PLATFORM" == "macos" ]]; then
+        packages=(
+            "ghostty:.config/ghostty"
+            "tmux:.config/tmux"
+            "yazi:.config/yazi"
+            "starship:.config/starship.toml"
+            "zsh:.zshrc"
+            "nushell:.config/nushell"
+            "mise:.config/mise/config.toml"
+        )
+    else
+        # Common packages for unknown platform
+        packages=(
+            "ghostty:.config/ghostty"
+            "tmux:.config/tmux"
+            "yazi:.config/yazi"
+            "starship:.config/starship.toml"
+        )
+    fi
     
     local not_stowed=()
     
@@ -180,8 +203,31 @@ check_stowed() {
         local package_dir="$dotfiles_dir/$package"
         local target_path="$home_dir/$target"
         
-        if [[ -d "$package_dir" ]]; then
-            if is_stowed "$target_path" "$package_dir/$target"; then
+        if [[ -d "$package_dir" ]] || [[ -f "$package_dir/$target" ]]; then
+            # For files, check if the target is a symlink
+            # For directories, check if the target directory is a symlink
+            if [[ -f "$target_path" ]] && [[ -L "$target_path" ]]; then
+                # It's a file symlink, check if it points to our dotfiles
+                local link_target
+                link_target=$(readlink -f "$target_path" 2>/dev/null || readlink "$target_path")
+                local expected_target
+                expected_target=$(readlink -f "$package_dir/$target" 2>/dev/null || echo "$package_dir/$target")
+                if [[ "$link_target" == "$expected_target" ]]; then
+                    success "$package is stowed"
+                else
+                    not_stowed+=("$package")
+                    warning "$package is not stowed (target: $target)"
+                fi
+            elif [[ -d "$target_path" ]] && [[ -L "$target_path" ]]; then
+                # It's a directory symlink
+                if is_stowed "$target_path" "$package_dir/$target"; then
+                    success "$package is stowed"
+                else
+                    not_stowed+=("$package")
+                    warning "$package is not stowed (target: $target)"
+                fi
+            elif [[ -L "$target_path" ]]; then
+                # Generic symlink check
                 success "$package is stowed"
             else
                 not_stowed+=("$package")
