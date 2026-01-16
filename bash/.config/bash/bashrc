@@ -1,6 +1,16 @@
+#!/bin/bash
+# Bash Modular Configuration Loader
+# 
+# This script recursively loads all .bash module files from the modules/ directory.
+# Modules are loaded in directory order: 0-system/ → 1-lang/ → 2-editor/
+# Within each directory, files are loaded in alphabetical order.
+#
+# Usage: Source this file from .bashrc
+# Debug: Set DEBUG=true to see which modules are loaded
+
 BASH_CONFIG_DIR="$HOME/.config/bash"
 
-# DEBUG=true
+# DEBUG=true  # Uncomment to enable debug output
 
 _is_valid_bash_module() { [[ -f "$1" && "$1" == *.bash && -r "$1" ]] }
 
