@@ -1,0 +1,8 @@
+# /Users/wixaxis/.config/tmuxinator/neovim.yml
+
+name: neovim
+root: ~/.config/nvim
+
+windows:
+  - neovim: nvim
+  - cursor_agent: cursor-agent
