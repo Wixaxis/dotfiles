@@ -1,8 +1,11 @@
 # Platform-aware command setting
-# On macOS with Homebrew, use zsh (default shell)
-# On Linux, you can uncomment "command = zsh" or "command = tmux" as needed
+# Linux: bash (default shell)
+# macOS: zsh (default shell)
+# Note: Ghostty doesn't support conditionals, so set this manually per platform
+# On Linux, use: command = /bin/bash
+# On macOS, use: command = /bin/zsh
 command = /bin/zsh
-# command = zsh
+# command = /bin/bash  # Uncomment for Linux
 # command = tmux
 
 theme = Nord

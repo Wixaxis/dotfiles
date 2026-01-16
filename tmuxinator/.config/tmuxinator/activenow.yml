@@ -1,0 +1,24 @@
+# /Users/wixaxis/.config/tmuxinator/activenow.yml
+
+name: activenow
+root: ~/work/activenow
+
+windows:
+  - neovim: nvim
+  - AI: cursor-agent
+  - notes: cd ~/Notes ; nvim work/dash.md
+  # - chat_and_notes: mprocs --names 'notes,codex' '' 'codex'
+  - general_terminal: fastfetch
+  # - notes: cd ~/Notes ; nvim work/dash.md
+  # - runtime_build: mprocs --names 'sidekiq,bin/dev,server,console' 'bundle && bundle exec sidekiq' 'bundle && bin/dev' 'bundle exec rails s' "nu -c \"echo 'Press Enter to continue...' | read -s; bundle exec rails c\""
+  - runtime_build:
+      layout: main-vertical
+      options:
+        pane-border-status: top
+        pane-border-format: |
+          #{?#{==:#{pane_index},1},1 - bin/dev,#{?#{==:#{pane_index},2},2 - sidekiq,3 - rails s}}
+      panes:
+        - bundle exec rails s
+        - bundle exec sidekiq
+        - bin/dev
+  - auxiliary_terminal: []

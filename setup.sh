@@ -2,17 +2,74 @@
 # Comprehensive dotfiles setup script
 # Idempotent - safe to run multiple times
 # Supports Arch Linux (pacman/paru) and macOS (brew)
+#
+# Default Shell Preferences:
+#   - Linux: bash
+#   - macOS: zsh
+# These defaults are configured in:
+#   - Ghostty: ~/.config/ghostty/config (set manually per platform)
+#   - Tmux: ~/.config/tmux/conf.d/base.conf (auto-detected)
 
 set -euo pipefail
 
-# Colors for output
-RED='\033[0;31m'
-GREEN='\033[0;32m'
-YELLOW='\033[1;33m'
-BLUE='\033[0;34m'
-NC='\033[0m' # No Color
+# ============================================================================
+# GUM CHECK - MUST BE FIRST
+# ============================================================================
+# Check if gum is installed, if not install it and exit
+check_gum() {
+    if ! command -v gum &> /dev/null; then
+        echo "⚠️  gum is not installed. Installing it now..."
+        
+        # Detect platform for gum installation
+        if [[ "$(uname -s)" == "Linux" ]]; then
+            if command -v pacman &> /dev/null; then
+                # Arch Linux
+                if command -v paru &> /dev/null; then
+                    paru -S --noconfirm gum
+                elif command -v yay &> /dev/null; then
+                    yay -S --noconfirm gum
+                else
+                    echo "Please install paru or yay first, then run:"
+                    echo "  paru -S gum"
+                    echo "or"
+                    echo "  yay -S gum"
+                    exit 1
+                fi
+            elif command -v apt-get &> /dev/null; then
+                # Debian/Ubuntu
+                sudo apt-get update && sudo apt-get install -y gum
+            else
+                echo "Please install gum manually for your Linux distribution"
+                exit 1
+            fi
+        elif [[ "$(uname -s)" == "Darwin" ]]; then
+            # macOS
+            if command -v brew &> /dev/null; then
+                brew install gum
+            else
+                echo "Please install Homebrew first, then run:"
+                echo "  brew install gum"
+                exit 1
+            fi
+        else
+            echo "Unknown platform. Please install gum manually."
+            exit 1
+        fi
+        
+        echo ""
+        echo "✅ gum has been installed!"
+        echo "Please run this script again: ./setup.sh"
+        exit 0
+    fi
+}
 
-# Detect platform
+# Check gum first, before anything else
+check_gum
+
+# Now we can use gum for all output
+# ============================================================================
+# PLATFORM DETECTION
+# ============================================================================
 detect_platform() {
     if [[ "$(uname -s)" == "Linux" ]]; then
         if command -v pacman &> /dev/null; then
@@ -30,19 +87,25 @@ detect_platform() {
 
 PLATFORM=$(detect_platform)
 
-# Print functions
-info() { echo -e "${BLUE}ℹ${NC} $1"; }
-success() { echo -e "${GREEN}✓${NC} $1"; }
-warning() { echo -e "${YELLOW}⚠${NC} $1"; }
-error() { echo -e "${RED}✗${NC} $1"; }
-section() { echo -e "\n${BLUE}━━━ $1 ━━━${NC}"; }
+# ============================================================================
+# PRINT FUNCTIONS (using gum)
+# ============================================================================
+info() { gum style --foreground 12 "ℹ" "$1"; }
+success() { gum style --foreground 10 "✓" "$1"; }
+warning() { gum style --foreground 11 "⚠" "$1"; }
+error() { gum style --foreground 9 "✗" "$1"; }
+section() { 
+    echo ""
+    gum style --bold --foreground 12 "━━━ $1 ━━━"
+}
 
-# Check if command exists
+# ============================================================================
+# UTILITY FUNCTIONS
+# ============================================================================
 has_command() {
     command -v "$1" &> /dev/null
 }
 
-# Check if package is installed (Arch)
 is_installed_arch() {
     if has_command paru; then
         paru -Qi "$1" &> /dev/null
@@ -51,12 +114,10 @@ is_installed_arch() {
     fi
 }
 
-# Check if package is installed (macOS)
 is_installed_macos() {
     brew list "$1" &> /dev/null 2>&1
 }
 
-# Check if symlink exists and points to dotfiles
 is_stowed() {
     local target="$1"
     local source="$2"
@@ -66,28 +127,69 @@ is_stowed() {
     return 1
 }
 
-# Install package (Arch)
+# ============================================================================
+# PACKAGE INSTALLATION
+# ============================================================================
 install_arch() {
     local pkg="$1"
     if has_command paru; then
         info "Installing $pkg with paru..."
         paru -S --noconfirm "$pkg"
+    elif has_command yay; then
+        info "Installing $pkg with yay..."
+        yay -S --noconfirm "$pkg"
     else
-        error "paru not found! Please install paru first:"
+        error "paru or yay not found! Please install one first:"
         echo "  git clone https://aur.archlinux.org/paru.git /tmp/paru"
         echo "  cd /tmp/paru && makepkg -si"
         exit 1
     fi
 }
 
-# Install package (macOS)
 install_macos() {
     local pkg="$1"
     info "Installing $pkg with brew..."
     brew install "$pkg"
 }
 
-# Check prerequisites
+# ============================================================================
+# EXA/EZA CONFLICT CHECK
+# ============================================================================
+check_exa_eza_conflict() {
+    if has_command exa; then
+        warning "exa is installed, but we use eza instead"
+        if gum confirm "Remove exa and ensure eza is installed?"; then
+            if [[ "$PLATFORM" == "arch" ]]; then
+                if is_installed_arch exa; then
+                    info "Removing exa..."
+                    sudo pacman -Rns --noconfirm exa 2>/dev/null || paru -Rns --noconfirm exa 2>/dev/null || true
+                fi
+            elif [[ "$PLATFORM" == "macos" ]]; then
+                if is_installed_macos exa; then
+                    info "Removing exa..."
+                    brew uninstall exa 2>/dev/null || true
+                fi
+            fi
+            success "exa removed"
+            
+            # Ensure eza is installed
+            if ! has_command eza; then
+                info "Installing eza..."
+                if [[ "$PLATFORM" == "arch" ]]; then
+                    install_arch eza
+                elif [[ "$PLATFORM" == "macos" ]]; then
+                    install_macos eza
+                fi
+            fi
+        else
+            warning "Keeping exa, but aliases will use eza if available"
+        fi
+    fi
+}
+
+# ============================================================================
+# CHECK PREREQUISITES
+# ============================================================================
 check_prerequisites() {
     section "Checking Prerequisites"
     
@@ -114,14 +216,14 @@ check_prerequisites() {
     
     # Platform-specific prerequisites
     if [[ "$PLATFORM" == "arch" ]]; then
-        if ! has_command paru; then
-            error "paru is not installed!"
+        if ! has_command paru && ! has_command yay; then
+            error "paru or yay is not installed!"
             echo "  Install paru:"
             echo "    git clone https://aur.archlinux.org/paru.git /tmp/paru"
             echo "    cd /tmp/paru && makepkg -si"
             exit 1
         else
-            success "paru is installed"
+            success "AUR helper (paru/yay) is installed"
         fi
     elif [[ "$PLATFORM" == "macos" ]]; then
         if ! has_command brew; then
@@ -137,9 +239,7 @@ check_prerequisites() {
     # Install missing prerequisites
     if [[ ${#missing[@]} -gt 0 ]]; then
         warning "Missing prerequisites: ${missing[*]}"
-        read -p "Install missing prerequisites? [y/N] " -n 1 -r
-        echo
-        if [[ $REPLY =~ ^[Yy]$ ]]; then
+        if gum confirm "Install missing prerequisites?"; then
             for pkg in "${missing[@]}"; do
                 if [[ "$PLATFORM" == "arch" ]]; then
                     install_arch "$pkg"
@@ -154,7 +254,9 @@ check_prerequisites() {
     fi
 }
 
-# Check if dotfiles are stowed
+# ============================================================================
+# CHECK STOWED PACKAGES
+# ============================================================================
 check_stowed() {
     section "Checking Dotfiles Installation"
     
@@ -204,10 +306,7 @@ check_stowed() {
         local target_path="$home_dir/$target"
         
         if [[ -d "$package_dir" ]] || [[ -f "$package_dir/$target" ]]; then
-            # For files, check if the target is a symlink
-            # For directories, check if the target directory is a symlink
             if [[ -f "$target_path" ]] && [[ -L "$target_path" ]]; then
-                # It's a file symlink, check if it points to our dotfiles
                 local link_target
                 link_target=$(readlink -f "$target_path" 2>/dev/null || readlink "$target_path")
                 local expected_target
@@ -219,7 +318,6 @@ check_stowed() {
                     warning "$package is not stowed (target: $target)"
                 fi
             elif [[ -d "$target_path" ]] && [[ -L "$target_path" ]]; then
-                # It's a directory symlink
                 if is_stowed "$target_path" "$package_dir/$target"; then
                     success "$package is stowed"
                 else
@@ -227,7 +325,6 @@ check_stowed() {
                     warning "$package is not stowed (target: $target)"
                 fi
             elif [[ -L "$target_path" ]]; then
-                # Generic symlink check
                 success "$package is stowed"
             else
                 not_stowed+=("$package")
@@ -238,9 +335,7 @@ check_stowed() {
     
     if [[ ${#not_stowed[@]} -gt 0 ]]; then
         warning "Some packages are not stowed: ${not_stowed[*]}"
-        read -p "Stow missing packages? [y/N] " -n 1 -r
-        echo
-        if [[ $REPLY =~ ^[Yy]$ ]]; then
+        if gum confirm "Stow missing packages?"; then
             cd "$dotfiles_dir"
             for package in "${not_stowed[@]}"; do
                 info "Stowing $package..."
@@ -251,11 +346,13 @@ check_stowed() {
     fi
 }
 
-# Check required packages
+# ============================================================================
+# CHECK REQUIRED PACKAGES
+# ============================================================================
 check_packages() {
     section "Checking Required Packages"
     
-    # Common packages
+    # Common packages (required for shell aliases and functionality)
     local common_packages=(
         "git"
         "stow"
@@ -263,7 +360,20 @@ check_packages() {
         "tmux"
         "ghostty"
         "yazi"
+        "eza"        # Enhanced ls replacement (used in bash/zsh)
+        "nvim"       # Editor (aliased as vim in all shells)
+        "gum"        # Beautiful CLI output (used by this script)
+        "lazygit"    # Git TUI (aliased as lg)
+        "fzf"        # Fuzzy finder (used in ff, ffn, ffc aliases)
+        "fd"         # Fast file finder (used in ff, ffn aliases)
+        "ripgrep"    # Fast grep (used in ffc alias, package name: ripgrep or rg)
     )
+    
+    # Platform-specific packages for trash
+    # macOS has built-in /usr/bin/trash, Linux needs trash-cli
+    if [[ "$PLATFORM" == "arch" ]] || [[ "$PLATFORM" == "linux" ]]; then
+        common_packages+=("trash-cli")  # Safe file operations (Linux only)
+    fi
     
     # Arch-specific packages
     local arch_packages=(
@@ -288,13 +398,32 @@ check_packages() {
     
     # Check common packages
     for pkg in "${common_packages[@]}"; do
-        if has_command "$pkg"; then
-            success "$pkg is installed"
+        # Handle ripgrep - command is 'rg' but package might be 'ripgrep'
+        if [[ "$pkg" == "ripgrep" ]]; then
+            if has_command rg; then
+                success "ripgrep (rg) is installed"
+            else
+                missing+=("ripgrep")
+                warning "ripgrep (rg) is not installed"
+            fi
         else
-            missing+=("$pkg")
-            warning "$pkg is not installed"
+            if has_command "$pkg"; then
+                success "$pkg is installed"
+            else
+                missing+=("$pkg")
+                warning "$pkg is not installed"
+            fi
         fi
     done
+    
+    # Check trash command (platform-specific)
+    if [[ "$PLATFORM" == "macos" ]]; then
+        if has_command trash; then
+            success "trash is available (macOS system command)"
+        else
+            warning "trash command not found (unexpected on macOS)"
+        fi
+    fi
     
     # Check platform-specific packages
     if [[ "$PLATFORM" == "arch" ]]; then
@@ -319,21 +448,29 @@ check_packages() {
     
     if [[ ${#missing[@]} -gt 0 ]]; then
         warning "Missing packages: ${missing[*]}"
-        read -p "Install missing packages? [y/N] " -n 1 -r
-        echo
-        if [[ $REPLY =~ ^[Yy]$ ]]; then
+        if gum confirm "Install missing packages?"; then
             for pkg in "${missing[@]}"; do
+                # Handle package name variations
+                local install_pkg="$pkg"
+                if [[ "$pkg" == "ripgrep" ]]; then
+                    # On Arch, package is 'ripgrep', on macOS it's 'ripgrep' via brew
+                    install_pkg="ripgrep"
+                fi
+                
                 if [[ "$PLATFORM" == "arch" ]]; then
-                    install_arch "$pkg"
+                    install_arch "$install_pkg"
                 elif [[ "$PLATFORM" == "macos" ]]; then
-                    install_macos "$pkg"
+                    install_macos "$install_pkg"
                 fi
             done
+            success "All packages installed"
         fi
     fi
 }
 
-# Check mise setup
+# ============================================================================
+# CHECK MISE SETUP
+# ============================================================================
 check_mise() {
     section "Checking mise Setup"
     
@@ -351,9 +488,7 @@ check_mise() {
         success "Ruby is installed via mise: $ruby_version"
     else
         warning "Ruby is not installed via mise"
-        read -p "Install Ruby with mise? [y/N] " -n 1 -r
-        echo
-        if [[ $REPLY =~ ^[Yy]$ ]]; then
+        if gum confirm "Install Ruby with mise?"; then
             mise install ruby@latest
             success "Ruby installed"
         fi
@@ -368,33 +503,52 @@ check_mise() {
     fi
 }
 
-# Check shell configuration
+# ============================================================================
+# CHECK SHELL CONFIGURATION
+# ============================================================================
 check_shell() {
     section "Checking Shell Configuration"
     
     local shell_name
     shell_name=$(basename "$SHELL")
     
-    if [[ "$PLATFORM" == "arch" ]]; then
+    # Default shell preferences:
+    # Linux: bash
+    # macOS: zsh
+    
+    if [[ "$PLATFORM" == "arch" ]] || [[ "$PLATFORM" == "linux" ]]; then
         if [[ "$shell_name" == "bash" ]]; then
             if [[ -f "$HOME/.bashrc" ]] && grep -q "bashrc" "$HOME/.bashrc"; then
-                success "Bash configuration is set up"
+                success "Bash configuration is set up (default for Linux)"
             else
                 warning "Bash configuration may not be complete"
             fi
+        else
+            info "Current shell: $shell_name (expected: bash for Linux)"
         fi
     elif [[ "$PLATFORM" == "macos" ]]; then
         if [[ "$shell_name" == "zsh" ]]; then
             if [[ -f "$HOME/.zshrc" ]]; then
-                success "Zsh configuration is set up"
+                success "Zsh configuration is set up (default for macOS)"
             else
                 warning "Zsh configuration may not be complete"
             fi
+        else
+            info "Current shell: $shell_name (expected: zsh for macOS)"
         fi
     fi
+    
+    # Check terminal/tmux default shell settings
+    info "Default shell preferences:"
+    info "  - Linux: bash"
+    info "  - macOS: zsh"
+    info "  - Ghostty: Set manually in config (bash on Linux, zsh on macOS)"
+    info "  - Tmux: Auto-detected based on platform"
 }
 
-# Check Wayland-specific setup (Arch only)
+# ============================================================================
+# CHECK WAYLAND SETUP (Arch only)
+# ============================================================================
 check_wayland() {
     if [[ "$PLATFORM" != "arch" ]]; then
         return 0
@@ -425,13 +579,14 @@ check_wayland() {
     fi
 }
 
-# Main function
+# ============================================================================
+# MAIN FUNCTION
+# ============================================================================
 main() {
-    echo -e "${BLUE}"
-    echo "╔══════════════════════════════════════════════════════════╗"
-    echo "║         Dotfiles Setup & Verification Script            ║"
-    echo "╚══════════════════════════════════════════════════════════╝"
-    echo -e "${NC}"
+    gum style --bold --foreground 12 "╔══════════════════════════════════════════════════════════╗"
+    gum style --bold --foreground 12 "║         Dotfiles Setup & Verification Script            ║"
+    gum style --bold --foreground 12 "╚══════════════════════════════════════════════════════════╝"
+    echo ""
     
     info "Detected platform: $PLATFORM"
     
@@ -439,6 +594,9 @@ main() {
         error "Unknown platform. This script supports Arch Linux and macOS only."
         exit 1
     fi
+    
+    # Check for exa/eza conflict
+    check_exa_eza_conflict
     
     check_prerequisites
     check_stowed
