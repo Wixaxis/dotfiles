@@ -1,8 +1,8 @@
 # Platform-aware command setting
-# On macOS with Homebrew, use the full path to nushell
-# On Linux, you can uncomment "command = nu" or "command = tmux" as needed
-command = /opt/homebrew/bin/nu
-# command = nu
+# On macOS with Homebrew, use zsh (default shell)
+# On Linux, you can uncomment "command = zsh" or "command = tmux" as needed
+command = /bin/zsh
+# command = zsh
 # command = tmux
 
 theme = Nord
