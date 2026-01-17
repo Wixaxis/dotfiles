@@ -6,15 +6,10 @@ alias vim=nvim
 # Safe file operations with trash
 # macOS: uses system /usr/bin/trash
 # Linux: uses trash-cli package
+# Use 'trash' command directly when you want to move files to trash
+# rm now works normally (rm -rf, etc.)
 if command -v trash &> /dev/null; then
-    alias rm='trash'
     alias mv='trash'  # Move to trash instead of moving files
-else
-    # Fallback: make rm safer with confirmation
-    alias rm='rm -i'
-    if [[ "$OSTYPE" == "linux-gnu"* ]]; then
-        echo "Warning: trash-cli not found. Install it for safe file operations." >&2
-    fi
 fi
 
 # Enhanced ls with eza (icons, colors, git status)
