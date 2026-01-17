@@ -399,6 +399,7 @@ check_packages() {
         "fzf"        # Fuzzy finder (used in ff, ffn, ffc aliases)
         "fd"         # Fast file finder (used in ff, ffn aliases)
         "ripgrep"    # Fast grep (used in ffc alias, package name: ripgrep or rg)
+        "ffmpegthumbnailer"  # Image thumbnail generation for yazi mediainfo plugin
     )
     
     # Platform-specific packages for trash
