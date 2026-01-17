@@ -22,10 +22,10 @@ fi
 # Output is still greppable (plain text with ANSI colors)
 if command -v eza &> /dev/null; then
     # Basic ls with icons and colors
-    alias ls='eza --icons --color=always --group-directories-first'
+    alias ls='eza -1 --icons --color=always --group-directories-first'
     
     # List all sorted by modified time (newest first)
-    alias lsa='eza --all --icons --color=always --group-directories-first --sort=modified --reverse'
+    alias lsa='eza -1 --all --icons --color=always --group-directories-first --sort=modified --reverse'
     
     # Tree view (level 2)
     alias lst='eza --tree --icons --color=always --group-directories-first --level=2'
@@ -34,8 +34,8 @@ if command -v eza &> /dev/null; then
     alias lsta='eza --tree --all --icons --color=always --group-directories-first --level=2'
 else
     # Fallback to regular ls with colors if eza is not available
-    alias ls='ls --color=auto'
-    alias lsa='ls -la'
+    alias ls='ls -1 --color=auto'
+    alias lsa='ls -1la'
     alias lst='tree -L 2 2>/dev/null || find . -maxdepth 2 -print | sed -e "s;[^/]*/;|____;g;s;____|; |;g"'
     alias lsta='tree -a -L 2 2>/dev/null || find . -maxdepth 2 -print | sed -e "s;[^/]*/;|____;g;s;____|; |;g"'
 fi
