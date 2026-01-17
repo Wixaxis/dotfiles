@@ -3,12 +3,11 @@
 # Idempotent - safe to run multiple times
 # Supports Arch Linux (pacman/paru) and macOS (brew)
 #
-# Default Shell Preferences:
-#   - Linux: bash
-#   - macOS: zsh
-# These defaults are configured in:
-#   - Ghostty: ~/.config/ghostty/config (set manually per platform)
-#   - Tmux: ~/.config/tmux/conf.d/base.conf (auto-detected)
+# Shell Configuration:
+#   - All tools respect the system's default shell ($SHELL)
+#   - No explicit shell settings - uses whatever the user has configured
+#   - Ghostty: Uses $SHELL automatically (no config needed)
+#   - Tmux: Uses $SHELL automatically (no config needed)
 
 set -euo pipefail
 
@@ -553,38 +552,23 @@ check_shell() {
     local shell_name
     shell_name=$(basename "$SHELL")
     
-    # Default shell preferences:
-    # Linux: bash
-    # macOS: zsh
-    
+    # Check shell configuration - we respect the system's default shell
     if [[ "$PLATFORM" == "arch" ]] || [[ "$PLATFORM" == "linux" ]]; then
-        if [[ "$shell_name" == "bash" ]]; then
-            if [[ -f "$HOME/.bashrc" ]] && grep -q "bashrc" "$HOME/.bashrc"; then
-                success "Bash configuration is set up (default for Linux)"
-            else
-                warning "Bash configuration may not be complete"
-            fi
+        if [[ -f "$HOME/.bashrc" ]] && grep -q "bashrc" "$HOME/.bashrc"; then
+            success "Bash configuration is set up"
         else
-            info "Current shell: $shell_name (expected: bash for Linux)"
+            warning "Bash configuration may not be complete"
         fi
     elif [[ "$PLATFORM" == "macos" ]]; then
-        if [[ "$shell_name" == "zsh" ]]; then
-            if [[ -f "$HOME/.zshrc" ]]; then
-                success "Zsh configuration is set up (default for macOS)"
-            else
-                warning "Zsh configuration may not be complete"
-            fi
+        if [[ -f "$HOME/.zshrc" ]]; then
+            success "Zsh configuration is set up"
         else
-            info "Current shell: $shell_name (expected: zsh for macOS)"
+            warning "Zsh configuration may not be complete"
         fi
     fi
     
-    # Check terminal/tmux default shell settings
-    info "Default shell preferences:"
-    info "  - Linux: bash"
-    info "  - macOS: zsh"
-    info "  - Ghostty: Set manually in config (bash on Linux, zsh on macOS)"
-    info "  - Tmux: Auto-detected based on platform"
+    info "Current shell: $shell_name (system default: $SHELL)"
+    info "All tools (tmux, ghostty, etc.) respect the system's default shell"
 }
 
 # ============================================================================
