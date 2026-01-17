@@ -45,6 +45,9 @@ alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
 
+# Reload shell configuration
+alias reload='source ~/.zshrc'
+
 # tmuxinator shortcut
 alias mux=tmuxinator
 
