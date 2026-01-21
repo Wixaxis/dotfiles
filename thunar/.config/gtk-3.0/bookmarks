@@ -1,0 +1,17 @@
+# GTK Bookmarks for Thunar
+# Format: file:///path/to/location Display Name
+# For SMB shares: smb://server/share Display Name
+
+# Existing bookmarks
+file:///home/wixaxis/Pobrane
+
+# Common locations
+file:///home/wixaxis
+file:///home/wixaxis/Documents
+file:///home/wixaxis/Downloads
+
+# TrueNAS SMB Shares
+smb://192.168.0.128 TrueNAS
+smb://192.168.0.128/Domowe%20Pliki Domowe Pliki
+smb://192.168.0.128/torrents torrents
+smb://192.168.0.128/jellyfin_videos jellyfin_videos
