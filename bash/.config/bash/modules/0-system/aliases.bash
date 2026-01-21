@@ -52,6 +52,9 @@ alias lg=lazygit
 # Cursor Agent shortcut
 alias ca=cursor-agent
 
+# mise run shortcut
+alias mr='mise run'
+
 # File finding aliases (using fzf)
 if command -v fzf &> /dev/null; then
     # Find files in current directory
