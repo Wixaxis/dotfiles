@@ -41,6 +41,8 @@ u() {
 # Universal package search function
 # Tries available package managers in order of preference
 # Usage: s <package-name>
+# Unalias s if it exists (may be defined by oh-my-zsh or other configs)
+unalias s 2>/dev/null || true
 s() {
     if [[ $# -eq 0 ]]; then
         echo "Usage: s <package-name>" >&2
