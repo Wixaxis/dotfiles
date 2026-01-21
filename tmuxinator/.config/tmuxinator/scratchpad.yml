@@ -1,0 +1,7 @@
+# /home/wixaxis/.config/tmuxinator/scratchpad.yml
+
+name: scratchpad
+root: ~/
+
+windows:
+  - main: fastfetch
