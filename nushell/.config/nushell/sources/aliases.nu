@@ -68,6 +68,60 @@ alias lg = lazygit
 # Cursor Agent shortcut
 alias ca = cursor-agent
 
+# mise run shortcut
+alias mr = mise run
+
+# Universal package update function
+# Tries available package managers in order of preference
+def u [] {
+    # Try arch-update first (if available)
+    if (which arch-update | is-not-empty) {
+        ^arch-update
+    } else if (which paru | is-not-empty) {
+        # Try paru (AUR helper)
+        ^paru -Syu
+    } else if (which yay | is-not-empty) {
+        # Try yay (AUR helper)
+        ^yay -Syu
+    } else if (which pacman | is-not-empty) {
+        # Try pacman (Arch Linux)
+        ^sudo pacman -Syu
+    } else if (which brew | is-not-empty) {
+        # Try brew (macOS)
+        ^brew update; ^brew upgrade -g
+    } else {
+        # No package manager found
+        print "Error: No supported package manager found (arch-update, paru, yay, pacman, or brew)"
+    }
+}
+
+# Universal package search function
+# Tries available package managers in order of preference
+# Usage: s <package-name>
+def s [...package: string] {
+    if ($package | is-empty) {
+        print "Usage: s <package-name>"
+        return
+    }
+    
+    # Try paru (AUR helper)
+    if (which paru | is-not-empty) {
+        ^paru -Ss ...$package
+    } else if (which yay | is-not-empty) {
+        # Try yay (AUR helper)
+        ^yay -Ss ...$package
+    } else if (which pacman | is-not-empty) {
+        # Try pacman (Arch Linux)
+        ^pacman -Ss ...$package
+    } else if (which brew | is-not-empty) {
+        # Try brew (macOS)
+        ^brew search ...$package
+    } else {
+        # No package manager found
+        print "Error: No supported package manager found (paru, yay, pacman, or brew)"
+    }
+}
+
 # File finding functions (using fzf)
 if (which fzf | is-not-empty) {
   # Find files in current directory
