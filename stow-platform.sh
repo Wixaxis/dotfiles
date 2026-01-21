@@ -43,6 +43,7 @@ COMMON_PACKAGES=(
   "qt6ct"
   "rofi"
   "scripts"
+  "ssh"
   "starship"
   "tmux"
   "tmuxinator"
