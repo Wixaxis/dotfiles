@@ -1,0 +1,14 @@
+# /home/wixaxis/.config/tmuxinator/notesman.yml
+
+name: notesman
+root: ~/projects/notesman
+
+windows:
+  - editor: cd ~/projects/notesman && nvim .
+  - cursor_agent: cd ~/projects/notesman && cursor-agent
+  - terminal: cd ~/projects/notesman && zsh
+  - server:
+      layout: main-horizontal
+      panes:
+        - cd ~/projects/notesman && (bin/dev || rails server)
+        - cd ~/projects/notesman && zsh
