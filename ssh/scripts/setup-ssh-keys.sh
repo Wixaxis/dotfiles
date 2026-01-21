@@ -356,20 +356,52 @@ setup_ssh_config_include() {
         return 0
     fi
     
-    # Add Include line at the top of the file
+    # Add Include line after any existing Include directives
     info "Adding Include directive to $ssh_config"
     
-    # Create a temporary file with the include line at the top
+    # Create a temporary file
     local temp_file
     temp_file=$(mktemp)
     
-    # Add Include line first
-    echo "$include_line" > "$temp_file"
-    echo "" >> "$temp_file"
+    # Track if we've inserted our include and if we're in the include section
+    local inserted=false
+    local in_include_section=false
     
-    # Append existing config (if any)
-    if [[ -s "$ssh_config" ]]; then
-        cat "$ssh_config" >> "$temp_file"
+    while IFS= read -r line || [[ -n "$line" ]]; do
+        # Check if this is an Include line
+        if [[ "$line" =~ ^[[:space:]]*Include ]]; then
+            in_include_section=true
+            echo "$line" >> "$temp_file"
+            continue
+        fi
+        
+        # If we were in include section and hit a non-empty, non-include line, insert our include
+        if [[ "$in_include_section" == true ]] && [[ "$inserted" == false ]] && \
+           [[ ! "$line" =~ ^[[:space:]]*$ ]]; then
+            echo "$include_line" >> "$temp_file"
+            echo "" >> "$temp_file"
+            inserted=true
+            in_include_section=false
+        fi
+        
+        # Write the line
+        echo "$line" >> "$temp_file"
+    done < "$ssh_config"
+    
+    # If we never inserted (file ended with includes or was empty), add after includes
+    if [[ "$inserted" == false ]]; then
+        if [[ "$in_include_section" == true ]]; then
+            # File ended with includes, add ours after them
+            echo "$include_line" >> "$temp_file"
+        else
+            # No includes found, add at the top
+            local temp_file2
+            temp_file2=$(mktemp)
+            echo "$include_line" >> "$temp_file2"
+            echo "" >> "$temp_file2"
+            cat "$temp_file" >> "$temp_file2"
+            mv "$temp_file2" "$temp_file"
+        fi
     fi
     
     # Replace original file

@@ -301,6 +301,7 @@ check_stowed() {
         "zsh:.zshrc"
         "mise:.config/mise/config.toml"
         "lazygit:.config/lazygit"
+        "ssh:.ssh/dotfiles.conf"
     )
     
     if [[ "$PLATFORM" == "arch" ]]; then
@@ -399,6 +400,7 @@ check_packages() {
         "fd"         # Fast file finder (used in ff, ffn aliases)
         "ripgrep"    # Fast grep (used in ffc alias, package name: ripgrep or rg)
         "ffmpegthumbnailer"  # Image thumbnail generation for yazi mediainfo plugin
+        "cloudflared" # Cloudflare Tunnel (required for SSH homelab connection)
     )
     
     # Platform-specific packages for trash
@@ -476,14 +478,16 @@ check_packages() {
             fi
         done
     elif [[ "$PLATFORM" == "macos" ]]; then
-        for pkg in "${macos_packages[@]}"; do
-            if is_installed_macos "$pkg" || has_command "$pkg"; then
-                success "$pkg is installed"
-            else
-                missing+=("$pkg")
-                warning "$pkg is not installed"
-            fi
-        done
+        if [[ ${#macos_packages[@]} -gt 0 ]]; then
+            for pkg in "${macos_packages[@]}"; do
+                if is_installed_macos "$pkg" || has_command "$pkg"; then
+                    success "$pkg is installed"
+                else
+                    missing+=("$pkg")
+                    warning "$pkg is not installed"
+                fi
+            done
+        fi
     fi
     
     if [[ ${#missing[@]} -gt 0 ]]; then
