@@ -6,14 +6,14 @@ tmux has-session -t $SESH
 
 if [[ $? != 0 ]]; then
 	tmux new-session -d -s $SESH:1 -n "main_terminal"
-	tmux send-keys -t $SESH:1 "neofetch" C-m
+	tmux send-keys -t $SESH:1 "fastfetch" C-m
 
 	tmux new-window -t $SESH:2 -n "files"
 	tmux send-keys -t $SESH:2 "cd ~ && yazi" C-m
 	tmux send-keys -t $SESH:2 "yazi" C-m
 
 	tmux new-window -t $SESH:3 -n "auxiliary_terminal"
-	tmux send-keys -t $SESH:3 "neofetch" C-m
+	tmux send-keys -t $SESH:3 "fastfetch" C-m
 
 	tmux new-window -t $SESH:4 -n "updates"
 	tmux send-keys -t $SESH:4 "just update" C-m

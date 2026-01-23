@@ -37,7 +37,6 @@ COMMON_PACKAGES=(
   "kitty"
   "lazygit"
   "mise"
-  "neofetch"
   "neovide"
   "nushell"
   "scripts"

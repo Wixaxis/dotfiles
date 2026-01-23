@@ -68,7 +68,7 @@ Successfully migrated from `macos` branch to `main` branch with all platform-spe
 **Branch**: `main`  
 **Platform**: macOS (detected automatically)  
 **Stowed Packages**: 
-- Common: lazygit, mise, neofetch, neovide, nushell, papes, qt6ct, rofi, scripts, starship, tmux, tmuxinator, yazi, themes
+- Common: lazygit, mise, fastfetch, neovide, nushell, papes, qt6ct, rofi, scripts, starship, tmux, tmuxinator, yazi, themes
 - macOS-specific: zsh
 
 ## Files Modified

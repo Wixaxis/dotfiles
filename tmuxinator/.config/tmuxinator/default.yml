@@ -3,9 +3,9 @@
 name: default
 root: ~/
 windows:
-  - main_terminal: neofetch
+  - main_terminal: fastfetch
   - files: yazi
-  - auxiliary_terminal: neofetch
+  - auxiliary_terminal: fastfetch
   - ollama:
     layout: main-horizontal
     panes:

@@ -14,7 +14,7 @@ PACKAGES=(
     "hyprpanel:hyprpanel"
     "justfile:just"
     "lazygit:lazygit"
-    "neofetch:neofetch"
+    "fastfetch:fastfetch"
     "neovide:neovide"
     "nushell:nu"
     "rofi:rofi"
