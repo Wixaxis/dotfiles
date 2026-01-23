@@ -12,7 +12,7 @@
 
 **macos branch** (current):
 - 485 files
-- 10 directories: ghostty, lazygit, neofetch, neovide, nushell, papes, starship, tmux, yazi, zsh
+- 10 directories: ghostty, lazygit, fastfetch, neovide, nushell, papes, starship, tmux, yazi, zsh
 - Minimal, macOS-focused
 
 **main branch**:
@@ -89,7 +89,7 @@ The main branch includes:
 
 Based on symlink analysis, these packages are currently stowed:
 - ✅ neovide
-- ✅ neofetch
+- ✅ fastfetch
 - ✅ lazygit
 - ✅ starship
 - ✅ nushell (both `.config/nushell` and `Library/Application Support/nushell`)
@@ -143,7 +143,7 @@ Based on symlink analysis, these packages are currently stowed:
 
 3. **Unstow current packages** (optional, but clean):
    ```bash
-   stow -D -t ~ ghostty lazygit neofetch neovide nushell papes starship tmux yazi zsh
+   stow -D -t ~ ghostty lazygit fastfetch neovide nushell papes starship tmux yazi zsh
    ```
 
 4. **Run platform-aware stow**:

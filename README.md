@@ -213,10 +213,10 @@ Some configuration packages have been moved to the `archived/` directory. These 
 - **Files**: `~/.config/lazygit/config.yml`
 - **Description**: Git TUI settings and keybindings
 
-#### `neofetch/`
-- **Purpose**: Neofetch system information display
-- **Files**: `~/.config/neofetch/config.conf`
-- **Description**: ASCII art and system info display configuration
+#### `fastfetch/`
+- **Purpose**: Fastfetch system information display
+- **Files**: `~/.config/fastfetch/config.jsonc`
+- **Description**: Fast system info display configuration
 
 #### `neovide/`
 - **Purpose**: Neovide GUI editor configuration

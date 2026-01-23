@@ -301,6 +301,7 @@ check_stowed() {
         "zsh:.zshrc"
         "mise:.config/mise/config.toml"
         "lazygit:.config/lazygit"
+        "fastfetch:.config/fastfetch"
         "ssh:.ssh/dotfiles.conf"
     )
     
@@ -396,6 +397,7 @@ check_packages() {
         "nvim"       # Editor (aliased as vim in all shells)
         "gum"        # Beautiful CLI output (used by this script)
         "lazygit"    # Git TUI (aliased as lg)
+        "fastfetch"  # Fast system info display (used in tmuxinator and tmux sessions)
         "fzf"        # Fuzzy finder (used in ff, ffn, ffc aliases)
         "fd"         # Fast file finder (used in ff, ffn aliases)
         "ripgrep"    # Fast grep (used in ffc alias, package name: ripgrep or rg)
