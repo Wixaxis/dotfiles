@@ -373,8 +373,26 @@ check_stowed() {
     
     if [[ ${#not_stowed[@]} -gt 0 ]]; then
         warning "Some packages are not stowed: ${not_stowed[*]}"
-        info "Please stow them manually with: stow -t ~ <package-name>"
-        info "For packages with existing files, use: stow -t ~ --adopt <package-name>"
+        
+        for package in "${not_stowed[@]}"; do
+            if gum confirm "Stow $package now?"; then
+                info "Stowing $package..."
+                
+                # Try normal stow first
+                if stow -d "$dotfiles_dir" -t ~ "$package" 2>/dev/null; then
+                    success "$package stowed successfully"
+                else
+                    # If normal stow fails, try with --adopt (for existing files)
+                    info "Trying with --adopt flag (for existing files)..."
+                    if stow -d "$dotfiles_dir" -t ~ --adopt "$package" 2>/dev/null; then
+                        success "$package stowed successfully (with --adopt)"
+                    else
+                        error "Failed to stow $package"
+                        info "You may need to stow it manually: cd $dotfiles_dir && stow -t ~ --adopt $package"
+                    fi
+                fi
+            fi
+        done
     fi
 }
 
