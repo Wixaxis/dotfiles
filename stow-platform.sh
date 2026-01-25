@@ -28,10 +28,30 @@ esac
 echo "Detected platform: $PLATFORM"
 echo ""
 
+# Check for DMS on Linux and offer installation if missing
+if [ "$OS" = "Linux" ]; then
+  if ! command -v dms &> /dev/null; then
+    echo "⚠️  DankMaterialShell (dms) is not installed."
+    if command -v gum &> /dev/null; then
+      if gum confirm "Would you like to install DankMaterialShell now?"; then
+        echo "Installing DankMaterialShell..."
+        curl -fsSL https://install.danklinux.com | sh
+        echo "✓ DankMaterialShell installed"
+      else
+        echo "Skipping DankMaterialShell installation"
+      fi
+    else
+      echo "Note: Install 'gum' to enable interactive DMS installation prompt"
+      echo "      Or install DMS manually: curl -fsSL https://install.danklinux.com | sh"
+    fi
+    echo ""
+  fi
+fi
+
 # Common packages (work on all platforms)
+# Note: On macOS, ghostty-raw is used instead of ghostty
 COMMON_PACKAGES=(
   "fastfetch"
-  "ghostty"
   "glow"
   "justfile"
   "kitty"
@@ -49,11 +69,12 @@ COMMON_PACKAGES=(
 
 # Linux-specific packages
 # Note: dunst, kitty, kvantum, qimgv, hyprpanel are archived (see archived/ directory)
+# Note: DMS config packages (dms-config, gtk-dms, environment-dms) are NOT auto-stowed
+#       They must be manually stowed if needed
 LINUX_PACKAGES=(
   "arch-update"
   "bash"
   "btop"
-  "ghostty"
   "papes"
   "qimgv"
   "qt6ct"
@@ -95,6 +116,21 @@ stow_packages() {
 # Stow common packages
 echo "=== Stowing common packages ==="
 stow_packages "${COMMON_PACKAGES[@]}"
+
+# Platform-specific ghostty selection
+if [ "$PLATFORM" = "macos" ]; then
+  # Use ghostty-raw on macOS (no DMS integration)
+  if [ -d "ghostty-raw" ]; then
+    echo "Stowing ghostty-raw (macOS uses non-DMS config)..."
+    stow -t ~ ghostty-raw || echo "  Warning: Failed to stow ghostty-raw"
+  fi
+else
+  # Use regular ghostty on Linux (with DMS integration)
+  if [ -d "ghostty" ]; then
+    echo "Stowing ghostty (Linux uses DMS-integrated config)..."
+    stow -t ~ ghostty || echo "  Warning: Failed to stow ghostty"
+  fi
+fi
 echo ""
 
 # Platform-specific packages
