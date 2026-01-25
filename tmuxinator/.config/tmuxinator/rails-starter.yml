@@ -1,7 +1,7 @@
-# /home/wixaxis/.config/tmuxinator/notesman.yml
+# /home/wixaxis/.config/tmuxinator/rails-starter.yml
 
-name: notesman
-root: ~/projects/notesman
+name: rails-starter
+root: ~/Projects/rails-starter
 
 windows:
   - editor: nvim .
