@@ -29,14 +29,23 @@ echo "Detected platform: $PLATFORM"
 echo ""
 
 # Check for DMS on Linux and offer installation if missing
+DMS_INSTALLED=false
 if [ "$OS" = "Linux" ]; then
-  if ! command -v dms &> /dev/null; then
+  if command -v dms &> /dev/null; then
+    DMS_INSTALLED=true
+    echo "✓ DankMaterialShell (dms) is installed"
+  else
     echo "⚠️  DankMaterialShell (dms) is not installed."
     if command -v gum &> /dev/null; then
       if gum confirm "Would you like to install DankMaterialShell now?"; then
         echo "Installing DankMaterialShell..."
         curl -fsSL https://install.danklinux.com | sh
-        echo "✓ DankMaterialShell installed"
+        if command -v dms &> /dev/null; then
+          DMS_INSTALLED=true
+          echo "✓ DankMaterialShell installed"
+        else
+          echo "⚠️  Installation may have failed. Please check manually."
+        fi
       else
         echo "Skipping DankMaterialShell installation"
       fi
@@ -44,8 +53,8 @@ if [ "$OS" = "Linux" ]; then
       echo "Note: Install 'gum' to enable interactive DMS installation prompt"
       echo "      Or install DMS manually: curl -fsSL https://install.danklinux.com | sh"
     fi
-    echo ""
   fi
+  echo ""
 fi
 
 # Common packages (work on all platforms)
@@ -69,8 +78,6 @@ COMMON_PACKAGES=(
 
 # Linux-specific packages
 # Note: dunst, kitty, kvantum, qimgv, hyprpanel are archived (see archived/ directory)
-# Note: DMS config packages (dms-config, gtk-dms, environment-dms) are NOT auto-stowed
-#       They must be manually stowed if needed
 LINUX_PACKAGES=(
   "arch-update"
   "bash"
@@ -85,6 +92,13 @@ LINUX_PACKAGES=(
   "solaar"
   "swaync"
   "waybar"
+)
+
+# DMS config packages (only stowed if DMS is installed)
+DMS_PACKAGES=(
+  "dms-config"
+  "gtk-dms"
+  "environment-dms"
 )
 
 # macOS-specific packages
@@ -138,6 +152,12 @@ case "$PLATFORM" in
   linux-wayland)
     echo "=== Stowing Linux packages ==="
     stow_packages "${LINUX_PACKAGES[@]}"
+    # Stow DMS packages if DMS is installed
+    if [ "$DMS_INSTALLED" = true ]; then
+      echo ""
+      echo "=== Stowing DMS config packages ==="
+      stow_packages "${DMS_PACKAGES[@]}"
+    fi
     ;;
   linux)
     echo "=== Stowing Linux packages (excluding Wayland-specific) ==="
@@ -147,6 +167,12 @@ case "$PLATFORM" in
         stow_packages "$pkg"
       fi
     done
+    # Stow DMS packages if DMS is installed
+    if [ "$DMS_INSTALLED" = true ]; then
+      echo ""
+      echo "=== Stowing DMS config packages ==="
+      stow_packages "${DMS_PACKAGES[@]}"
+    fi
     ;;
   macos)
     echo "=== Stowing macOS packages ==="
