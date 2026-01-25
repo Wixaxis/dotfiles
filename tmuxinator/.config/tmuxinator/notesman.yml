@@ -4,11 +4,11 @@ name: notesman
 root: ~/projects/notesman
 
 windows:
-  - editor: cd ~/projects/notesman && nvim .
-  - cursor_agent: cd ~/projects/notesman && cursor-agent
-  - terminal: cd ~/projects/notesman && zsh
+  - editor: nvim .
+  - cursor_agent: cursor-agent
+  - terminal:
   - server:
       layout: main-horizontal
       panes:
-        - cd ~/projects/notesman && (bin/dev || rails server)
-        - cd ~/projects/notesman && zsh
+        - bin/dev || rails server
+        -

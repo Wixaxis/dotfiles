@@ -1,0 +1,14 @@
+# /home/wixaxis/.config/tmuxinator/rails-starter.yml
+
+name: rails-starter
+root: ~/Projects/rails-starter
+
+windows:
+  - editor: nvim .
+  - cursor_agent: cursor-agent
+  - terminal:
+  - server:
+      layout: main-horizontal
+      panes:
+        - bin/dev || rails server
+        -
