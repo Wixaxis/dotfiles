@@ -1,5 +1,21 @@
 {
   "dankLauncherKeys": {
     "enabled": true
+  },
+  "calculator": {
+    "enabled": true,
+    "trigger": "="
+  },
+  "emojiLauncher": {
+    "enabled": true
+  },
+  "powerOptions": {
+    "enabled": true
+  },
+  "dankBatteryAlerts": {
+    "enabled": true
+  },
+  "dankActions": {
+    "enabled": true
   }
 }
