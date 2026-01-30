@@ -97,6 +97,7 @@ LINUX_PACKAGES=(
 # DMS config packages (only stowed if DMS is installed)
 DMS_PACKAGES=(
   "dms-config"
+  "icons-dms"
   "gtk-dms"
   "environment-dms"
 )
