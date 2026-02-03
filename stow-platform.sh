@@ -128,6 +128,19 @@ stow_packages() {
   done
 }
 
+# Function to unstow packages (removes symlinks created by stow)
+unstow_packages() {
+  local packages=("$@")
+  for package in "${packages[@]}"; do
+    if [ -d "$package" ]; then
+      if stow -t ~ -D "$package" 2>/dev/null; then
+        echo "Unstowed $package"
+      fi
+      # No warning if nothing was stowed - that's expected
+    fi
+  done
+}
+
 # Stow common packages
 echo "=== Stowing common packages ==="
 stow_packages "${COMMON_PACKAGES[@]}"
@@ -176,6 +189,9 @@ case "$PLATFORM" in
     fi
     ;;
   macos)
+    echo "=== Unstowing DMS packages (not used on macOS) ==="
+    unstow_packages "${DMS_PACKAGES[@]}"
+    echo ""
     echo "=== Stowing macOS packages ==="
     stow_packages "${MACOS_PACKAGES[@]}"
     echo ""
