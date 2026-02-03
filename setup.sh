@@ -293,8 +293,8 @@ check_stowed() {
     local packages=()
     
     # Common packages (available on all platforms)
+    # Note: macOS uses ghostty-raw (non-DMS config); Linux uses ghostty (DMS-integrated config)
     local common_stowed=(
-        "ghostty:.config/ghostty"
         "tmux:.config/tmux"
         "yazi:.config/yazi"
         "starship:.config/starship.toml"
@@ -308,6 +308,7 @@ check_stowed() {
     if [[ "$PLATFORM" == "arch" ]]; then
         packages=(
             "${common_stowed[@]}"
+            "ghostty:.config/ghostty"
             "bash:.bashrc"
             "hyprland:.config/hypr"
             "waybar:.config/waybar"
@@ -316,12 +317,14 @@ check_stowed() {
     elif [[ "$PLATFORM" == "macos" ]]; then
         packages=(
             "${common_stowed[@]}"
+            "ghostty-raw:.config/ghostty"
             "nushell:.config/nushell"
         )
     else
         # Common packages for unknown platform
         packages=(
             "${common_stowed[@]}"
+            "ghostty:.config/ghostty"
         )
     fi
     
