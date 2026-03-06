@@ -250,6 +250,16 @@ source = ./dms/colors.conf
 
 And add your own color definitions in `hyprland.conf`.
 
+### Using your own layouts (e.g. new Hyprland layout features)
+
+**Recommended approach (from [DMS compositor docs](https://danklinux.com/docs/dankmaterialshell/compositors)):**
+
+1. **Keep your config first, DMS sources last** – Put your layout config (`general`, `dwindle`, `master`, or any new layout blocks) in `hyprland.conf` **before** the `source = ./dms/...` lines. Hyprland applies config in order; DMS files only add/override what they define.
+
+2. **What DMS layout.conf actually overrides** – `dms/layout.conf` only sets `general { gaps_in, gaps_out, border_size }` and `decoration { rounding }`. It does **not** set `layout = dwindle`/`master` or any layout-specific options. So you can add new Hyprland layout features (e.g. master orientation, dwindle options, new layouts) in your `# LAYOUTS` section and they will apply; DMS will only override gaps and rounding when its layout.conf is sourced.
+
+3. **Optional: full control over gaps/rounding** – If you want to set gaps and rounding yourself (and not have DMS Settings → Compositor change them), remove `source = ./dms/layout.conf` and define `general` / `decoration` in your `hyprland.conf` instead.
+
 ### Theming
 
 DMS uses dynamic theming based on wallpapers. The theme is generated using:
