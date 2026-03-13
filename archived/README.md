@@ -29,11 +29,6 @@ This directory contains configuration packages that are not currently in use but
 - **Reason archived**: Not currently installed or used
 - **Date archived**: 2025-01-15
 
-### `hyprpanel/`
-- **Purpose**: Hyprpanel panel configuration
-- **Reason archived**: Switched back to Waybar as the status bar
-- **Date archived**: 2025-01-15
-
 ## Restoring Archived Configs
 
 To restore an archived configuration:

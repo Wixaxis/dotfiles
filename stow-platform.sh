@@ -48,7 +48,7 @@ COMMON_PACKAGES=(
 )
 
 # Linux-specific packages
-# Note: dunst, kitty, kvantum, qimgv, hyprpanel are archived (see archived/ directory)
+# Note: dunst, kitty, kvantum, qimgv are archived (see archived/ directory)
 LINUX_PACKAGES=(
   "arch-update"
   "bash"
@@ -73,7 +73,6 @@ MACOS_PACKAGES=(
 # Wayland-specific packages (subset of Linux)
 WAYLAND_PACKAGES=(
   "hyprland"
-  "hyprpanel"
   "swaync"
   "waybar"
 )
@@ -116,7 +115,7 @@ if [ "$PLATFORM" = "macos" ]; then
     stow -t ~ ghostty-raw || echo "  Warning: Failed to stow ghostty-raw"
   fi
 else
-  # Use ghostty-raw on Linux too (no DMS)
+  # Use ghostty-raw on Linux too
   if [ -d "ghostty-raw" ]; then
     echo "Stowing ghostty-raw..."
     stow -t ~ ghostty-raw || echo "  Warning: Failed to stow ghostty-raw"

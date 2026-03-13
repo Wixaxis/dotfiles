@@ -11,7 +11,6 @@ PACKAGES=(
     "mise:mise"
     "qt6ct:qt6ct"
     "hyprland:hyprland"
-    "hyprpanel:hyprpanel"
     "justfile:just"
     "lazygit:lazygit"
     "fastfetch:fastfetch"
