@@ -32,10 +32,6 @@ keybind = ctrl+plus=increase_font_size:1
 keybind = ctrl+minus=decrease_font_size:1
 keybind = ctrl+zero=reset_font_size
 
-# Material 3 UI elements
-unfocused-split-opacity = 0.7
-unfocused-split-fill = #44464f
-
 # Tab configuration
 gtk-titlebar = false
 
@@ -44,8 +40,8 @@ shell-integration = detect
 shell-integration-features = cursor,sudo,title,no-cursor
 keybind = shift+enter=text:\n
 
-# Rando stuff
+# Single instance
 gtk-single-instance = true
 
-# Dank color generation
+# Theme
 theme = dankcolors

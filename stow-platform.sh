@@ -28,35 +28,6 @@ esac
 echo "Detected platform: $PLATFORM"
 echo ""
 
-# Check for DMS on Linux and offer installation if missing
-DMS_INSTALLED=false
-if [ "$OS" = "Linux" ]; then
-  if command -v dms &> /dev/null; then
-    DMS_INSTALLED=true
-    echo "✓ DankMaterialShell (dms) is installed"
-  else
-    echo "⚠️  DankMaterialShell (dms) is not installed."
-    if command -v gum &> /dev/null; then
-      if gum confirm "Would you like to install DankMaterialShell now?"; then
-        echo "Installing DankMaterialShell..."
-        curl -fsSL https://install.danklinux.com | sh
-        if command -v dms &> /dev/null; then
-          DMS_INSTALLED=true
-          echo "✓ DankMaterialShell installed"
-        else
-          echo "⚠️  Installation may have failed. Please check manually."
-        fi
-      else
-        echo "Skipping DankMaterialShell installation"
-      fi
-    else
-      echo "Note: Install 'gum' to enable interactive DMS installation prompt"
-      echo "      Or install DMS manually: curl -fsSL https://install.danklinux.com | sh"
-    fi
-  fi
-  echo ""
-fi
-
 # Common packages (work on all platforms)
 # Note: On macOS, ghostty-raw is used instead of ghostty
 COMMON_PACKAGES=(
@@ -92,14 +63,6 @@ LINUX_PACKAGES=(
   "solaar"
   "swaync"
   "waybar"
-)
-
-# DMS config packages (only stowed if DMS is installed)
-DMS_PACKAGES=(
-  "dms-config"
-  "icons-dms"
-  "gtk-dms"
-  "environment-dms"
 )
 
 # macOS-specific packages
@@ -147,16 +110,16 @@ stow_packages "${COMMON_PACKAGES[@]}"
 
 # Platform-specific ghostty selection
 if [ "$PLATFORM" = "macos" ]; then
-  # Use ghostty-raw on macOS (no DMS integration)
+  # Use ghostty-raw on macOS
   if [ -d "ghostty-raw" ]; then
-    echo "Stowing ghostty-raw (macOS uses non-DMS config)..."
+    echo "Stowing ghostty-raw..."
     stow -t ~ ghostty-raw || echo "  Warning: Failed to stow ghostty-raw"
   fi
 else
-  # Use regular ghostty on Linux (with DMS integration)
-  if [ -d "ghostty" ]; then
-    echo "Stowing ghostty (Linux uses DMS-integrated config)..."
-    stow -t ~ ghostty || echo "  Warning: Failed to stow ghostty"
+  # Use ghostty-raw on Linux too (no DMS)
+  if [ -d "ghostty-raw" ]; then
+    echo "Stowing ghostty-raw..."
+    stow -t ~ ghostty-raw || echo "  Warning: Failed to stow ghostty-raw"
   fi
 fi
 echo ""
@@ -166,12 +129,6 @@ case "$PLATFORM" in
   linux-wayland)
     echo "=== Stowing Linux packages ==="
     stow_packages "${LINUX_PACKAGES[@]}"
-    # Stow DMS packages if DMS is installed
-    if [ "$DMS_INSTALLED" = true ]; then
-      echo ""
-      echo "=== Stowing DMS config packages ==="
-      stow_packages "${DMS_PACKAGES[@]}"
-    fi
     ;;
   linux)
     echo "=== Stowing Linux packages (excluding Wayland-specific) ==="
@@ -181,17 +138,8 @@ case "$PLATFORM" in
         stow_packages "$pkg"
       fi
     done
-    # Stow DMS packages if DMS is installed
-    if [ "$DMS_INSTALLED" = true ]; then
-      echo ""
-      echo "=== Stowing DMS config packages ==="
-      stow_packages "${DMS_PACKAGES[@]}"
-    fi
     ;;
   macos)
-    echo "=== Unstowing DMS packages (not used on macOS) ==="
-    unstow_packages "${DMS_PACKAGES[@]}"
-    echo ""
     echo "=== Stowing macOS packages ==="
     stow_packages "${MACOS_PACKAGES[@]}"
     echo ""
