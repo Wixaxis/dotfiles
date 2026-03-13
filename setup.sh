@@ -293,7 +293,6 @@ check_stowed() {
     local packages=()
     
     # Common packages (available on all platforms)
-    # Note: macOS uses ghostty-raw (non-DMS config); Linux uses ghostty (DMS-integrated config)
     local common_stowed=(
         "tmux:.config/tmux"
         "yazi:.config/yazi"
