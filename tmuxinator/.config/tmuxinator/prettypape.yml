@@ -1,0 +1,14 @@
+# /home/wixaxis/.config/tmuxinator/prettypape.yml
+
+name: prettypape
+root: ~/Projects/PrettyPape
+
+windows:
+  - cursor_agent: cursor-agent
+  - editor: nvim .
+  - terminal:
+  - server:
+      layout: main-horizontal
+      panes:
+        - bin/dev || bin/rails server
+        -
