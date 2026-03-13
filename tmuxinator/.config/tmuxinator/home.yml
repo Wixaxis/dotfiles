@@ -1,0 +1,9 @@
+# /home/wixaxis/.config/tmuxinator/home.yml
+
+name: home
+root: ~/
+
+windows:
+  - cursor_agent: cursor-agent
+  - shell: zsh
+  - notes: cd ~/Notes
