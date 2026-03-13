@@ -175,19 +175,6 @@ Some configuration packages have been moved to the `archived/` directory. These 
 - **Description**: Complete Hyprland window manager setup for Wayland
 - **Note**: Window rules syntax changed significantly in v0.53.0. See `WINDOW_LAYER_RULES_REFERENCE.md` for details.
 
-#### `hyprpanel/`
-- **Purpose**: Hyprpanel configuration
-- **Files**: 
-  - `~/.config/hyprpanel/config.json`
-  - `~/.config/hyprpanel/modules.json`
-  - `~/.config/hyprpanel/modules.scss`
-- **Description**: Panel configuration for Hyprland
-
-#### `hyprpanel_copy/`
-- **Purpose**: Backup/copy of hyprpanel configuration
-- **Files**: Alternative configuration files
-- **Note**: Appears to be a backup or alternative configuration
-
 #### `justfile/`
 - **Purpose**: Just command runner configuration
 - **Files**: `~/justfile`
@@ -410,7 +397,6 @@ This repository uses a **single unified branch** (`main`) that works on all plat
 - `dunst/` - Notification daemon
 - `ghostty/` - Terminal emulator
 - `hyprland/` - Wayland compositor
-- `hyprpanel/` - Hyprland panel
 - `kvantum/` - Qt theme engine
 - `solaar/` - Logitech device manager
 - `swaync/` - Wayland notification center
