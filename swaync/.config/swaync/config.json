@@ -27,6 +27,7 @@
     "dnd",
     "notifications"
   ],
+  "text-empty": "",
   "widget-config": {
     "mpris": {
       "image-size": 96,
