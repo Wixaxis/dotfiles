@@ -4,6 +4,6 @@ name: home
 root: ~/
 
 windows:
-  - cursor_agent: cursor-agent
+  - opencode: opencode -c
   - shell: zsh
   - notes: cd ~/Notes

@@ -5,4 +5,4 @@ root: ~/.config/nvim
 
 windows:
   - neovim: nvim
-  - cursor_agent: cursor-agent
+  - opencode: opencode -c

@@ -4,7 +4,7 @@ name: dotfiles
 root: ~/dotfiles
 
 windows:
-  - cursor_agent: cursor-agent
+  - opencode: opencode -c
   - testing_shell: zsh
   - lazygit: lazygit
   - editor: nvim

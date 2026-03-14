@@ -5,7 +5,7 @@ root: ~/projects/notesman
 
 windows:
   - editor: nvim .
-  - cursor_agent: cursor-agent
+  - opencode: opencode -c
   - terminal:
   - server:
       layout: main-horizontal
