@@ -1,0 +1,7 @@
+name: ai-chat
+root: ~/.vicinae/extensions/ai-chat
+
+windows:
+  - opencode: opencode -c
+  - editor: nvim .
+  - terminal:
