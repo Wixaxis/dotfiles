@@ -16,12 +16,28 @@
 @define-color nord14 #A3BE8C;
 @define-color nord15 #B48EAD;
 
-/* Base */
+/* Base - Aggressive reset for no rounded corners */
 * {
   color: @nord6;
   font-family: "CaskaydiaCove Nerd Font", "FiraCode Nerd Font", sans-serif;
   font-weight: 600;
   font-size: 15px;
+  border-radius: 0 !important;
+}
+
+/* GTK widgets that might have defaults */
+switch,
+switch slider,
+scale,
+scale trough,
+scale highlight,
+scale slider,
+scrollbar,
+scrollbar slider,
+button,
+.image,
+.overlay {
+  border-radius: 0 !important;
 }
 
 /* Floating Notifications - Bold i3bar Style */

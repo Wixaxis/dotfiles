@@ -53,8 +53,7 @@
     "notifications",
     "buttons-grid",
     "backlight#intel_backlight",
-    "backlight#ddcci18",
-    "volume"
+    "backlight#ddcci18"
   ],
   "widget-config": {
     "menubar#label": {
