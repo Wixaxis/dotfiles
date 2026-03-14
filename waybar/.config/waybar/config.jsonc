@@ -55,12 +55,6 @@
     "tray": {
         "spacing": 10
     },
-    // "clock": {
-    //     "tooltip-format": "<tt>{calendar}</tt>",
-    //     "format-alt": "  {:%a, %d %b %Y}",
-    //     "format": "  {:%H:%M:%S}",
-    //     "interval": 1
-    // },
     "clock": {
         "tooltip-format": "<tt>{calendar}</tt>",
         "format": "{:%H:%M:%S  %a %d}",
@@ -109,7 +103,6 @@
         "scroll-step": 1
     },
     "backlight": {
-        // "device": "acpi_video1",
         "tooltip": false,
         "format": "{percent}% {icon}",
         "format-icons": [
