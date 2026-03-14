@@ -200,17 +200,45 @@
   color: @nord1;
 }
 
-/* Hide no notifications placeholder completely */
-.widget-notifications-placeholder,
-.widget-notifications-placeholder * {
-  background: transparent;
-  border: none;
-  min-height: 0;
-  min-width: 0;
-  padding: 0;
+/* Hide no notifications placeholder - aggressive */
+.widget-notifications-placeholder {
+  display: none;
+}
+
+/* DND widget */
+.widget-dnd {
+  margin: 0 0 12px 0;
+  padding: 12px 16px;
+  font-size: 16px;
+  font-weight: 600;
+  color: @nord6;
+  background: @nord1;
+  border: 2px solid @nord3;
+}
+
+.widget-dnd>switch {
+  font-size: initial;
+  border-radius: 0;
+  background: @nord11;
+  border: 2px solid @nord3;
+  box-shadow: none;
+  min-width: 48px;
+  min-height: 24px;
+}
+
+.widget-dnd>switch:checked {
+  background: @nord14;
+  border-color: @nord3;
+}
+
+.widget-dnd>switch slider {
+  background: @nord6;
+  border-radius: 0;
+  min-width: 20px;
+  min-height: 20px;
   margin: 0;
-  font-size: 0;
-  opacity: 0;
+  border: 2px solid @nord3;
+  box-shadow: none;
 }
 
 /* Scrollbar styling */

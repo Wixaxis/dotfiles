@@ -24,6 +24,7 @@
   "script-fail-notify": true,
   "widgets": [
     "mpris",
+    "dnd",
     "notifications"
   ],
   "widget-config": {
