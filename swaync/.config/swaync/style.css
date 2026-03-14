@@ -235,11 +235,12 @@ button,
   color: @nord6;
   background: @nord1;
   border-bottom: 2px solid @nord3;
+  border-radius: 0 !important;
 }
 
 .widget-dnd>switch {
   font-size: initial;
-  border-radius: 0;
+  border-radius: 0 !important;
   background: @nord11;
   border: 2px solid @nord3;
   box-shadow: none;
@@ -254,12 +255,46 @@ button,
 
 .widget-dnd>switch slider {
   background: @nord6;
-  border-radius: 0;
+  border-radius: 0 !important;
   min-width: 20px;
   min-height: 20px;
   margin: 0;
   border: 2px solid @nord3;
   box-shadow: none;
+}
+
+/* Hide no notifications placeholder completely */
+.widget-notifications-placeholder,
+.widget-notifications-placeholder * {
+  background: transparent;
+  border: none;
+  min-height: 0;
+  min-width: 0;
+  padding: 0;
+  margin: 0;
+  font-size: 0;
+  opacity: 0;
+}
+
+/* Ensure all widgets have no rounded corners */
+.widget-title,
+.widget-dnd,
+.widget-label,
+.widget-mpris,
+.widget-volume,
+.widget-backlight,
+.widget-buttons-grid,
+.power-buttons,
+.control-center-list,
+.floating-notifications {
+  border-radius: 0 !important;
+}
+
+/* GTK internal widgets */
+.widget-dnd switch,
+.widget-dnd switch slider,
+.widget-mpris-player {
+  border-radius: 0 !important;
 }
 
 /* Label widget */
