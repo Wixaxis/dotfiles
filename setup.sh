@@ -450,6 +450,10 @@ check_packages() {
         "xdg-desktop-portal"
         "xdg-desktop-portal-hyprland"
         "flameshot"
+        "papirus-icon-theme"
+        "nordzy-icon-theme-git"
+        "colloid-icon-theme-git"
+        "tela-icon-theme"
     )
     
     # macOS-specific packages
