@@ -4,7 +4,7 @@ name: prettypape
 root: ~/Projects/PrettyPape
 
 windows:
-  - cursor_agent: cursor-agent
+  - opencode: opencode -c
   - editor: nvim .
   - terminal:
   - server:

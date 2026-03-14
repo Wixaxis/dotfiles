@@ -5,7 +5,7 @@ root: ~/work/activenow
 
 windows:
   - neovim: nvim
-  - AI: cursor-agent
+  - opencode: opencode -c
   - notes: cd ~/Notes ; nvim work/dash.md
   # - chat_and_notes: mprocs --names 'notes,codex' '' 'codex'
   - general_terminal: fastfetch

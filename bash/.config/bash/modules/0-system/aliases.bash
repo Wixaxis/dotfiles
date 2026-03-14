@@ -51,6 +51,8 @@ alias lg=lazygit
 
 # Cursor Agent shortcut
 alias ca=cursor-agent
+alias oc=opencode
+alias co=codex
 
 # mise run shortcut
 alias mr='mise run'

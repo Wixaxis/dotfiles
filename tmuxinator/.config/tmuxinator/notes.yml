@@ -4,5 +4,5 @@ name: notes
 root: ~/Notes/Obsidian/Główny Sejf
 
 windows:
-  - AI: cursor-agent
+  - opencode: opencode -c
   - editor: nvim .
