@@ -22,28 +22,41 @@
   font-family: "CaskaydiaCove Nerd Font", "FiraCode Nerd Font", sans-serif;
   font-weight: 600;
   font-size: 15px;
-  border-radius: 0 !important;
 }
 
-/* GTK widgets that might have defaults */
-switch,
-switch slider,
-scale,
-scale trough,
-scale highlight,
-scale slider,
-scrollbar,
-scrollbar slider,
-button,
-.image,
-.overlay {
-  border-radius: 0 !important;
+/* Reset all border-radius */
+* {
+  border-radius: 0;
+}
+
+/* Control Center Window */
+.control-center {
+  background-color: @nord0;
+  border: 2px solid @nord3;
+  padding: 12px;
+}
+
+.control-center-list {
+  background: transparent;
+  padding: 0;
+}
+
+.floating-notifications {
+  background: transparent;
+}
+
+.blank-window {
+  background-color: rgba(46, 52, 64, 0.8);
 }
 
 /* Floating Notifications - Bold i3bar Style */
 .notification-row {
   outline: none;
-  margin: 0;
+  margin: 0 0 8px 0;
+}
+
+.notification-row:last-child {
+  margin-bottom: 0;
 }
 
 .notification-row:focus,
@@ -53,7 +66,7 @@ button,
 
 .notification {
   border-radius: 0;
-  margin: 4px 8px;
+  margin: 0;
   padding: 0;
   background: @nord1;
   border: 2px solid @nord3;
@@ -158,162 +171,12 @@ button,
   margin-top: 4px;
 }
 
-/* Progress bar hidden */
-.notification progress,
-.notification progress trough {
-  opacity: 0;
-  min-height: 0;
-  margin: 0;
-  padding: 0;
-  border: none;
-}
-
-.notification progress progress {
-  opacity: 0;
-  min-height: 0;
-}
-
-/* Control Center - Bold Block Style */
-.control-center {
-  background-color: @nord0;
-  border: 2px solid @nord3;
-  border-radius: 0;
-  box-shadow: none;
-  padding: 0;
-}
-
-.control-center-list {
-  background: transparent;
-}
-
-.floating-notifications {
-  background: transparent;
-}
-
-.blank-window {
-  background-color: rgba(46, 52, 64, 0.8);
-}
-
-/*** Widgets ***/
-
-/* Title widget */
-.widget-title {
-  margin: 0;
-  padding: 12px 16px;
-  font-size: 18px;
-  font-weight: 700;
-  color: @nord0;
-  background: @nord8;
-  border-bottom: 2px solid @nord3;
-}
-
-.widget-title>button {
-  font-size: 14px;
-  color: @nord0;
-  text-shadow: none;
-  background: @nord9;
-  border: 2px solid @nord0;
-  border-radius: 0;
-  box-shadow: none;
-  padding: 6px 12px;
-  font-weight: 700;
-  transition: none;
-}
-
-.widget-title>button:hover {
-  background: @nord11;
-  color: @nord0;
-  border-color: @nord0;
-}
-
-/* DND widget */
-.widget-dnd {
-  margin: 0;
-  padding: 12px 16px;
-  font-size: 16px;
-  font-weight: 600;
-  color: @nord6;
-  background: @nord1;
-  border-bottom: 2px solid @nord3;
-  border-radius: 0 !important;
-}
-
-.widget-dnd>switch {
-  font-size: initial;
-  border-radius: 0 !important;
-  background: @nord11;
-  border: 2px solid @nord3;
-  box-shadow: none;
-  min-width: 48px;
-  min-height: 24px;
-}
-
-.widget-dnd>switch:checked {
-  background: @nord14;
-  border-color: @nord3;
-}
-
-.widget-dnd>switch slider {
-  background: @nord6;
-  border-radius: 0 !important;
-  min-width: 20px;
-  min-height: 20px;
-  margin: 0;
-  border: 2px solid @nord3;
-  box-shadow: none;
-}
-
-/* Hide no notifications placeholder completely */
-.widget-notifications-placeholder,
-.widget-notifications-placeholder * {
-  background: transparent;
-  border: none;
-  min-height: 0;
-  min-width: 0;
-  padding: 0;
-  margin: 0;
-  font-size: 0;
-  opacity: 0;
-}
-
-/* Ensure all widgets have no rounded corners */
-.widget-title,
-.widget-dnd,
-.widget-label,
-.widget-mpris,
-.widget-volume,
-.widget-backlight,
-.widget-buttons-grid,
-.power-buttons,
-.control-center-list,
-.floating-notifications {
-  border-radius: 0 !important;
-}
-
-/* GTK internal widgets */
-.widget-dnd switch,
-.widget-dnd switch slider,
-.widget-mpris-player {
-  border-radius: 0 !important;
-}
-
-/* Label widget */
-.widget-label {
-  margin: 8px 16px;
-}
-
-.widget-label>label {
-  font-size: 15px;
-  font-weight: 600;
-  color: @nord6;
-}
-
 /* Mpris widget - Music Player */
 .widget-mpris {
   background: @nord12;
   border-radius: 0;
   border: 2px solid @nord3;
-  margin: 8px;
+  margin: 0 0 12px 0;
   padding: 0;
 }
 
@@ -337,121 +200,17 @@ button,
   color: @nord1;
 }
 
-/* Volume Widget - Cyan */
-.widget-volume {
-  background-color: @nord8;
-  padding: 12px 16px;
-  border-radius: 0;
-  border: 2px solid @nord3;
-  margin: 8px;
-}
-
-.widget-volume label {
-  color: @nord0;
-  font-weight: 700;
-  font-size: 16px;
-}
-
-/* Backlight Widget - Teal */
-.widget-backlight {
-  background-color: @nord7;
-  padding: 12px 16px;
-  border-radius: 0;
-  border: 2px solid @nord3;
-  margin: 8px;
-  margin-bottom: 8px;
-}
-
-.widget-backlight label {
-  color: @nord0;
-  font-weight: 700;
-  font-size: 16px;
-}
-
-/* Power Buttons - Red */
-.power-buttons {
-  background-color: @nord11;
-  padding: 12px;
-  margin: 8px;
-  border-radius: 0;
-  border: 2px solid @nord3;
-}
-
-.power-buttons>button {
-  background: @nord1;
-  border: 2px solid @nord3;
-  border-radius: 0;
-  padding: 8px 12px;
-  margin: 4px;
-  color: @nord6;
-  font-weight: 700;
-  font-size: 14px;
-  transition: none;
-}
-
-.power-buttons>button:hover {
-  background: @nord0;
-  color: @nord6;
-  border-color: @nord6;
-}
-
-.widget-menubar>box>.menu-button-bar>button {
-  border: 2px solid @nord3;
-  background: @nord2;
-  border-radius: 0;
-  padding: 8px 14px;
-  margin: 2px;
-  font-weight: 700;
-  font-size: 15px;
-  transition: none;
-}
-
-.widget-menubar>box>.menu-button-bar>button:hover {
-  background: @nord9;
-  color: @nord0;
-  border-color: @nord3;
-}
-
-.topbar-buttons>button {
-  border: 2px solid @nord3;
-  background: @nord2;
-  border-radius: 0;
-  padding: 8px 14px;
-  margin: 2px;
-  font-weight: 700;
-  transition: none;
-}
-
-.topbar-buttons>button:hover {
-  background: @nord9;
-  color: @nord0;
-  border-color: @nord3;
-}
-
-/* Buttons Grid - Colorful */
-.widget-buttons-grid {
-  padding: 12px;
-  margin: 8px;
-  border-radius: 0;
-  background-color: @nord1;
-  border: 2px solid @nord3;
-}
-
-.widget-buttons-grid>flowbox>flowboxchild>button {
-  background: @nord2;
-  border-radius: 0;
-  border: 2px solid @nord3;
-  padding: 12px;
-  color: @nord6;
-  font-size: 22px;
-  font-weight: 700;
-  transition: none;
-}
-
-.widget-buttons-grid>flowbox>flowboxchild>button:hover {
-  background: @nord9;
-  color: @nord0;
-  border-color: @nord3;
+/* Hide no notifications placeholder completely */
+.widget-notifications-placeholder,
+.widget-notifications-placeholder * {
+  background: transparent;
+  border: none;
+  min-height: 0;
+  min-width: 0;
+  padding: 0;
+  margin: 0;
+  font-size: 0;
+  opacity: 0;
 }
 
 /* Scrollbar styling */
