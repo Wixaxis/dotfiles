@@ -2,26 +2,24 @@
     "layer": "top",
     "position": "top",
     "spacing": 0,
-    "height": 25,
+    "height": 30,
     "margin-top": 0,
     "margin-bottom": 0,
-    "margin-left": 5,
-    "margin-right": 5,
+    "margin-left": 0,
+    "margin-right": 0,
     "modules-left": [
-        "clock",
-        "hyprland/window"
+        "hyprland/workspaces"
     ],
     "modules-center": [
-        "hyprland/workspaces"
+        "clock"
     ],
     "modules-right": [
         "tray",
+        "idle_inhibitor",
         "cpu",
         "memory",
-        "pulseaudio",
         "backlight",
-        // "network",
-        "idle_inhibitor",
+        "pulseaudio",
         "battery",
         "custom/notification"
     ],
@@ -29,7 +27,7 @@
         "on-click": "activate",
         "format": "{icon}",
         "format-icons": {
-            "default": "",
+            "default": "○",
             "1": "1",
             "2": "2",
             "3": "3",
@@ -39,7 +37,8 @@
             "7": "7",
             "8": "8",
             "9": "9",
-            "urgent": "!"
+            "active": "◉",
+            "urgent": "◈"
         }
     },
     "memory": {
@@ -64,7 +63,7 @@
     // },
     "clock": {
         "tooltip-format": "<tt>{calendar}</tt>",
-        "format": "{:%H:%M:%S %a, %d %b %Y}",
+        "format": "{:%H:%M:%S  %a %d}",
         "interval": 1
     },
     "idle_inhibitor": {
