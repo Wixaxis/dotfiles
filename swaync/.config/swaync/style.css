@@ -1,41 +1,30 @@
-/* Nord Color Palette */
-@define-color nord0 #2E3440;   /* Polar Night - darkest */
-@define-color nord1 #3B4252;   /* Polar Night - dark */
-@define-color nord2 #434C5E;   /* Polar Night - medium */
-@define-color nord3 #4C566A;   /* Polar Night - light */
-@define-color nord4 #D8DEE9;   /* Snow Storm - dark */
-@define-color nord5 #E5E9F0;   /* Snow Storm - medium */
-@define-color nord6 #ECEFF4;   /* Snow Storm - lightest */
-@define-color nord7 #8FBCBB;   /* Frost - turquoise */
-@define-color nord8 #88C0D0;   /* Frost - ice blue */
-@define-color nord9 #81A1C1;   /* Frost - blue */
-@define-color nord10 #5E81AC;  /* Frost - dark blue */
-@define-color nord11 #BF616A;  /* Aurora - red */
-@define-color nord12 #D08770;  /* Aurora - orange */
-@define-color nord13 #EBCB8B;  /* Aurora - yellow */
-@define-color nord14 #A3BE8C;  /* Aurora - green */
-@define-color nord15 #B48EAD;  /* Aurora - purple */
+/* Nord Color Palette - i3bar Style */
+@define-color nord0 #2E3440;
+@define-color nord1 #3B4252;
+@define-color nord2 #434C5E;
+@define-color nord3 #4C566A;
+@define-color nord4 #D8DEE9;
+@define-color nord5 #E5E9F0;
+@define-color nord6 #ECEFF4;
+@define-color nord7 #8FBCBB;
+@define-color nord8 #88C0D0;
+@define-color nord9 #81A1C1;
+@define-color nord10 #5E81AC;
+@define-color nord11 #BF616A;
+@define-color nord12 #D08770;
+@define-color nord13 #EBCB8B;
+@define-color nord14 #A3BE8C;
+@define-color nord15 #B48EAD;
 
-/* Theme Colors */
-@define-color noti-border-color @nord3;
-@define-color noti-bg @nord0;
-@define-color noti-bg-alt @nord1;
-@define-color noti-fg @nord4;
-@define-color noti-bg-focus @nord9;
-@define-color noti-close-bg @nord11;
-@define-color noti-close-bg-hover @nord12;
-@define-color noti-urgent @nord11;
-@define-color bg-selected @nord3;
-@define-color bg-hover @nord2;
-
+/* Base */
 * {
   color: @nord6;
-  font-family: "Noto Sans", "Font Awesome 6 Free", sans-serif;
-  font-weight: 500;
-  font-size: 14px;
+  font-family: "CaskaydiaCove Nerd Font", "FiraCode Nerd Font", sans-serif;
+  font-weight: 600;
+  font-size: 15px;
 }
 
-/* Notifications */
+/* Floating Notifications - Bold i3bar Style */
 .notification-row {
   outline: none;
   margin: 0;
@@ -47,34 +36,27 @@
 }
 
 .notification {
-  border-radius: 12px;
-  margin: 8px;
-  box-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.4),
-              0 0 0 1px rgba(136, 192, 208, 0.1);
+  border-radius: 0;
+  margin: 4px 8px;
   padding: 0;
   background: @nord1;
-  border: 1px solid @nord3;
-  transition: all 0.2s ease-in-out;
+  border: 2px solid @nord3;
+  transition: none;
 }
 
 .notification:hover {
-  box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.5),
-              0 0 0 1px @nord8;
   border-color: @nord8;
-  transform: translateY(-1px);
 }
 
 .critical {
-  border: 2px solid @nord11;
+  border: 3px solid @nord11;
   background: @nord1;
-  box-shadow: 0 4px 16px 0 rgba(191, 97, 106, 0.3),
-              0 0 0 1px rgba(191, 97, 106, 0.2);
 }
 
 .notification-content {
   background: transparent;
-  padding: 12px;
-  border-radius: 12px;
+  padding: 10px 14px;
+  border-radius: 0;
 }
 
 .close-button {
@@ -82,81 +64,60 @@
   color: @nord6;
   text-shadow: none;
   padding: 0;
-  border-radius: 50%;
-  margin-top: 8px;
-  margin-right: 12px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  border: 2px solid transparent;
-  min-width: 24px;
-  min-height: 24px;
-  transition: all 0.2s ease-in-out;
+  border-radius: 0;
+  margin-top: 6px;
+  margin-right: 10px;
+  border: none;
+  min-width: 28px;
+  min-height: 28px;
+  font-weight: 700;
+  font-size: 16px;
+  transition: none;
 }
 
 .close-button:hover {
   background: @nord11;
-  color: @nord6;
-  box-shadow: 0 4px 8px rgba(191, 97, 106, 0.4);
-  transform: scale(1.1);
+  color: @nord0;
 }
 
 .notification-default-action,
 .notification-action {
-  padding: 8px 12px;
-  margin: 2px;
+  padding: 8px 14px;
+  margin: 0;
   box-shadow: none;
   background: @nord2;
   color: @nord6;
-  border-radius: 6px;
-  border: 1px solid @nord3;
-  transition: all 0.2s ease-in-out;
+  border-radius: 0;
+  border: none;
+  border-top: 2px solid @nord3;
+  font-weight: 600;
+  transition: none;
 }
 
 .notification-default-action:hover,
 .notification-action:hover {
   background: @nord9;
   color: @nord0;
-  border-color: @nord8;
-  transform: translateY(-1px);
-  box-shadow: 0 2px 8px rgba(129, 161, 193, 0.3);
-}
-
-.notification-default-action {
-  border-radius: 6px;
-}
-
-.notification-default-action:not(:only-child) {
-  border-bottom-left-radius: 0px;
-  border-bottom-right-radius: 0px;
-}
-
-.notification-action {
-  border-radius: 0px;
-  border-top: 1px solid @nord3;
-  border-right: none;
 }
 
 .notification-action:first-child {
-  border-bottom-left-radius: 6px;
-}
-
-.notification-action:last-child {
-  border-bottom-right-radius: 6px;
+  border-right: 1px solid @nord3;
 }
 
 .image {
-  border-radius: 8px;
+  border-radius: 0;
 }
 
 .body-image {
   margin-top: 8px;
   background-color: @nord2;
-  border-radius: 8px;
-  border: 1px solid @nord3;
+  border-radius: 0;
+  border: 2px solid @nord3;
 }
 
 .summary {
-  font-size: 15px;
-  font-weight: 600;
+  font-size: 17px;
+  font-weight: 700;
   background: transparent;
   color: @nord6;
   text-shadow: none;
@@ -164,48 +125,24 @@
 }
 
 .time {
-  font-size: 12px;
-  font-weight: 500;
+  font-size: 13px;
+  font-weight: 600;
   background: transparent;
   color: @nord4;
   text-shadow: none;
-  margin-right: 12px;
-  opacity: 0.8;
+  margin-right: 10px;
 }
 
 .body {
-  font-size: 13px;
-  font-weight: 400;
+  font-size: 14px;
+  font-weight: 500;
   background: transparent;
   color: @nord5;
   text-shadow: none;
   margin-top: 4px;
 }
 
-/* Progress bar in notifications (used by volumectl) */
-progress {
-  background-color: @nord2;
-  border-radius: 4px;
-  border: 1px solid @nord3;
-  min-height: 6px;
-  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.2);
-}
-
-progress trough {
-  background-color: @nord2;
-  border-radius: 4px;
-  border: 1px solid @nord3;
-  min-height: 6px;
-}
-
-progress progress {
-  background-color: @nord8;
-  border-radius: 4px;
-  border: none;
-  box-shadow: 0 1px 2px rgba(136, 192, 208, 0.3);
-}
-
-/* Notification progress bar - HIDDEN (we use wob or better notifications instead) */
+/* Progress bar hidden */
 .notification progress,
 .notification progress trough {
   opacity: 0;
@@ -220,20 +157,13 @@ progress progress {
   min-height: 0;
 }
 
-/* Control Center */
-.top-action-title {
-  color: @nord6;
-  font-size: 18px;
-  font-weight: 600;
-  text-shadow: none;
-}
-
+/* Control Center - Bold Block Style */
 .control-center {
   background-color: @nord0;
-  border: 1px solid @nord3;
-  border-radius: 16px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
-  padding: 8px;
+  border: 2px solid @nord3;
+  border-radius: 0;
+  box-shadow: none;
+  padding: 0;
 }
 
 .control-center-list {
@@ -245,246 +175,272 @@ progress progress {
 }
 
 .blank-window {
-  background-color: rgba(46, 52, 64, 0.6);
-  backdrop-filter: blur(8px);
+  background-color: rgba(46, 52, 64, 0.8);
 }
 
 /*** Widgets ***/
 
 /* Title widget */
 .widget-title {
-  margin: 12px;
-  font-size: 1.5rem;
-  font-weight: 600;
-  color: @nord6;
+  margin: 0;
+  padding: 12px 16px;
+  font-size: 18px;
+  font-weight: 700;
+  color: @nord0;
+  background: @nord8;
+  border-bottom: 2px solid @nord3;
 }
 
 .widget-title>button {
-  font-size: 13px;
-  color: @nord6;
+  font-size: 14px;
+  color: @nord0;
   text-shadow: none;
-  background: @nord2;
-  border: 1px solid @nord3;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  border-radius: 8px;
+  background: @nord9;
+  border: 2px solid @nord0;
+  border-radius: 0;
+  box-shadow: none;
   padding: 6px 12px;
-  transition: all 0.2s ease-in-out;
+  font-weight: 700;
+  transition: none;
 }
 
 .widget-title>button:hover {
-  background: @nord9;
+  background: @nord11;
   color: @nord0;
-  border-color: @nord8;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 8px rgba(129, 161, 193, 0.3);
+  border-color: @nord0;
 }
 
 /* DND widget */
 .widget-dnd {
-  margin: 12px;
-  font-size: 1.1rem;
+  margin: 0;
+  padding: 12px 16px;
+  font-size: 16px;
+  font-weight: 600;
   color: @nord6;
+  background: @nord1;
+  border-bottom: 2px solid @nord3;
 }
 
 .widget-dnd>switch {
   font-size: initial;
-  border-radius: 12px;
-  background: @nord2;
-  border: 1px solid @nord3;
-  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+  border-radius: 0;
+  background: @nord11;
+  border: 2px solid @nord3;
+  box-shadow: none;
   min-width: 48px;
   min-height: 24px;
 }
 
 .widget-dnd>switch:checked {
   background: @nord14;
-  border-color: @nord14;
+  border-color: @nord3;
 }
 
 .widget-dnd>switch slider {
   background: @nord6;
-  border-radius: 50%;
+  border-radius: 0;
   min-width: 20px;
   min-height: 20px;
-  margin: 2px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  margin: 0;
+  border: 2px solid @nord3;
+  box-shadow: none;
 }
 
 /* Label widget */
 .widget-label {
-  margin: 12px;
+  margin: 8px 16px;
 }
 
 .widget-label>label {
-  font-size: 1.1rem;
+  font-size: 15px;
+  font-weight: 600;
   color: @nord6;
 }
 
-/* Mpris widget */
+/* Mpris widget - Music Player */
 .widget-mpris {
-  background: @nord1;
-  border-radius: 12px;
-  border: 1px solid @nord3;
+  background: @nord12;
+  border-radius: 0;
+  border: 2px solid @nord3;
   margin: 8px;
-  padding: 8px;
+  padding: 0;
 }
 
 .widget-mpris-player {
   padding: 12px;
   margin: 0;
-  border-radius: 8px;
-  background: @nord2;
+  border-radius: 0;
+  background: @nord12;
 }
 
 .widget-mpris-title {
-  font-weight: 600;
-  font-size: 1.2rem;
-  color: @nord6;
+  font-weight: 700;
+  font-size: 16px;
+  color: @nord0;
   margin-bottom: 4px;
 }
 
 .widget-mpris-subtitle {
-  font-size: 1rem;
-  color: @nord5;
+  font-size: 14px;
+  font-weight: 600;
+  color: @nord1;
 }
 
-/* Volume and Brightness Widget */
+/* Volume Widget - Cyan */
 .widget-volume {
-  background-color: @nord1;
-  padding: 12px;
-  border-radius: 12px;
-  border: 1px solid @nord3;
+  background-color: @nord8;
+  padding: 12px 16px;
+  border-radius: 0;
+  border: 2px solid @nord3;
   margin: 8px;
 }
 
+.widget-volume label {
+  color: @nord0;
+  font-weight: 700;
+  font-size: 16px;
+}
+
+/* Backlight Widget - Teal */
 .widget-backlight {
-  background-color: @nord1;
-  padding: 12px;
-  border-radius: 12px;
-  border: 1px solid @nord3;
+  background-color: @nord7;
+  padding: 12px 16px;
+  border-radius: 0;
+  border: 2px solid @nord3;
   margin: 8px;
   margin-bottom: 8px;
 }
 
+.widget-backlight label {
+  color: @nord0;
+  font-weight: 700;
+  font-size: 16px;
+}
+
+/* Power Buttons - Red */
 .power-buttons {
-  background-color: @nord1;
+  background-color: @nord11;
   padding: 12px;
   margin: 8px;
-  border-radius: 12px;
-  border: 1px solid @nord3;
+  border-radius: 0;
+  border: 2px solid @nord3;
 }
 
 .power-buttons>button {
-  background: @nord2;
-  border: 1px solid @nord3;
-  border-radius: 8px;
-  padding: 8px;
+  background: @nord1;
+  border: 2px solid @nord3;
+  border-radius: 0;
+  padding: 8px 12px;
   margin: 4px;
   color: @nord6;
-  transition: all 0.2s ease-in-out;
+  font-weight: 700;
+  font-size: 14px;
+  transition: none;
 }
 
 .power-buttons>button:hover {
-  background: @nord9;
-  color: @nord0;
-  border-color: @nord8;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(129, 161, 193, 0.3);
+  background: @nord0;
+  color: @nord6;
+  border-color: @nord6;
 }
 
 .widget-menubar>box>.menu-button-bar>button {
-  border: 1px solid @nord3;
+  border: 2px solid @nord3;
   background: @nord2;
-  border-radius: 8px;
-  padding: 6px 12px;
+  border-radius: 0;
+  padding: 8px 14px;
   margin: 2px;
-  transition: all 0.2s ease-in-out;
+  font-weight: 700;
+  font-size: 15px;
+  transition: none;
 }
 
 .widget-menubar>box>.menu-button-bar>button:hover {
   background: @nord9;
   color: @nord0;
-  border-color: @nord8;
+  border-color: @nord3;
 }
 
 .topbar-buttons>button {
-  border: 1px solid @nord3;
+  border: 2px solid @nord3;
   background: @nord2;
-  border-radius: 8px;
-  padding: 6px 12px;
+  border-radius: 0;
+  padding: 8px 14px;
   margin: 2px;
-  transition: all 0.2s ease-in-out;
+  font-weight: 700;
+  transition: none;
 }
 
 .topbar-buttons>button:hover {
   background: @nord9;
   color: @nord0;
-  border-color: @nord8;
+  border-color: @nord3;
 }
 
+/* Buttons Grid - Colorful */
 .widget-buttons-grid {
   padding: 12px;
   margin: 8px;
-  border-radius: 12px;
+  border-radius: 0;
   background-color: @nord1;
-  border: 1px solid @nord3;
+  border: 2px solid @nord3;
 }
 
 .widget-buttons-grid>flowbox>flowboxchild>button {
   background: @nord2;
-  border-radius: 8px;
-  border: 1px solid @nord3;
+  border-radius: 0;
+  border: 2px solid @nord3;
   padding: 12px;
   color: @nord6;
-  font-size: 20px;
-  transition: all 0.2s ease-in-out;
+  font-size: 22px;
+  font-weight: 700;
+  transition: none;
 }
 
 .widget-buttons-grid>flowbox>flowboxchild>button:hover {
   background: @nord9;
   color: @nord0;
-  border-color: @nord8;
-  transform: translateY(-2px) scale(1.05);
-  box-shadow: 0 4px 12px rgba(129, 161, 193, 0.4);
+  border-color: @nord3;
 }
 
 /* Scrollbar styling */
 scrollbar {
   background: @nord1;
-  border-radius: 8px;
+  border-radius: 0;
 }
 
 scrollbar slider {
   background: @nord3;
-  border-radius: 8px;
+  border-radius: 0;
   min-width: 8px;
+  border: 1px solid @nord2;
 }
 
 scrollbar slider:hover {
   background: @nord9;
 }
 
-/* OSD (On-Screen Display) - Used by volumectl and other volume controls */
+/* OSD - On-Screen Display */
 .osd {
   background-color: @nord0;
-  border: 1px solid @nord3;
-  border-radius: 12px;
-  padding: 16px 20px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+  border: 2px solid @nord3;
+  border-radius: 0;
+  padding: 14px 18px;
+  box-shadow: none;
   color: @nord6;
 }
 
 .osd .osd-bar {
   background-color: @nord2;
-  border-radius: 8px;
-  min-height: 8px;
-  border: 1px solid @nord3;
+  border-radius: 0;
+  min-height: 10px;
+  border: 2px solid @nord3;
 }
 
 .osd .osd-bar progress {
   background-color: @nord8;
-  border-radius: 8px;
-  min-height: 8px;
+  border-radius: 0;
+  min-height: 10px;
 }
 
 .osd .osd-bar progress.overdrive {
@@ -493,8 +449,8 @@ scrollbar slider:hover {
 
 .osd .osd-label {
   color: @nord8;
-  font-size: 14px;
-  font-weight: 600;
+  font-size: 16px;
+  font-weight: 700;
   margin-bottom: 8px;
 }
 
@@ -506,14 +462,15 @@ scrollbar slider:hover {
 
 .osd .osd-icon-container {
   background-color: @nord8;
-  border-radius: 8px;
+  border-radius: 0;
   padding: 8px;
   color: @nord0;
+  border: 2px solid @nord3;
 }
 
 .osd .osd-bar-container {
   background-color: @nord0;
-  border-radius: 8px;
+  border-radius: 0;
   padding: 8px;
-  border: 1px solid @nord3;
+  border: 2px solid @nord3;
 }
