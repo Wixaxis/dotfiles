@@ -447,6 +447,9 @@ check_packages() {
         "noto-fonts-cjk"
         "noto-fonts-emoji"
         "noto-fonts-extra"
+        "xdg-desktop-portal"
+        "xdg-desktop-portal-hyprland"
+        "flameshot"
     )
     
     # macOS-specific packages
