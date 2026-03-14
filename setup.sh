@@ -443,6 +443,10 @@ check_packages() {
         "btop"
         "rofi"
         "starship"
+        "noto-fonts"
+        "noto-fonts-cjk"
+        "noto-fonts-emoji"
+        "noto-fonts-extra"
     )
     
     # macOS-specific packages
