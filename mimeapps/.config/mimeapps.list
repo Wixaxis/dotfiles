@@ -1,14 +1,14 @@
 [Added Associations]
-x-scheme-handler/http=google-chrome.desktop;userapp-Waterfox-U291E3.desktop;
-x-scheme-handler/https=google-chrome.desktop;userapp-Waterfox-U291E3.desktop;
-x-scheme-handler/chrome=google-chrome.desktop;userapp-Waterfox-U291E3.desktop;
-text/html=google-chrome.desktop;userapp-Waterfox-U291E3.desktop;
-application/x-extension-htm=google-chrome.desktop;userapp-Waterfox-U291E3.desktop;
-application/x-extension-html=google-chrome.desktop;userapp-Waterfox-U291E3.desktop;
-application/x-extension-shtml=google-chrome.desktop;userapp-Waterfox-U291E3.desktop;
-application/xhtml+xml=google-chrome.desktop;userapp-Waterfox-U291E3.desktop;
-application/x-extension-xhtml=google-chrome.desktop;userapp-Waterfox-U291E3.desktop;
-application/x-extension-xht=google-chrome.desktop;userapp-Waterfox-U291E3.desktop;
+x-scheme-handler/http=google-chrome.desktop;
+x-scheme-handler/https=google-chrome.desktop;
+x-scheme-handler/chrome=google-chrome.desktop;
+text/html=google-chrome.desktop;
+application/x-extension-htm=google-chrome.desktop;
+application/x-extension-html=google-chrome.desktop;
+application/x-extension-shtml=google-chrome.desktop;
+application/xhtml+xml=google-chrome.desktop;
+application/x-extension-xhtml=google-chrome.desktop;
+application/x-extension-xht=google-chrome.desktop;
 application/x-cmakecache=cmake-gui.desktop;
 application/ogg=mpv.desktop;
 application/x-ogg=mpv.desktop;
@@ -153,6 +153,7 @@ image/png=org.xfce.ristretto.desktop;qimgv.desktop;
 image/bmp=qimgv.desktop;
 image/webp=qimgv.desktop;
 inode/directory=yazi.desktop;
+x-scheme-handler/opencode=opencode-desktop-electron.desktop;OpenCode.desktop;
 
 [Default Applications]
 x-scheme-handler/http=google-chrome.desktop
@@ -172,3 +173,6 @@ x-scheme-handler/discord-562286213059444737=lunarclient.desktop
 inode/directory=thunar.desktop
 application/x-directory=thunar.desktop
 x-scheme-handler/opencode=opencode-desktop-handler.desktop
+x-scheme-handler/about=google-chrome.desktop
+x-scheme-handler/unknown=google-chrome.desktop
+
