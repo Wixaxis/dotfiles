@@ -1,0 +1,75 @@
+[meta]
+version = 1
+name = "Nord Vibrant"
+description = "Full Nord palette with all colors distributed evenly"
+variant = "dark"
+inherits = "vicinae-dark"
+
+[colors.core]
+background = "#3B4252"
+foreground = "#ECEFF4"
+secondary_background = "#2E3440"
+border = "#4C566A"
+accent = "#88C0D0"
+accent_foreground = "#242933"
+
+[colors.accents]
+blue = "#5E81AC"
+cyan = "#88C0D0"
+green = "#A3BE8C"
+magenta = "#B48EAD"
+orange = "#D08770"
+purple = "#B48EAD"
+red = "#BF616A"
+yellow = "#EBCB8B"
+
+[colors.main_window]
+border = "#4C566A"
+footer = { background = "#3B4252" }
+
+[colors.settings_window]
+border = "#4C566A"
+
+[colors.shortcut]
+border = "#D08770"
+
+[colors.text]
+default = "#ECEFF4"
+muted = "#B48EAD"
+danger = "#BF616A"
+success = "#A3BE8C"
+placeholder = "#81A1C1"
+selection = { background = "#88C0D0", foreground = "#242933" }
+
+[colors.text.links]
+default = "#8FBCBB"
+visited = "#B48EAD"
+
+[colors.input]
+border = "#4C566A"
+border_focus = "#EBCB8B"
+border_error = "#BF616A"
+
+[colors.button.primary]
+background = "#88C0D0"
+foreground = "#242933"
+hover = { background = "#8FBCBB" }
+focus = { outline = "#EBCB8B" }
+
+[colors.list.item.selection]
+background = "#D8DEE9"
+foreground = "#242933"
+secondary_background = "#5E81AC"
+secondary_foreground = "#ECEFF4"
+
+[colors.grid.item]
+background = "#2E3440"
+hover = { outline = "#D08770" }
+selection = { outline = "#EBCB8B" }
+
+[colors.scrollbars]
+background = "#3B4252"
+
+[colors.loading]
+bar = "#A3BE8C"
+spinner = "#EBCB8B"
