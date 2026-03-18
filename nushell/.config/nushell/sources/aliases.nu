@@ -3,33 +3,6 @@
 # Editor aliases
 alias vim = nvim
 
-# Platform-aware trash function
-# macOS: uses system /usr/bin/trash (built-in)
-# Linux: uses trash-cli package
-def "get trash path" [] {
-  # macOS system trash (built-in, always available)
-  if ("/usr/bin/trash" | path exists) {
-    "/usr/bin/trash"
-  # Linux: check for trash-cli in common locations
-  } else if ("/usr/bin/trash" | path exists) {
-    "/usr/bin/trash"
-  } else if (which trash | is-not-empty) {
-    (which trash | get path.0)
-  } else {
-    "trash"  # Fallback to PATH
-  }
-}
-
-# Wrapper function for platform-aware trash
-def trash [...rest] {
-  let trash_bin = (get trash path)
-  ^$trash_bin ...$rest
-}
-
-# Safe file operations with trash
-alias rm = trash
-alias mv = trash  # Move to trash instead of moving files
-
 # Enhanced ls using nushell's built-in ls
 # Nushell's built-in ls is already excellent with colors, icons, and structured data
 def lsa [] { ls -a | sort-by modified | reverse }

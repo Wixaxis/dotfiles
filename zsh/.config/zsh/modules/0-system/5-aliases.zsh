@@ -3,15 +3,6 @@
 # Editor aliases
 alias vim=nvim
 
-# Safe file operations with trash
-# macOS: uses system /usr/bin/trash
-# Linux: uses trash-cli package
-# Use 'trash' command directly when you want to move files to trash
-# rm now works normally (rm -rf, etc.)
-if command -v trash &> /dev/null; then
-    alias mv='trash'  # Move to trash instead of moving files
-fi
-
 # Enhanced ls with eza (icons, colors, git status)
 # eza is a modern replacement for ls with better colors and icons
 # Output is still greppable (plain text with ANSI colors)

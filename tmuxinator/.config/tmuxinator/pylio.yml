@@ -1,0 +1,14 @@
+# /Users/wixaxis/.config/tmuxinator/pylio.yml
+
+name: pylio
+root: ~/Projects/Pylio
+
+windows:
+  - codex: codex
+  - editor: nvim .
+  - terminal:
+  - expo:
+      layout: main-horizontal
+      panes:
+        - bun run start
+        -

@@ -30,23 +30,7 @@ This document compares the nushell configuration with the current zsh setup to i
    - **Zsh equivalent**: Could use `exa` or `ls` with sorting
    - **Recommendation**: ⭐ **Add this** - Useful for seeing recent files
 
-2. **`rm = trash` - Safe delete**
-   ```nushell
-   alias rm = trash
-   ```
-   - **Purpose**: Use trash-cli instead of permanent delete
-   - **Zsh equivalent**: Already in bash config, missing in zsh
-   - **Recommendation**: ⭐ **Add this** - Prevents accidental deletions
-
-3. **`mv = mv -i` - Interactive move**
-   ```nushell
-   alias mv = mv -i
-   ```
-   - **Purpose**: Ask before overwriting files
-   - **Zsh equivalent**: Missing
-   - **Recommendation**: ⭐ **Add this** - Safety feature
-
-4. **`reset` - Terminal reset**
+2. **`reset` - Terminal reset**
    ```nushell
    alias reset = zsh -c 'reset && exit'
    ```
@@ -83,18 +67,7 @@ This document compares the nushell configuration with the current zsh setup to i
 
 #### ⚠️ Missing in Zsh
 
-1. **`trash` - Platform-aware trash function**
-   ```nushell
-   def trash [...rest] {
-     let trash_bin = (get trash path)
-     ^$trash_bin ...$rest
-   }
-   ```
-   - **Purpose**: Platform-aware wrapper for trash-cli
-   - **Zsh equivalent**: Missing (bash has it, zsh doesn't)
-   - **Recommendation**: ⭐ **Add this** - Needed for `rm = trash` alias
-
-2. **`lsa` - Enhanced list function**
+1. **`lsa` - Enhanced list function**
    - Already covered in aliases section
    - **Recommendation**: ⭐ **Add this**
 
@@ -154,18 +127,7 @@ Nushell has comprehensive XDG Base Directory setup:
    export VISUAL='nvim'
    ```
 
-2. **Safe file operations aliases**
-   ```zsh
-   # Platform-aware trash
-   if command -v trash &> /dev/null; then
-       alias rm='trash'
-   else
-       alias rm='rm -i'  # Fallback to interactive
-   fi
-   alias mv='mv -i'
-   ```
-
-3. **Enhanced list alias**
+2. **Enhanced list alias**
    ```zsh
    # lsa - list all sorted by modified time (newest first)
    if command -v exa &> /dev/null; then
@@ -181,12 +143,12 @@ Nushell has comprehensive XDG Base Directory setup:
 
 ### Priority 2 (Nice to Have)
 
-5. **TERMINAL environment variable**
+3. **TERMINAL environment variable**
    ```zsh
    export TERMINAL='ghostty'
    ```
 
-6. **Reset alias** (if you use it)
+4. **Reset alias** (if you use it)
    ```zsh
    alias reset='reset && clear'
    ```
@@ -207,7 +169,7 @@ Nushell has comprehensive XDG Base Directory setup:
 ## Files to Create/Modify
 
 1. **Modify**: `zsh/.config/zsh/modules/0-system/5-aliases.zsh`
-   - Add `lsa`, `rm = trash`, `mv = mv -i`, `reset`
+   - Add `lsa`, `reset`
 
 2. **Create**: `zsh/.config/zsh/modules/0-system/7-env.zsh`
    - Add `EDITOR`, `VISUAL`, `TERMINAL`
@@ -215,12 +177,9 @@ Nushell has comprehensive XDG Base Directory setup:
 3. **Create**: `zsh/.config/zsh/modules/0-system/0-xdg.zsh`
    - Full XDG Base Directory setup (port from nushell)
 
-4. **Create**: Helper function for trash (if needed)
-   - Could add to `5-aliases.zsh` or create separate `trash.zsh`
-
 ## Notes
 
 - The bash config already has some of these (aliases, path), so we can reference it
 - XDG setup is particularly useful for cross-platform compatibility
 - Editor variables are used by many tools (git, etc.)
-- Safe file operations (trash, interactive mv) prevent accidents
+- Native `mv` and `rm` behavior may be preferable if you do not want shell-level wrappers
