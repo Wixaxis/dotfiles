@@ -9,7 +9,7 @@ This package contains SSH configuration and setup scripts for connecting to the 
 Use the setup script for an interactive setup:
 
 ```bash
-cd ~/dotfiles/ssh
+cd ~/dotfiles
 ./scripts/setup-ssh-keys.sh
 ```
 
@@ -127,7 +127,7 @@ stow ssh
 Then run the setup script (which will add the Include directive automatically):
 
 ```bash
-cd ~/dotfiles/ssh
+cd ~/dotfiles
 ./scripts/setup-ssh-keys.sh
 ```
 
