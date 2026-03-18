@@ -105,6 +105,35 @@ has_command() {
     command -v "$1" &> /dev/null
 }
 
+canonical_path() {
+    local path="$1"
+
+    if [[ ! -e "$path" ]] && [[ ! -L "$path" ]]; then
+        return 1
+    fi
+
+    realpath "$path" 2>/dev/null
+}
+
+is_target_stowed() {
+    local target="$1"
+    local source="$2"
+    local target_real
+    local source_real
+
+    target_real=$(canonical_path "$target") || return 1
+    source_real=$(canonical_path "$source") || return 1
+
+    [[ "$target_real" == "$source_real" ]]
+}
+
+backup_path() {
+    local path="$1"
+    local timestamp
+    timestamp=$(date +"%Y%m%d-%H%M%S")
+    echo "${path}.pre-dotfiles-${timestamp}"
+}
+
 is_installed_arch() {
     if has_command paru; then
         paru -Qi "$1" &> /dev/null
@@ -117,12 +146,52 @@ is_installed_macos() {
     brew list "$1" &> /dev/null 2>&1
 }
 
-is_stowed() {
-    local target="$1"
-    local source="$2"
-    if [[ -L "$target" ]] && [[ "$(readlink -f "$target")" == "$(readlink -f "$source")" ]]; then
+is_brew_formula_installed() {
+    brew list --formula "$1" &> /dev/null 2>&1
+}
+
+is_brew_cask_installed() {
+    brew list --cask "$1" &> /dev/null 2>&1
+}
+
+install_macos_formula() {
+    local pkg="$1"
+    info "Installing $pkg with brew..."
+    brew install "$pkg"
+}
+
+install_macos_cask() {
+    local pkg="$1"
+    info "Installing $pkg with brew cask..."
+    brew install --cask "$pkg"
+}
+
+stow_package() {
+    local dotfiles_dir="$1"
+    local package="$2"
+    local target="$3"
+    local target_path="$HOME/$target"
+
+    if stow -d "$dotfiles_dir" -t "$HOME" "$package"; then
+        success "$package stowed successfully"
         return 0
     fi
+
+    if [[ -e "$target_path" ]] || [[ -L "$target_path" ]]; then
+        local backup_target
+        backup_target=$(backup_path "$target_path")
+        warning "Backing up conflicting target: $target_path -> $backup_target"
+        mkdir -p "$(dirname "$backup_target")"
+        mv "$target_path" "$backup_target"
+
+        if stow -d "$dotfiles_dir" -t "$HOME" "$package"; then
+            success "$package stowed successfully"
+            return 0
+        fi
+    fi
+
+    error "Failed to stow $package"
+    info "You may need to stow it manually: cd $dotfiles_dir && stow -t ~ $package"
     return 1
 }
 
@@ -147,8 +216,7 @@ install_arch() {
 
 install_macos() {
     local pkg="$1"
-    info "Installing $pkg with brew..."
-    brew install "$pkg"
+    install_macos_formula "$pkg"
 }
 
 # ============================================================================
@@ -294,14 +362,19 @@ check_stowed() {
     
     # Common packages (available on all platforms)
     local common_stowed=(
-        "tmux:.config/tmux"
-        "yazi:.config/yazi"
-        "starship:.config/starship.toml"
-        "zsh:.zshrc"
-        "mise:.config/mise/config.toml"
-        "lazygit:.config/lazygit"
         "fastfetch:.config/fastfetch"
+        "ghostty:.config/ghostty"
+        "glow:.config/glow"
+        "lazygit:.config/lazygit"
+        "justfile:justfile"
+        "mise:.config/mise"
+        "neovide:.config/neovide"
+        "scripts:scripts"
         "ssh:.ssh/dotfiles.conf"
+        "starship:.config/starship.toml"
+        "tmux:.config/tmux"
+        "tmuxinator:.config/tmuxinator"
+        "yazi:.config/yazi"
     )
     
     if [[ "$PLATFORM" == "arch" ]]; then
@@ -316,14 +389,13 @@ check_stowed() {
     elif [[ "$PLATFORM" == "macos" ]]; then
         packages=(
             "${common_stowed[@]}"
-            "ghostty-raw:.config/ghostty"
             "nushell:.config/nushell"
+            "zsh:.zshrc"
         )
     else
         # Common packages for unknown platform
         packages=(
             "${common_stowed[@]}"
-            "ghostty:.config/ghostty"
         )
     fi
     
@@ -333,39 +405,12 @@ check_stowed() {
         IFS=':' read -r package target <<< "$package_info"
         local package_dir="$dotfiles_dir/$package"
         local target_path="$home_dir/$target"
-        
+        local source_path="$package_dir/$target"
+
         # Check if package directory or target file exists in dotfiles
-        if [[ -d "$package_dir" ]] || [[ -f "$package_dir/$target" ]]; then
-            # Check if target is a symlink (file or directory)
-            if [[ -L "$target_path" ]]; then
-                local link_target
-                link_target=$(readlink -f "$target_path" 2>/dev/null || readlink "$target_path")
-                local expected_target
-                expected_target=$(readlink -f "$package_dir/$target" 2>/dev/null || echo "$package_dir/$target")
-                
-                # Handle relative symlinks (like ../dotfiles/...)
-                if [[ "$link_target" == *"$package_dir/$target"* ]] || [[ "$link_target" == "$expected_target" ]]; then
-                    success "$package is stowed"
-                elif [[ "$link_target" == *"$package"* ]] && [[ "$link_target" == *"$target"* ]]; then
-                    # Check if symlink points to the package directory
-                    success "$package is stowed"
-                else
-                    not_stowed+=("$package")
-                    warning "$package is not stowed (target: $target)"
-                fi
-            # Check if target directory exists and contains the expected file (for directory stows)
-            elif [[ -d "$target_path" ]] && [[ -f "$target_path/$(basename "$target")" ]]; then
-                # Directory exists and contains the file - might be stowed as directory
-                local parent_dir
-                parent_dir=$(dirname "$target_path")
-                local dir_name
-                dir_name=$(basename "$target_path")
-                if [[ -L "$parent_dir/$dir_name" ]]; then
-                    success "$package is stowed"
-                else
-                    not_stowed+=("$package")
-                    warning "$package is not stowed (target: $target)"
-                fi
+        if [[ -d "$package_dir" ]] || [[ -f "$source_path" ]] || [[ -d "$source_path" ]]; then
+            if is_target_stowed "$target_path" "$source_path"; then
+                success "$package is stowed"
             else
                 not_stowed+=("$package")
                 warning "$package is not stowed (target: $target)"
@@ -377,22 +422,18 @@ check_stowed() {
         warning "Some packages are not stowed: ${not_stowed[*]}"
         
         for package in "${not_stowed[@]}"; do
+            local target=""
+            for package_info in "${packages[@]}"; do
+                IFS=':' read -r candidate_package candidate_target <<< "$package_info"
+                if [[ "$candidate_package" == "$package" ]]; then
+                    target="$candidate_target"
+                    break
+                fi
+            done
+
             if gum confirm "Stow $package now?"; then
                 info "Stowing $package..."
-                
-                # Try normal stow first
-                if stow -d "$dotfiles_dir" -t ~ "$package" 2>/dev/null; then
-                    success "$package stowed successfully"
-                else
-                    # If normal stow fails, try with --adopt (for existing files)
-                    info "Trying with --adopt flag (for existing files)..."
-                    if stow -d "$dotfiles_dir" -t ~ --adopt "$package" 2>/dev/null; then
-                        success "$package stowed successfully (with --adopt)"
-                    else
-                        error "Failed to stow $package"
-                        info "You may need to stow it manually: cd $dotfiles_dir && stow -t ~ --adopt $package"
-                    fi
-                fi
+                stow_package "$dotfiles_dir" "$package" "$target"
             fi
         done
     fi
@@ -410,12 +451,15 @@ check_packages() {
         "stow"
         "mise"
         "tmux"
+        "tmuxinator"
         "ghostty"
         "yazi"
         "zsh"        # Shell (has advanced configs in dotfiles)
         "eza"        # Enhanced ls replacement (used in bash/zsh)
         "nvim"       # Editor (aliased as vim in all shells)
         "gum"        # Beautiful CLI output (used by this script)
+        "glow"       # Markdown viewer
+        "just"       # Task runner
         "lazygit"    # Git TUI (aliased as lg)
         "fastfetch"  # Fast system info display (used in tmuxinator and tmux sessions)
         "fzf"        # Fuzzy finder (used in ff, ffn, ffc aliases)
@@ -423,13 +467,8 @@ check_packages() {
         "ripgrep"    # Fast grep (used in ffc alias, package name: ripgrep or rg)
         "ffmpegthumbnailer"  # Image thumbnail generation for yazi mediainfo plugin
         "cloudflared" # Cloudflare Tunnel (required for SSH homelab connection)
+        "starship"   # Prompt used by shell configs
     )
-    
-    # Platform-specific packages for trash
-    # macOS has built-in /usr/bin/trash, Linux needs trash-cli
-    if [[ "$PLATFORM" == "arch" ]] || [[ "$PLATFORM" == "linux" ]]; then
-        common_packages+=("trash-cli")  # Safe file operations (Linux only)
-    fi
     
     # Arch-specific packages
     local arch_packages=(
@@ -458,7 +497,7 @@ check_packages() {
     
     # macOS-specific packages
     local macos_packages=(
-        # (none currently - zsh moved to common packages)
+        "nushell"
     )
     
     local missing=()
@@ -473,13 +512,40 @@ check_packages() {
                 missing+=("ripgrep")
                 warning "ripgrep (rg) is not installed"
             fi
-        # Handle trash-cli - command is 'trash' but package is 'trash-cli'
-        elif [[ "$pkg" == "trash-cli" ]]; then
-            if has_command trash; then
-                success "trash-cli (trash) is installed"
+        elif [[ "$pkg" == "tmuxinator" ]]; then
+            if has_command tmuxinator; then
+                success "tmuxinator is installed"
             else
-                missing+=("trash-cli")
-                warning "trash-cli (trash) is not installed"
+                missing+=("tmuxinator")
+                warning "tmuxinator is not installed"
+            fi
+        elif [[ "$pkg" == "ghostty" ]]; then
+            if has_command ghostty || is_brew_cask_installed ghostty; then
+                success "ghostty is installed"
+            else
+                missing+=("ghostty")
+                warning "ghostty is not installed"
+            fi
+        elif [[ "$pkg" == "just" ]]; then
+            if has_command just; then
+                success "just is installed"
+            else
+                missing+=("just")
+                warning "just is not installed"
+            fi
+        elif [[ "$pkg" == "glow" ]]; then
+            if has_command glow; then
+                success "glow is installed"
+            else
+                missing+=("glow")
+                warning "glow is not installed"
+            fi
+        elif [[ "$pkg" == "starship" ]]; then
+            if has_command starship; then
+                success "starship is installed"
+            else
+                missing+=("starship")
+                warning "starship is not installed"
             fi
         else
             if has_command "$pkg"; then
@@ -490,15 +556,6 @@ check_packages() {
             fi
         fi
     done
-    
-    # Check trash command (platform-specific)
-    if [[ "$PLATFORM" == "macos" ]]; then
-        if has_command trash; then
-            success "trash is available (macOS system command)"
-        else
-            warning "trash command not found (unexpected on macOS)"
-        fi
-    fi
     
     # Check platform-specific packages
     if [[ "$PLATFORM" == "arch" ]]; then
@@ -537,7 +594,14 @@ check_packages() {
                 if [[ "$PLATFORM" == "arch" ]]; then
                     install_arch "$install_pkg"
                 elif [[ "$PLATFORM" == "macos" ]]; then
-                    install_macos "$install_pkg"
+                    case "$install_pkg" in
+                        ghostty)
+                            install_macos_cask ghostty
+                            ;;
+                        *)
+                            install_macos_formula "$install_pkg"
+                            ;;
+                    esac
                 fi
             done
             success "All packages installed"
@@ -570,13 +634,45 @@ check_mise() {
             success "Ruby installed"
         fi
     fi
+
+    if mise current &> /dev/null; then
+        local missing_tools
+        missing_tools=$(mise current 2>/dev/null | awk '$2 == "MISSING" {print $1}')
+        if [[ -n "$missing_tools" ]]; then
+            warning "Some mise tools from the repo config are missing"
+            if gum confirm "Install all tools from mise config now?"; then
+                mise install
+                success "mise tools installed"
+            fi
+        else
+            success "All tools from mise config are installed"
+        fi
+    fi
     
-    # Check if mise is activated in shell
-    if [[ -n "${MISE_SHELL:-}" ]] || command -v mise &> /dev/null && mise env | grep -q "PATH"; then
-        success "mise is activated in shell"
+    # Check if mise activation is present in the active shell config
+    local shell_name
+    shell_name=$(basename "${SHELL:-}")
+
+    if [[ "$shell_name" == "zsh" ]]; then
+        if grep -qs 'mise activate zsh' "$HOME/.zshrc" 2>/dev/null || grep -Rqs 'mise activate zsh' "$HOME/.config/zsh" 2>/dev/null; then
+            success "mise is activated in shell"
+        else
+            warning "mise may not be activated in your shell"
+            info 'Make sure you have: eval "$(mise activate zsh)" in your shell config'
+        fi
+    elif [[ "$shell_name" == "bash" ]]; then
+        if grep -qs 'mise activate bash' "$HOME/.bashrc" 2>/dev/null || grep -Rqs 'mise activate bash' "$HOME/.config/bash" 2>/dev/null; then
+            success "mise is activated in shell"
+        else
+            warning "mise may not be activated in your shell"
+            info 'Make sure you have: eval "$(mise activate bash)" in your shell config'
+        fi
     else
-        warning "mise may not be activated in your shell"
-        info "Make sure you have: eval \"\$(mise activate bash)\" in your shell config"
+        if [[ -n "${MISE_SHELL:-}" ]]; then
+            success "mise is activated in shell"
+        else
+            warning "mise activation could not be verified for shell: $shell_name"
+        fi
     fi
 }
 
