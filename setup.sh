@@ -388,6 +388,7 @@ check_stowed() {
         "tmux:.config/tmux"
         "tmuxinator:.config/tmuxinator"
         "yazi:.config/yazi"
+        "zed:.config/zed/settings.json"
     )
     
     if [[ "$PLATFORM" == "arch" ]] || [[ "$PLATFORM" == "linux" ]]; then
