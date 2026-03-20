@@ -8,6 +8,10 @@ zed/.config/zed/prompts/
 zed/.config/zed/themes/
 zed/.config/zed/*.pre-dotfiles-*
 zed/.config/zed/*_backup.json
+ssh/.ssh/config
+ssh/.ssh/agent/
+ssh/.ssh/id_*
+ssh/.ssh/known_hosts*
 
 # API keys and secrets - DO NOT COMMIT
 # Note: Empty placeholder files are tracked, but content is ignored via .gitattributes
