@@ -3,6 +3,7 @@ papes/Pictures/screenshots
 nushell/.config/nushell/history.txt
 nushell/Library/Application Support/nushell/history.txt
 scripts/scripts/debug.log
+truenas-macos/.config/truenas-mount/truenas-smb.env
 
 # API keys and secrets - DO NOT COMMIT
 # Note: Empty placeholder files are tracked, but content is ignored via .gitattributes

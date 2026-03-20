@@ -86,6 +86,19 @@ detect_platform() {
 
 PLATFORM=$(detect_platform)
 
+# Desktop detection (Linux only): gnome | hyprland | other
+# Used to stow/install only packages that make sense for the DE
+DESKTOP=""
+if [[ "$PLATFORM" == "arch" ]] || [[ "$PLATFORM" == "linux" ]]; then
+    if [[ "${XDG_CURRENT_DESKTOP:-}" == *"GNOME"* ]] || [[ "${XDG_SESSION_DESKTOP:-}" == *"gnome"* ]]; then
+        DESKTOP="gnome"
+    elif [[ -n "${HYPRLAND_INSTANCE:-}" ]] || [[ "${XDG_CURRENT_DESKTOP:-}" == *"Hyprland"* ]]; then
+        DESKTOP="hyprland"
+    else
+        DESKTOP="other"
+    fi
+fi
+
 # ============================================================================
 # PRINT FUNCTIONS (using gum)
 # ============================================================================
@@ -377,23 +390,26 @@ check_stowed() {
         "yazi:.config/yazi"
     )
     
-    if [[ "$PLATFORM" == "arch" ]]; then
+    if [[ "$PLATFORM" == "arch" ]] || [[ "$PLATFORM" == "linux" ]]; then
         packages=(
             "${common_stowed[@]}"
-            "ghostty:.config/ghostty"
             "bash:.bashrc"
-            "hyprland:.config/hypr"
-            "waybar:.config/waybar"
-            "swaync:.config/swaync"
         )
+        if [[ "$DESKTOP" == "hyprland" ]]; then
+            packages+=(
+                "hyprland:.config/hypr"
+                "waybar:.config/waybar"
+                "swaync:.config/swaync"
+            )
+        fi
     elif [[ "$PLATFORM" == "macos" ]]; then
         packages=(
             "${common_stowed[@]}"
             "nushell:.config/nushell"
+            "truenas-macos:Library/LaunchAgents/com.wixaxis.mount-truenas.plist"
             "zsh:.zshrc"
         )
     else
-        # Common packages for unknown platform
         packages=(
             "${common_stowed[@]}"
         )
@@ -470,29 +486,37 @@ check_packages() {
         "starship"   # Prompt used by shell configs
     )
     
-    # Arch-specific packages
-    local arch_packages=(
+    # Platform-specific packages for trash
+    # macOS has built-in /usr/bin/trash, Linux needs trash-cli
+    if [[ "$PLATFORM" == "arch" ]] || [[ "$PLATFORM" == "linux" ]]; then
+        common_packages+=("trash-cli")  # Safe file operations (Linux only)
+    fi
+    
+    # Arch packages: DE-agnostic vs Hyprland-only
+    local arch_common=(
         "bash"
-        "hyprland"
-        "waybar"
-        "swaync"
-        "hypridle"
-        "hyprlock"
-        "hyprpolkitagent"
         "btop"
-        "rofi"
         "starship"
         "noto-fonts"
         "noto-fonts-cjk"
         "noto-fonts-emoji"
         "noto-fonts-extra"
         "xdg-desktop-portal"
-        "xdg-desktop-portal-hyprland"
         "flameshot"
         "papirus-icon-theme"
         "nordzy-icon-theme-git"
         "colloid-icon-theme-git"
         "tela-icon-theme"
+    )
+    local arch_hyprland=(
+        "hyprland"
+        "waybar"
+        "swaync"
+        "hypridle"
+        "hyprlock"
+        "hyprpolkitagent"
+        "rofi"
+        "xdg-desktop-portal-hyprland"
     )
     
     # macOS-specific packages
@@ -559,7 +583,7 @@ check_packages() {
     
     # Check platform-specific packages
     if [[ "$PLATFORM" == "arch" ]]; then
-        for pkg in "${arch_packages[@]}"; do
+        for pkg in "${arch_common[@]}"; do
             if is_installed_arch "$pkg" || has_command "$pkg"; then
                 success "$pkg is installed"
             else
@@ -567,6 +591,16 @@ check_packages() {
                 warning "$pkg is not installed"
             fi
         done
+        if [[ "$DESKTOP" == "hyprland" ]]; then
+            for pkg in "${arch_hyprland[@]}"; do
+                if is_installed_arch "$pkg" || has_command "$pkg"; then
+                    success "$pkg is installed"
+                else
+                    missing+=("$pkg")
+                    warning "$pkg is not installed"
+                fi
+            done
+        fi
     elif [[ "$PLATFORM" == "macos" ]]; then
         if [[ ${#macos_packages[@]} -gt 0 ]]; then
             for pkg in "${macos_packages[@]}"; do
@@ -705,10 +739,10 @@ check_shell() {
 }
 
 # ============================================================================
-# CHECK WAYLAND SETUP (Arch only)
+# CHECK WAYLAND SETUP (Arch only; Hyprland-specific checks when on Hyprland)
 # ============================================================================
 check_wayland() {
-    if [[ "$PLATFORM" != "arch" ]]; then
+    if [[ "$PLATFORM" != "arch" ]] && [[ "$PLATFORM" != "linux" ]]; then
         return 0
     fi
     
@@ -716,21 +750,21 @@ check_wayland() {
     
     if [[ -n "${WAYLAND_DISPLAY:-}" ]] || [[ "${XDG_SESSION_TYPE:-}" == "wayland" ]]; then
         success "Running on Wayland"
-        
-        # Check Hyprland services
-        if systemctl --user is-active --quiet hyprpolkitagent.service 2>/dev/null; then
-            success "hyprpolkitagent service is running"
-        else
-            warning "hyprpolkitagent service is not running"
-            info "Start it with: systemctl --user enable --now hyprpolkitagent.service"
-        fi
-        
-        # Check qt6ct configuration
-        if [[ -f "$HOME/.config/qt6ct/qt6ct.conf" ]]; then
-            success "qt6ct is configured"
-        else
-            warning "qt6ct is not configured"
-            info "Configure it with: qt6ct"
+        if [[ "$DESKTOP" == "gnome" ]]; then
+            info "GNOME session detected (no Hyprland-specific checks)"
+        elif [[ "$DESKTOP" == "hyprland" ]]; then
+            if systemctl --user is-active --quiet hyprpolkitagent.service 2>/dev/null; then
+                success "hyprpolkitagent service is running"
+            else
+                warning "hyprpolkitagent service is not running"
+                info "Start it with: systemctl --user enable --now hyprpolkitagent.service"
+            fi
+            if [[ -f "$HOME/.config/qt6ct/qt6ct.conf" ]]; then
+                success "qt6ct is configured"
+            else
+                warning "qt6ct is not configured"
+                info "Configure it with: qt6ct"
+            fi
         fi
     else
         info "Not running on Wayland (or not in Wayland session)"
@@ -775,7 +809,7 @@ main() {
     gum style --bold --foreground 12 "╚══════════════════════════════════════════════════════════╝"
     echo ""
     
-    info "Detected platform: $PLATFORM"
+    info "Detected platform: $PLATFORM${DESKTOP:+ (desktop: $DESKTOP)}"
     
     if [[ "$PLATFORM" == "unknown" ]]; then
         error "Unknown platform. This script supports Arch Linux and macOS only."
@@ -797,8 +831,8 @@ main() {
     success "All checks completed!"
     info "You may need to restart your shell or log out/in for some changes to take effect"
     
-    if [[ "$PLATFORM" == "arch" ]] && [[ -n "${WAYLAND_DISPLAY:-}" ]]; then
-        info "For Wayland/Hyprland, you may want to run:"
+    if [[ "$PLATFORM" == "arch" ]] && [[ "$DESKTOP" == "hyprland" ]]; then
+        info "For Hyprland, you may want to run:"
         echo "  hyprctl reload"
         echo "  systemctl --user restart hyprpolkitagent"
     fi
