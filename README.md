@@ -68,7 +68,7 @@ The `stow-platform.sh` script automatically:
 - Stows platform-specific packages only when appropriate
 
 **Package Categories:**
-- **Common packages**: Work on all platforms (ghostty, mise, neovide, nushell, qt6ct, rofi, starship, tmux, yazi, etc.)
+- **Common packages**: Work on all platforms (ghostty, mise, neovide, nushell, qt6ct, rofi, starship, tmux, yazi, zed, etc.)
 - **Linux packages**: Arch-specific (arch-update, btop, etc.)
 - **Wayland packages**: Hyprland, Waybar, SwayNC (require Wayland session)
 - **macOS packages**: zsh configuration
@@ -347,6 +347,12 @@ Some configuration packages have been moved to the `archived/` directory. These 
   - `package.toml` - Package/plugin management
   - `plugins/` - Yazi plugins (bunny, full-border, glow, mdcat, mediainfo, ouch, what-size)
 - **Description**: Terminal file manager with Lua configuration and plugins
+
+#### `zed/`
+- **Purpose**: Zed editor configuration
+- **Platform**: cross-platform
+- **Files**: `~/.config/zed/settings.json`
+- **Description**: Editor UI, theme, font and language server preferences
 
 ## Justfile Commands
 

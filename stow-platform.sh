@@ -81,6 +81,7 @@ COMMON_PACKAGES=(
   "tmux"
   "tmuxinator"
   "yazi"
+  "zed"
 )
 
 # Linux packages that work on any DE (GNOME, Hyprland, X11, etc.)
