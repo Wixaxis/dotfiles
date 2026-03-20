@@ -62,6 +62,7 @@ This dotfiles repository uses GNU Stow to manage symbolic links, allowing each c
 
 The `stow-platform.sh` script automatically:
 - Detects your operating system (Linux, macOS)
+- On Linux: detects desktop (GNOME vs Hyprland vs other) and stows only packages that make sense (e.g. no Hyprland/waybar/rofi on GNOME)
 - Detects Wayland vs X11 on Linux
 - Stows common packages (work on all platforms)
 - Stows platform-specific packages only when appropriate
@@ -316,6 +317,16 @@ Some configuration packages have been moved to the `archived/` directory. These 
 - **Files**: `~/.config/tmuxinator/default.yml`
 - **Description**: Predefined tmux session layouts
 
+#### `truenas-macos/`
+- **Purpose**: macOS-only TrueNAS SMB automount assets
+- **Platform**: macOS only
+- **Files**:
+  - `~/Library/LaunchAgents/com.wixaxis.mount-truenas.plist`
+  - `~/.config/truenas-mount/truenas-smb.env.example`
+  - `~/.config/truenas-mount/README.md`
+- **Description**: LaunchAgent + template config for login-time SMB mount retries to TrueNAS
+- **Note**: Real credentials live in local-only `~/.config/truenas-mount/truenas-smb.env`
+
 #### `waybar/`
 - **Purpose**: Waybar status bar configuration
 - **Files**: 
@@ -376,6 +387,7 @@ The following files/directories are gitignored (see `.gitignore`):
 - `papes/Pictures/screenshots` - Screenshots directory
 - `nushell/.config/nushell/history.txt` - Shell history
 - `scripts/scripts/debug.log` - Debug logs
+- `truenas-macos/.config/truenas-mount/truenas-smb.env` - Local SMB credentials (never commit)
 
 ### Platform Support
 
@@ -404,6 +416,7 @@ This repository uses a **single unified branch** (`main`) that works on all plat
 
 **macOS-only packages:**
 - `zsh/` - Zsh configuration with Oh My Zsh and Starship prompt
+- `truenas-macos/` - TrueNAS SMB LaunchAgent + local env template
 
 **Cross-platform packages:**
 - All other packages work on both Linux and macOS

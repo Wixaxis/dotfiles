@@ -1,0 +1,9 @@
+# ~/.config/tmuxinator/slim-lsp.yml
+
+name: slim-lsp
+root: ~/projects/slim-lsp
+
+windows:
+  - editor: nvim
+  - cursor_agent: cursor-agent
+  - shell: zsh
