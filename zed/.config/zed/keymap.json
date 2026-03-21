@@ -1,7 +1,41 @@
 [
   {
+    "context": "Workspace && !menu",
+    "bindings": {
+      "alt-t": "terminal_panel::ToggleFocus",
+      "space f f": "file_finder::Toggle",
+      "space f w": "pane::DeploySearch",
+      "space f b": "tab_switcher::Toggle",
+      "space f h": "outline::Toggle",
+      "space f s": "project_symbols::Toggle",
+      "space e": "project_panel::ToggleFocus",
+      "space shift-e": "pane::RevealInProjectPanel",
+      "space e h": "project_panel::ToggleHideHidden",
+      "space e i": "project_panel::ToggleHideGitIgnore",
+      "space q": "diagnostics::Deploy",
+      "space g t": "git_panel::ToggleFocus",
+      "space g d": "git::Diff",
+      "space x": ["pane::CloseActiveItem", { "close_pinned": false }],
+      "space b p": "pane::TogglePinTab",
+      "space t h": "theme_selector::Toggle",
+      "space l g": [
+        "task::Spawn",
+        { "task_name": "lazygit", "reveal_target": "center" }
+      ],
+      "space l h": "git::FileHistory",
+      "space t e f": "task::Spawn",
+      "space t e a": ["task::Rerun", { "reevaluate_context": true }],
+      "tab": "pane::ActivateNextItem",
+      "shift-tab": "pane::ActivatePreviousItem"
+    }
+  },
+  {
     "context": "Dock",
     "bindings": {
+      "ctrl-h": "workspace::ActivatePaneLeft",
+      "ctrl-j": "workspace::ActivatePaneDown",
+      "ctrl-k": "workspace::ActivatePaneUp",
+      "ctrl-l": "workspace::ActivatePaneRight",
       "ctrl-w h": "workspace::ActivatePaneLeft",
       "ctrl-w j": "workspace::ActivatePaneDown",
       "ctrl-w k": "workspace::ActivatePaneUp",
@@ -11,6 +45,10 @@
   {
     "context": "VimControl && !menu",
     "bindings": {
+      "ctrl-h": "workspace::ActivatePaneLeft",
+      "ctrl-j": "workspace::ActivatePaneDown",
+      "ctrl-k": "workspace::ActivatePaneUp",
+      "ctrl-l": "workspace::ActivatePaneRight",
       "ctrl-w h": "workspace::ActivatePaneLeft",
       "ctrl-w j": "workspace::ActivatePaneDown",
       "ctrl-w k": "workspace::ActivatePaneUp",
@@ -18,22 +56,59 @@
     }
   },
   {
+    "context": "Editor && vim_mode == insert && !menu",
+    "bindings": {
+      "j j": ["workspace::SendKeystrokes", "escape"],
+      "j k": ["workspace::SendKeystrokes", "escape"],
+      "ctrl-h": ["workspace::SendKeystrokes", "left"],
+      "ctrl-j": ["workspace::SendKeystrokes", "down"],
+      "ctrl-k": ["workspace::SendKeystrokes", "up"],
+      "ctrl-l": ["workspace::SendKeystrokes", "right"]
+    }
+  },
+  {
     "context": "vim_mode == normal && !menu",
     "bindings": {
-      "space f f": "file_finder::Toggle",
-      "space f w": "pane::DeploySearch",
-      "space f b": "tab_switcher::Toggle",
-      "space f h": "outline::Toggle",
-      "space f s": "project_symbols::Toggle",
-      "space e": "project_panel::ToggleFocus",
-      "space shift-e": "pane::RevealInProjectPanel",
-      "space q": "diagnostics::Deploy",
-      "space g t": "git_panel::ToggleFocus",
-      "space g d": "git::Diff",
-      "space x": ["pane::CloseActiveItem", { "close_pinned": false }],
-      "space b p": "pane::TogglePinTab",
+      "g r": "editor::FindAllReferences",
+      "g t d": "editor::GoToTypeDefinition",
+      "shift-k": "editor::Hover",
+      "ctrl-g": "editor::ShowSignatureHelp",
+      "space f m": "editor::Format",
+      "space r s": "editor::Rename",
+      "space c a": "editor::ToggleCodeActions",
+      "space /": "editor::ToggleComments",
+      "space e": "vim::ToggleProjectPanelFocus",
+      "space g b t": "editor::ToggleGitBlameInline",
+      "space r n t": "editor::ToggleRelativeLineNumbers",
+      "space t e c": "editor::ToggleCodeActions",
       "tab": "pane::ActivateNextItem",
       "shift-tab": "pane::ActivatePreviousItem"
+    }
+  },
+  {
+    "context": "vim_mode == visual && !menu",
+    "bindings": {
+      "space /": "vim::ToggleComments",
+      "space e": "vim::ToggleProjectPanelFocus"
+    }
+  },
+  {
+    "context": "ProjectPanel && not_editing && !menu",
+    "bindings": {
+      "space e": "project_panel::ToggleFocus",
+      "escape": "project_panel::ToggleFocus"
+    }
+  },
+  {
+    "context": "MarkdownPreview && !menu",
+    "bindings": {
+      "alt-t": "terminal_panel::ToggleFocus",
+      "space f f": "file_finder::Toggle",
+      "space f w": "pane::DeploySearch",
+      "space e": "project_panel::ToggleFocus",
+      "space q": "diagnostics::Deploy",
+      "space g t": "git_panel::ToggleFocus",
+      "space t h": "theme_selector::Toggle"
     }
   }
 ]
