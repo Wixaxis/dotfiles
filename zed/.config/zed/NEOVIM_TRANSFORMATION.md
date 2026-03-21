@@ -324,4 +324,3 @@ These are not done and should not be pretended to be done:
 - Full Bufferline parity
 - Full Snacks parity
 - Full Noice/Lualine UI parity
-
