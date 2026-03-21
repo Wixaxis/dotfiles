@@ -19,6 +19,7 @@ The current work has focused on:
 - Getting the core editor feel closer to Neovim.
 - Porting the highest-value muscle-memory bindings.
 - Making the config actually hot-reload reliably with Stow.
+- Building a custom transparent OneNord-style theme so Zed is visually close to the current Ghostty + Neovim setup.
 - Being explicit about what is still only partial parity.
 
 ## What Is Done
@@ -26,7 +27,7 @@ The current work has focused on:
 - Vim mode is enabled.
 - Which-key is enabled with a short delay.
 - Relative line numbers, smartcase find, system clipboard, autosave, and `scrolloff`-style margin are enabled.
-- Preview tabs are disabled so tabs behave more intentionally.
+- Preview tabs are enabled only for the file finder.
 - Git gutter and inline blame are enabled.
 - Ruby / ERB language server preferences have been ported.
 - Pane navigation exists on both `ctrl-w h/j/k/l` and direct `ctrl-h/j/k/l`.
@@ -37,7 +38,10 @@ The current work has focused on:
 - Visual-mode `space /` now comments selections correctly.
 - A global `lazygit` task exists in `tasks.json`.
 - Leader bindings were widened to workspace-level contexts so they work in more than just editable text.
+- `space` is explicitly mapped to `zed::NoAction` in leader scopes so it behaves more like a real Vim leader key.
 - `~/.config/zed` is now a real directory containing symlinks to tracked files instead of being one symlinked directory. This matters for hot reload.
+- A custom local theme, `OneNord Blurred`, now drives the dark theme and keeps transparency/blur while matching OneNord colors much more closely than the built-in themes.
+- Typography has been tuned toward the current Ghostty/Neovim setup: `Hack Nerd Font Mono`, larger code size, heavier weight, and ligatures enabled.
 
 ## Important Caveats
 
@@ -45,7 +49,9 @@ The current work has focused on:
 - `space e` is now a real toggle in more contexts, but true "open file from project panel and then auto-hide panel immediately" still does not appear to be exposed as a clean native action.
 - Workspace-level leader bindings make the config much more usable in panels and previews, but context-specific behavior in Zed can still differ from Neovim.
 - Which-key is enabled, but its usefulness depends on bindings being available in the active context. That was a major reason for broadening the leader bindings.
+- Zed still appears to keep a short timeout for some multi-stroke bindings when the first key is also valid input/action. Mapping bare `space` to `zed::NoAction` is the best available workaround, but does not guarantee full Neovim-style `timeoutlen` behavior because Zed does not currently expose an exact equivalent setting.
 - Tests currently use Zed task/code-action approximations, not full Neotest parity.
+- File finder preview support is limited. Zed can open selections from the file finder in preview tabs, but it does not give Telescope-style live file content preview while moving through results.
 - The package contains a concise state summary here and a deeper tracker in `NEOVIM_TRANSFORMATION.md`. The tracker still needs a proper full refresh to match every recent binding change.
 
 ## Findings
@@ -55,13 +61,15 @@ The current work has focused on:
 - Context selection matters a lot in Zed. A binding that works in an editor may not work in a project panel or preview unless it is also exposed at the workspace or panel level.
 - Symlinking the whole `~/.config/zed` directory is a bad fit for reliable hot reload. Symlinking files inside a real `~/.config/zed` directory is the safer layout.
 - Some remaining Neovim workflows are not missing because of laziness in config; they are missing because Zed does not expose a native equivalent that is honest to call parity.
+- Built-in Nord-family themes were not good enough to match the current setup. A custom OneNord-derived theme was required to get syntax contrast, blur, and UI tone close enough.
 
 ## Still To Do
 
 High priority:
 
-- Refresh the detailed tracker so it matches the current config exactly.
 - Re-test hot reload and confirm whether Zed now picks up direct file edits without requiring manual reload.
+- Decide whether the leader timeout workaround is "good enough" or whether the highest-friction leader actions should move to shorter bindings.
+- Continue language-by-language syntax tuning for the custom theme if more mismatches show up outside HTML/JS/JSON.
 - Decide how strict to be about test workflow parity versus "good enough via tasks and code actions."
 
 Next major parity targets:
@@ -73,6 +81,7 @@ Next major parity targets:
 - Exact insert-mode completion keybind parity.
 - Visual whitespace workflow.
 - Custom Slim / language-specific parity.
+- File finder workflow, if Zed ever gains better live preview behavior.
 
 Lower-confidence or likely non-goals:
 

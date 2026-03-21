@@ -39,12 +39,16 @@ Current migration policy:
 - Scroll margin aligned with Neovim `scrolloff = 8`.
 - No scrolling past EOF.
 - Autosave after delay enabled.
-- Preview-tab behavior disabled to make tabs behave more intentionally.
+- Preview-tab behavior enabled only for file-finder selections.
 - Git gutter enabled.
 - Inline git blame enabled.
 - Project panel diagnostics visibility enabled.
 - Explicit leader mappings for a small set of search / explorer / git / tab actions.
 - `ctrl-w h/j/k/l` pane navigation added in Zed.
+- Direct `ctrl-h/j/k/l` pane navigation added in normal contexts.
+- Insert `jj` / `jk` escape configured.
+- Visual `<leader>/` commenting fixed.
+- Custom transparent `OneNord Blurred` theme added and active.
 
 ### PARTIAL now
 
@@ -52,17 +56,17 @@ Current migration policy:
 - Search/navigation parity is mixed: some leader prefixes exist, but Snacks pickers are only partially represented.
 - Buffer/tab UX is only partially matched: Zed has tabs/items, not Bufferline.
 - Git parity is partial: some native Zed Git Vim flows exist, but not on your current Neovim keys.
-- Commenting is partial: feature exists, but your `<leader>/` binding is not yet mirrored.
+- Commenting is partial overall even though `<leader>/` is mirrored, because native Zed/Vim comment workflows still differ in some contexts.
 - Treesitter motions/textobjects are often available in Zed Vim mode, but not all have been explicitly audited in config.
+- Theme parity is much closer now, but still depends on a custom local theme file and ongoing token-by-token tuning.
+- Leader-key timeout behavior is only partially solved. `space` now acts like a no-op leader prefix, but Zed still does not expose a full Neovim-style `timeoutlen` equivalent.
 
 ### TODO now
 
 - Session workflow.
 - Tests workflow.
 - Yank history.
-- LazyGit workflow.
 - Floating terminal workflow.
-- Which-key-style discoverability.
 - AI / Sidekick workflows.
 - Visual whitespace workflow.
 - Most plugin toggles and plugin-specific commands.

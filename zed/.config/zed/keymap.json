@@ -2,6 +2,7 @@
   {
     "context": "Workspace && !menu",
     "bindings": {
+      "space": "zed::NoAction",
       "alt-t": "terminal_panel::ToggleFocus",
       "space f f": "file_finder::Toggle",
       "space f w": "pane::DeploySearch",
@@ -69,6 +70,7 @@
   {
     "context": "vim_mode == normal && !menu",
     "bindings": {
+      "space": "zed::NoAction",
       "g r": "editor::FindAllReferences",
       "g t d": "editor::GoToTypeDefinition",
       "shift-k": "editor::Hover",
@@ -88,6 +90,7 @@
   {
     "context": "vim_mode == visual && !menu",
     "bindings": {
+      "space": "zed::NoAction",
       "space /": "vim::ToggleComments",
       "space e": "vim::ToggleProjectPanelFocus"
     }
