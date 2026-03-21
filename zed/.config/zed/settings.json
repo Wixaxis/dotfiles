@@ -7,6 +7,7 @@
 // custom settings, run `zed: open default settings` from the
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
+  "buffer_font_weight": 600.0,
   "which_key": {
     "delay_ms": 300,
     "enabled": true,
@@ -21,6 +22,9 @@
   },
   "ui_font_family": "Hack Nerd Font",
   "buffer_font_family": "Hack Nerd Font Mono",
+  "buffer_font_features": {
+    "calt": true
+  },
   "icon_theme": "Material Icon Theme",
   "autosave": {
     "after_delay": {
@@ -43,9 +47,9 @@
     "show_diagnostics": "all",
   },
   "preview_tabs": {
-    "enabled": false,
+    "enabled": true,
     "enable_preview_from_project_panel": false,
-    "enable_preview_from_file_finder": false,
+    "enable_preview_from_file_finder": true,
     "enable_preview_from_multibuffer": false,
     "enable_preview_multibuffer_from_code_navigation": false,
     "enable_preview_file_from_code_navigation": false,
@@ -73,6 +77,8 @@
     "hide_hidden": true,
     "file_icons": true,
     "entry_spacing": "standard",
+    "default_width": 220.0,
+    "indent_size": 16.0,
     "git_status": true,
     "show_diagnostics": "all",
   },
@@ -87,12 +93,23 @@
     "toggle_relative_line_numbers": true,
     "highlight_on_yank_duration": 120,
   },
-  "ui_font_size": 16,
-  "buffer_font_size": 15,
+  "ui_font_size": 14,
+  "buffer_font_size": 13.5,
+  "buffer_line_height": {
+    "custom": 1.15
+  },
   "theme": {
     "mode": "system",
     "light": "Nord Light",
-    "dark": "Nordfox - blurred",
+    "dark": "OneNord Blurred",
+  },
+  "terminal": {
+    "font_family": "Hack Nerd Font Mono",
+    "font_size": 13,
+    "font_weight": 600,
+    "line_height": {
+      "custom": 1.15
+    }
   },
   "languages": {
     "Ruby": {
