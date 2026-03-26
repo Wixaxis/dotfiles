@@ -553,6 +553,22 @@ check_stowed() {
                 # Not stowed and content doesn't match
                 not_stowed+=("$package")
                 warning "$package is not stowed (target: $target)"
+                # Debug info
+                if [[ -e "$target_path" ]]; then
+                    info "  Debug: Target exists at $target_path"
+                    if [[ -d "$target_path" ]]; then
+                        local file_count
+                        file_count=$(find "$target_path" -type f 2>/dev/null | wc -l)
+                        info "  Debug: Target is directory with $file_count files"
+                    fi
+                else
+                    info "  Debug: Target does not exist at $target_path"
+                fi
+                if [[ -d "$package_dir" ]]; then
+                    local source_file_count
+                    source_file_count=$(find "$package_dir" -type f 2>/dev/null | wc -l)
+                    info "  Debug: Source package has $source_file_count files"
+                fi
             fi
         fi
     done
@@ -573,7 +589,29 @@ check_stowed() {
 
             if gum confirm "Stow $package now?"; then
                 info "Stowing $package..."
-                stow_package "$dotfiles_dir" "$package" "$target"
+                if stow_package "$dotfiles_dir" "$package" "$target"; then
+                    # Verify it was actually stowed
+                    if is_target_stowed "$HOME/$target" "$dotfiles_dir/$package/$target"; then
+                        success "$package is now properly stowed"
+                    else
+                        error "Stow reported success but $package is still not detected as stowed"
+                        info "Target: $HOME/$target"
+                        info "Source: $dotfiles_dir/$package/$target"
+                        if [[ -e "$HOME/$target" ]]; then
+                            info "Target exists: yes"
+                            if [[ -L "$HOME/$target" ]]; then
+                                info "Target is symlink: yes -> $(readlink "$HOME/$target")"
+                            else
+                                info "Target is symlink: no"
+                                info "Target type: directory"
+                            fi
+                        else
+                            info "Target exists: no"
+                        fi
+                    fi
+                else
+                    error "Failed to stow $package"
+                fi
             fi
         done
     fi
@@ -660,7 +698,6 @@ check_packages() {
         "flameshot"
         "papirus-icon-theme"
         "nordzy-icon-theme"
-        "colloid-icon-theme"
         "tela-icon-theme"
     )
     local arch_hyprland=(
