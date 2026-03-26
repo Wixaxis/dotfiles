@@ -137,7 +137,115 @@ is_target_stowed() {
     target_real=$(canonical_path "$target") || return 1
     source_real=$(canonical_path "$source") || return 1
 
-    [[ "$target_real" == "$source_real" ]]
+    # Fast path: check if it's a proper symlink
+    if [[ "$target_real" == "$source_real" ]]; then
+        return 0
+    fi
+
+    # If target exists but isn't a symlink to source, check if content matches
+    if [[ -e "$target" ]] && [[ -e "$source" ]]; then
+        if [[ -d "$target" ]] && [[ -d "$source" ]]; then
+            # Compare directory contents recursively
+            if compare_directories "$source" "$target"; then
+                return 0
+            fi
+        elif [[ -f "$target" ]] && [[ -f "$source" ]]; then
+            # Compare single files by size and hash
+            if compare_files "$source" "$target"; then
+                return 0
+            fi
+        fi
+    fi
+
+    return 1
+}
+
+# Compare two directories for identical content (files and sizes)
+compare_directories() {
+    local source_dir="$1"
+    local target_dir="$2"
+
+    # Check if source exists
+    if [[ ! -d "$source_dir" ]]; then
+        return 1
+    fi
+
+    # Check if target exists
+    if [[ ! -d "$target_dir" ]]; then
+        return 1
+    fi
+
+    # Build file lists (relative paths)
+    local source_files target_files
+    source_files=$(find "$source_dir" -type f 2>/dev/null | sed "s|^$source_dir/||" | sort)
+    target_files=$(find "$target_dir" -type f 2>/dev/null | sed "s|^$target_dir/||" | sort)
+
+    # Quick check: same number of files
+    local source_count target_count
+    source_count=$(echo "$source_files" | grep -c '^' 2>/dev/null || echo 0)
+    target_count=$(echo "$target_files" | grep -c '^' 2>/dev/null || echo 0)
+
+    if [[ "$source_count" -ne "$target_count" ]]; then
+        return 1
+    fi
+
+    # Check: same file list
+    if [[ "$source_files" != "$target_files" ]]; then
+        return 1
+    fi
+
+    # Compare file sizes for each file (faster than hashing)
+    local file
+    while IFS= read -r file; do
+        if [[ -z "$file" ]]; then
+            continue
+        fi
+
+        local source_file="$source_dir/$file"
+        local target_file="$target_dir/$file"
+
+        # Check if both are files
+        if [[ ! -f "$source_file" ]] || [[ ! -f "$target_file" ]]; then
+            return 1
+        fi
+
+        # Compare sizes
+        local source_size target_size
+        source_size=$(stat -c%s "$source_file" 2>/dev/null || stat -f%z "$source_file" 2>/dev/null)
+        target_size=$(stat -c%s "$target_file" 2>/dev/null || stat -f%z "$target_file" 2>/dev/null)
+
+        if [[ "$source_size" != "$target_size" ]]; then
+            return 1
+        fi
+    done <<< "$source_files"
+
+    return 0
+}
+
+# Compare two files for equality
+compare_files() {
+    local source_file="$1"
+    local target_file="$2"
+
+    # Check both exist and are files
+    [[ -f "$source_file" ]] || return 1
+    [[ -f "$target_file" ]] || return 1
+
+    # Compare sizes first (fast)
+    local source_size target_size
+    source_size=$(stat -c%s "$source_file" 2>/dev/null || stat -f%z "$source_file" 2>/dev/null)
+    target_size=$(stat -c%s "$target_file" 2>/dev/null || stat -f%z "$target_file" 2>/dev/null)
+
+    if [[ "$source_size" != "$target_size" ]]; then
+        return 1
+    fi
+
+    # Same size - compare content with md5sum
+    local source_hash target_hash
+    source_hash=$(md5sum "$source_file" 2>/dev/null | cut -d' ' -f1)
+    target_hash=$(md5sum "$target_file" 2>/dev/null | cut -d' ' -f1)
+
+    [[ "$source_hash" == "$target_hash" ]]
 }
 
 backup_path() {
@@ -419,6 +527,7 @@ check_stowed() {
     fi
     
     local not_stowed=()
+    local content_matches_not_stowed=()
     
     for package_info in "${packages[@]}"; do
         IFS=':' read -r package target <<< "$package_info"
@@ -428,15 +537,27 @@ check_stowed() {
 
         # Check if package directory or target file exists in dotfiles
         if [[ -d "$package_dir" ]] || [[ -f "$source_path" ]] || [[ -d "$source_path" ]]; then
-            if is_target_stowed "$target_path" "$source_path"; then
+            # Check if properly symlinked first
+            local target_real source_real
+            target_real=$(canonical_path "$target_path") || target_real=""
+            source_real=$(canonical_path "$source_path") || source_real=""
+            
+            if [[ "$target_real" == "$source_real" ]] && [[ -n "$target_real" ]]; then
+                # Properly symlinked
                 success "$package is stowed"
+            elif is_target_stowed "$target_path" "$source_path"; then
+                # Content matches but not symlinked
+                content_matches_not_stowed+=("$package:$target")
+                warning "$package content matches but is not symlinked (target: $target)"
             else
+                # Not stowed and content doesn't match
                 not_stowed+=("$package")
                 warning "$package is not stowed (target: $target)"
             fi
         fi
     done
     
+    # Handle packages that need to be stowed (missing or different content)
     if [[ ${#not_stowed[@]} -gt 0 ]]; then
         warning "Some packages are not stowed: ${not_stowed[*]}"
         
@@ -455,6 +576,37 @@ check_stowed() {
                 stow_package "$dotfiles_dir" "$package" "$target"
             fi
         done
+    fi
+    
+    # Handle packages where content matches but isn't symlinked
+    if [[ ${#content_matches_not_stowed[@]} -gt 0 ]]; then
+        echo ""
+        info "Some packages have matching content but aren't symlinked:"
+        for pkg_info in "${content_matches_not_stowed[@]}"; do
+            IFS=':' read -r pkg_name pkg_target <<< "$pkg_info"
+            echo "  - $pkg_name (~/$pkg_target)"
+        done
+        echo ""
+        
+        if gum confirm "Replace these with symlinks to dotfiles?"; then
+            for pkg_info in "${content_matches_not_stowed[@]}"; do
+                IFS=':' read -r pkg_name pkg_target <<< "$pkg_info"
+                local full_target="$home_dir/$pkg_target"
+                
+                info "Converting $pkg_name to symlink..."
+                
+                # Backup existing directory/file
+                if [[ -e "$full_target" ]] || [[ -L "$full_target" ]]; then
+                    local backup_path="${full_target}.backup.$(date +%Y%m%d_%H%M%S)"
+                    mv "$full_target" "$backup_path"
+                    info "Backed up to: $backup_path"
+                fi
+                
+                # Stow the package
+                stow_package "$dotfiles_dir" "$pkg_name" "$pkg_target"
+            done
+            success "All packages converted to symlinks"
+        fi
     fi
 }
 
