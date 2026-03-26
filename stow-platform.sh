@@ -7,13 +7,22 @@ set -e
 # Detect platform
 OS="$(uname -s)"
 PLATFORM=""
+DESKTOP=""
 
 case "$OS" in
   Linux)
-    # Detect if running Wayland
-    if [ -n "$WAYLAND_DISPLAY" ] || [ -n "$XDG_SESSION_TYPE" ] && [ "$XDG_SESSION_TYPE" = "wayland" ]; then
+    # Detect desktop: GNOME vs Hyprland vs other (affects which packages we stow)
+    if [[ "${XDG_CURRENT_DESKTOP:-}" == *"GNOME"* ]] || [[ "${XDG_SESSION_DESKTOP:-}" == *"gnome"* ]]; then
+      DESKTOP="gnome"
+      PLATFORM="linux-gnome"
+    elif [[ -n "${HYPRLAND_INSTANCE:-}" ]] || [[ "${XDG_CURRENT_DESKTOP:-}" == *"Hyprland"* ]]; then
+      DESKTOP="hyprland"
+      PLATFORM="linux-wayland"
+    elif [ -n "$WAYLAND_DISPLAY" ] || { [ -n "$XDG_SESSION_TYPE" ] && [ "$XDG_SESSION_TYPE" = "wayland" ]; }; then
+      DESKTOP="other"
       PLATFORM="linux-wayland"
     else
+      DESKTOP="other"
       PLATFORM="linux"
     fi
     ;;
@@ -25,9 +34,37 @@ case "$OS" in
     ;;
 esac
 
-echo "Detected platform: $PLATFORM"
+echo "Detected platform: $PLATFORM${DESKTOP:+ (desktop: $DESKTOP)}"
 echo ""
 
+# Check for DMS on Linux (only relevant for Hyprland)
+DMS_INSTALLED=false
+if [ "$OS" = "Linux" ] && [ "$DESKTOP" = "hyprland" ]; then
+  if command -v dms &> /dev/null; then
+    DMS_INSTALLED=true
+    echo "✓ DankMaterialShell (dms) is installed"
+  else
+    echo "⚠️  DankMaterialShell (dms) is not installed."
+    if command -v gum &> /dev/null; then
+      if gum confirm "Would you like to install DankMaterialShell now?"; then
+        echo "Installing DankMaterialShell..."
+        curl -fsSL https://install.danklinux.com | sh
+        if command -v dms &> /dev/null; then
+          DMS_INSTALLED=true
+          echo "✓ DankMaterialShell installed"
+        else
+          echo "⚠️  Installation may have failed. Please check manually."
+        fi
+      else
+        echo "Skipping DankMaterialShell installation"
+      fi
+    else
+      echo "Note: Install 'gum' to enable interactive DMS installation prompt"
+      echo "      Or install DMS manually: curl -fsSL https://install.danklinux.com | sh"
+    fi
+  fi
+  echo ""
+fi
 # Common packages (work on all platforms)
 COMMON_PACKAGES=(
   "fastfetch"
@@ -44,33 +81,42 @@ COMMON_PACKAGES=(
   "tmux"
   "tmuxinator"
   "yazi"
+  "zed"
 )
 
-# Linux-specific packages (dunst, kitty, kvantum, qimgv are in archived/)
-LINUX_PACKAGES=(
+# Linux packages that work on any DE (GNOME, Hyprland, X11, etc.)
+# Note: dunst, kitty, kvantum, qimgv are in archived/
+LINUX_DE_AGNOSTIC=(
   "arch-update"
   "bash"
   "btop"
   "papes"
   "qt6ct"
-  "rofi"
+  "flameshot"
   "themes"
-  "thunar"
+)
+
+# Hyprland/Wayland-only packages (not used on GNOME)
+LINUX_HYPRLAND_ONLY=(
   "hyprland"
+  "rofi"
   "swaync"
   "waybar"
+  "thunar"
+)
+
+# DMS config packages (only stowed on Hyprland when DMS is installed)
+DMS_PACKAGES=(
+  "dms-config"
+  "icons-dms"
+  "gtk-dms"
+  "environment-dms"
 )
 
 # macOS-specific packages
 MACOS_PACKAGES=(
   "zsh"
-)
-
-# Wayland-specific packages (subset of Linux)
-WAYLAND_PACKAGES=(
-  "hyprland"
-  "swaync"
-  "waybar"
+  "truenas-macos"
 )
 
 # Function to stow packages
@@ -102,22 +148,40 @@ unstow_packages() {
 # Stow common packages
 echo "=== Stowing common packages ==="
 stow_packages "${COMMON_PACKAGES[@]}"
-echo ""
 
 # Platform-specific packages
 case "$PLATFORM" in
+  linux-gnome)
+    echo "=== GNOME detected: stowing DE-agnostic packages only ==="
+    unstow_packages "${DMS_PACKAGES[@]}"
+    unstow_packages "${LINUX_HYPRLAND_ONLY[@]}"
+    echo ""
+    stow_packages "${LINUX_DE_AGNOSTIC[@]}"
+    ;;
   linux-wayland)
-    echo "=== Stowing Linux packages ==="
-    stow_packages "${LINUX_PACKAGES[@]}"
+    if [ "$DESKTOP" = "hyprland" ]; then
+      echo "=== Hyprland detected: stowing full Linux + Hyprland set ==="
+      stow_packages "${LINUX_DE_AGNOSTIC[@]}"
+      stow_packages "${LINUX_HYPRLAND_ONLY[@]}"
+      if [ "$DMS_INSTALLED" = true ]; then
+        echo ""
+        echo "=== Stowing DMS config packages ==="
+        stow_packages "${DMS_PACKAGES[@]}"
+      fi
+    else
+      echo "=== Wayland (non-GNOME/non-Hyprland): stowing DE-agnostic only ==="
+      unstow_packages "${DMS_PACKAGES[@]}"
+      unstow_packages "${LINUX_HYPRLAND_ONLY[@]}"
+      echo ""
+      stow_packages "${LINUX_DE_AGNOSTIC[@]}"
+    fi
     ;;
   linux)
-    echo "=== Stowing Linux packages (excluding Wayland-specific) ==="
-    # Linux packages minus Wayland-specific
-    for pkg in "${LINUX_PACKAGES[@]}"; do
-      if [[ ! " ${WAYLAND_PACKAGES[@]} " =~ " ${pkg} " ]]; then
-        stow_packages "$pkg"
-      fi
-    done
+    echo "=== Linux (X11 or other): stowing DE-agnostic only ==="
+    unstow_packages "${DMS_PACKAGES[@]}"
+    unstow_packages "${LINUX_HYPRLAND_ONLY[@]}"
+    echo ""
+    stow_packages "${LINUX_DE_AGNOSTIC[@]}"
     ;;
   macos)
     echo "=== Stowing macOS packages ==="

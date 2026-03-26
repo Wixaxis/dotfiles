@@ -3,7 +3,7 @@
 
 theme = Nord
 macos-option-as-alt=left
-macos-titlebar-style=hidden
+macos-titlebar-style=tabs
 keybind = global:ctrl+t=toggle_quick_terminal
 keybind = super+equal=increase_font_size:0.25
 keybind = super+minus=decrease_font_size:0.25

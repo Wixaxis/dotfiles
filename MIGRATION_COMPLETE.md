@@ -21,14 +21,6 @@ Successfully migrated from `macos` branch to `main` branch with all platform-spe
   - Linux: `/usr/sbin/mise` or `/usr/bin/mise`
   - Fallback: Uses `mise` from PATH
 
-#### **nushell/.config/nushell/sources/aliases.nu**
-- **Fixed**: Made trash alias platform-aware
-- **Before**: Hardcoded `/opt/homebrew/opt/trash-cli/bin/trash` (macOS only)
-- **After**: Automatically detects trash path:
-  - macOS: `/opt/homebrew/opt/trash-cli/bin/trash`
-  - Linux: `/usr/bin/trash` or from PATH
-  - Fallback: Uses `trash` from PATH
-
 #### **ghostty/.config/ghostty/config**
 - **Fixed**: Uncommented nushell command for macOS
 - **Before**: Command was commented out
@@ -77,8 +69,7 @@ Successfully migrated from `macos` branch to `main` branch with all platform-spe
 2. `mise/.config/mise/config.toml` - Merged with local config
 3. `nushell/.config/nushell/env.nu` - Restored AI env files
 4. `nushell/.config/nushell/modules/mise.nu` - Platform-aware mise path
-5. `nushell/.config/nushell/sources/aliases.nu` - Platform-aware trash path
-6. `tmux/.config/tmux/conf.d/base.conf` - Platform-aware default-shell
+5. `tmux/.config/tmux/conf.d/base.conf` - Platform-aware default-shell
 
 ## Files Added
 
@@ -101,7 +92,6 @@ Successfully migrated from `macos` branch to `main` branch with all platform-spe
    git commit -m "Fix platform-specific paths for macOS compatibility
 
    - Make mise path detection platform-aware
-   - Make trash alias platform-aware  
    - Uncomment ghostty nushell command for macOS
    - Add platform-aware tmux default-shell
    - Restore AI env files in nushell
@@ -127,7 +117,6 @@ The repository now uses platform detection in:
 - `zsh/.fzf.zsh` - Detects macOS vs Linux for fzf paths
 - `zsh/.zshrc` - Detects macOS for SSH keychain
 - `nushell/modules/mise.nu` - Detects mise installation path
-- `nushell/sources/aliases.nu` - Detects trash installation path
 - `tmux/conf.d/base.conf` - Detects macOS for default shell
 
 All configurations will work seamlessly on both macOS and Linux!

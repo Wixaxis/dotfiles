@@ -9,8 +9,8 @@ This document lists all aliases currently defined across bash, zsh, and nushell 
 | Alias | Bash | Zsh | Nushell | Description |
 |-------|------|-----|---------|-------------|
 | `mux` | ✅ | ✅ | ✅ | Shortcut for `tmuxinator` |
-| `mv` | ✅ (`mv -i`) | ❌ | ✅ (`mv -i`) | Interactive move (ask before overwriting) |
-| `rm` | ✅ (trash) | ❌ | ✅ (trash) | Safe delete using trash-cli |
+| `mv` | ❌ | ❌ | ❌ | Uses native shell command |
+| `rm` | ❌ | ❌ | ❌ | Uses native shell command |
 | `vim` | ✅ | ❌ | ❌ | Alias to `nvim` |
 
 ### Directory Listing
@@ -57,9 +57,6 @@ This document lists all aliases currently defined across bash, zsh, and nushell 
 | Alias/Def | Location | Description |
 |-----------|----------|-------------|
 | `lsa` (def) | `aliases.nu` | List all sorted by modified (reverse) |
-| `trash` (def) | `aliases.nu` | Platform-aware trash wrapper function |
-| `get trash path` (def) | `aliases.nu` | Helper to find trash binary |
-
 ## Detailed Breakdown by Shell
 
 ### Bash Aliases
@@ -67,9 +64,6 @@ This document lists all aliases currently defined across bash, zsh, and nushell 
 **Location**: `bash/.config/bash/modules/0-system/aliases.bash`
 
 ```bash
-# Safe file operations
-rm='trash' (if trash available) or 'rm -i' (fallback)
-mv='mv -i'
 mux=tmuxinator
 reset='reset && clear'
 lsa='exa --color=always --icons -la --sort=modified --reverse' (if exa available)
@@ -124,24 +118,15 @@ def lsa [] { ls -a | sort-by modified | reverse }
 
 # Aliases
 alias mux = tmuxinator
-alias reset = zsh -c 'reset && exit'
-alias rm = trash  # Uses trash function
-alias mv = mv -i
-
-# Platform-aware trash function
-def "get trash path" [] { ... }
-def trash [...rest] { ... }
 ```
 
 ## Missing Aliases (Not Synced)
 
 ### Should be in all shells but missing:
 
-1. **`mv='mv -i'`** - Missing in Zsh
-2. **`rm='trash'`** - Missing in Zsh
-3. **`vim=nvim`** - Missing in Zsh and Nushell
-4. **`reload`** - Missing in Zsh and Nushell
-5. **`reset`** - Missing in Zsh (present in Bash and Nushell)
+1. **`vim=nvim`** - Missing in Zsh and Nushell
+2. **`reload`** - Missing in Zsh and Nushell
+3. **`reset`** - Missing in Zsh (present in Bash and Nushell)
 
 ### Shell-specific that might be useful elsewhere:
 
@@ -153,8 +138,6 @@ def trash [...rest] { ... }
 
 1. **Core aliases to sync across all shells:**
    - `mux=tmuxinator` ✅ (already synced)
-   - `mv='mv -i'` (add to Zsh)
-   - `rm='trash'` (add to Zsh, ensure trash-cli available)
    - `vim=nvim` (add to Zsh and Nushell)
    - `reset` (add to Zsh, adjust for shell)
    - `reload` (add to Zsh and Nushell, adjust for shell)

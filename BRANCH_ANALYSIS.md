@@ -42,10 +42,6 @@ The main branch includes:
    - **Current macos branch**: Uses `/opt/homebrew/bin/mise`
    - **Fix needed**: Platform detection to use `/opt/homebrew/bin/mise` on macOS
 
-2. **`nushell/.config/nushell/sources/aliases.nu`**:
-   - **Problem**: Hardcoded `/opt/homebrew/opt/trash-cli/bin/trash`
-   - **Fix needed**: Platform-aware path or conditional alias
-
 3. **`ghostty/.config/ghostty/config`**:
    - **Main branch**: Has `# command = /opt/homebrew/bin/nu` commented out
    - **macos branch**: Has `command = /opt/homebrew/bin/nu` active
@@ -116,7 +112,6 @@ Based on symlink analysis, these packages are currently stowed:
    - Run `./stow-platform.sh` to restow packages with platform detection
    - Fix the hardcoded paths in:
      - `nushell/.config/nushell/modules/mise.nu` (mise path)
-     - `nushell/.config/nushell/sources/aliases.nu` (trash path)
    - Decide on:
      - Whether to restore AI-related nushell env files
      - Whether to uncomment ghostty command for macOS
@@ -161,11 +156,9 @@ Based on symlink analysis, these packages are currently stowed:
 
 ### Priority 1 (Critical):
 1. `nushell/.config/nushell/modules/mise.nu` - Fix mise path detection
-2. `nushell/.config/nushell/sources/aliases.nu` - Fix trash path
-
 ### Priority 2 (Important):
-3. `ghostty/.config/ghostty/config` - Consider uncommenting command for macOS
-4. `tmux/.config/tmux/conf.d/base.conf` - Add platform-aware default-shell
+2. `ghostty/.config/ghostty/config` - Consider uncommenting command for macOS
+3. `tmux/.config/tmux/conf.d/base.conf` - Add platform-aware default-shell
 
 ### Priority 3 (Optional):
 5. `nushell/.config/nushell/env.nu` - Decide on AI env files
