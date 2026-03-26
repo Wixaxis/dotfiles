@@ -16,3 +16,4 @@ quick-terminal-screen = mouse
 quick-terminal-animation-duration = 0
 background-opacity = 0.7
 background-blur = 50
+infocmp -x xterm-ghostty = ssh-terminfo
