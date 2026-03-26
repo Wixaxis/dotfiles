@@ -81,7 +81,7 @@
         "tooltip-format-wifi": "{icon} {essid}\n⇣{bandwidthDownBytes}  ⇡{bandwidthUpBytes}",
         "tooltip-format-ethernet": "󰀂  {ifname}\n⇣{bandwidthDownBytes}  ⇡{bandwidthUpBytes}",
         "tooltip-format-disconnected": "Disconnected",
-        "on-click": "kitty sh -c 'sleep 0.1 && nmtui'",
+        "on-click": "ghostty -e sh -c 'sleep 0.1 && nmtui'",
         "interval": 5,
         "nospacing": 1
     },

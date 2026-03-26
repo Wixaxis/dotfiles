@@ -316,7 +316,7 @@ check_stowed() {
     elif [[ "$PLATFORM" == "macos" ]]; then
         packages=(
             "${common_stowed[@]}"
-            "ghostty-raw:.config/ghostty"
+            "ghostty:.config/ghostty"
             "nushell:.config/nushell"
         )
     else

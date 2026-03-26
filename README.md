@@ -180,7 +180,7 @@ Some configuration packages have been moved to the `archived/` directory. These 
 - **Files**: `~/justfile`
 - **Description**: Common tasks and shortcuts (see [Justfile Commands](#justfile-commands))
 
-#### `kitty/`
+#### `kitty/` (archived)
 - **Purpose**: Kitty terminal emulator configuration
 - **Files**: 
   - `~/.config/kitty/kitty.conf` - Main configuration
@@ -188,7 +188,7 @@ Some configuration packages have been moved to the `archived/` directory. These 
   - `~/.config/kitty/themes/NordicLight.conf` - Theme definitions
 - **Description**: Terminal emulator settings with theme support
 
-#### `kvantum/`
+#### `kvantum/` (archived)
 - **Purpose**: Kvantum theme engine configuration
 - **Files**: `~/.config/Kvantum/` containing:
   - `kvantum.kvconfig` - Main configuration
@@ -232,7 +232,7 @@ Some configuration packages have been moved to the `archived/` directory. These 
 - **Description**: Collection of wallpapers (PNG, JPG formats)
 - **Note**: Screenshots directory is gitignored
 
-#### `qimgv/`
+#### `qimgv/` (archived)
 - **Purpose**: qimgv image viewer configuration
 - **Files**: 
   - `~/.config/qimgv/qimgv.conf`
@@ -259,7 +259,6 @@ Some configuration packages have been moved to the `archived/` directory. These 
   - `theme_switcher.rb` - Unified theme switching across applications
   - `randomize_wallpaper.rb` - Wallpaper randomization
   - `powermenu.rb` - Power menu functionality
-  - `rofi-hyprshot.rb` - Screenshot integration with Rofi
   - `rb-setup-monitors.rb` - Monitor configuration
   - `reload_adjust_swaync.rb` - SwayNC notification center reload
   - `ruby/` - Ruby utility modules (cache_base, ensure_process_up, handle_dmenu, log, rofi_base)

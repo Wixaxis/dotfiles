@@ -29,12 +29,11 @@ echo "Detected platform: $PLATFORM"
 echo ""
 
 # Common packages (work on all platforms)
-# Note: On macOS, ghostty-raw is used instead of ghostty
 COMMON_PACKAGES=(
   "fastfetch"
+  "ghostty"
   "glow"
   "justfile"
-  "kitty"
   "lazygit"
   "mise"
   "neovide"
@@ -47,20 +46,17 @@ COMMON_PACKAGES=(
   "yazi"
 )
 
-# Linux-specific packages
-# Note: dunst, kitty, kvantum, qimgv are archived (see archived/ directory)
+# Linux-specific packages (dunst, kitty, kvantum, qimgv are in archived/)
 LINUX_PACKAGES=(
   "arch-update"
   "bash"
   "btop"
   "papes"
-  "qimgv"
   "qt6ct"
   "rofi"
   "themes"
   "thunar"
   "hyprland"
-  "solaar"
   "swaync"
   "waybar"
 )
@@ -106,21 +102,6 @@ unstow_packages() {
 # Stow common packages
 echo "=== Stowing common packages ==="
 stow_packages "${COMMON_PACKAGES[@]}"
-
-# Platform-specific ghostty selection
-if [ "$PLATFORM" = "macos" ]; then
-  # Use ghostty-raw on macOS
-  if [ -d "ghostty-raw" ]; then
-    echo "Stowing ghostty-raw..."
-    stow -t ~ ghostty-raw || echo "  Warning: Failed to stow ghostty-raw"
-  fi
-else
-  # Use ghostty-raw on Linux too
-  if [ -d "ghostty-raw" ]; then
-    echo "Stowing ghostty-raw..."
-    stow -t ~ ghostty-raw || echo "  Warning: Failed to stow ghostty-raw"
-  fi
-fi
 echo ""
 
 # Platform-specific packages
