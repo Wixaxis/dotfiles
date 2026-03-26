@@ -80,7 +80,6 @@ COMMON_PACKAGES=(
   "starship"
   "tmux"
   "tmuxinator"
-  "vicinae"
   "yazi"
   "zed"
 )
@@ -95,6 +94,7 @@ LINUX_DE_AGNOSTIC=(
   "qt6ct"
   "flameshot"
   "themes"
+  "vicinae"
 )
 
 # Hyprland/Wayland-only packages (not used on GNOME)
