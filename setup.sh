@@ -710,7 +710,7 @@ check_packages() {
         "flameshot"
         "papirus-icon-theme"
         "nordzy-icon-theme"
-        "tela-icon-theme"
+        "tela-icon-theme-bin"
     )
     local arch_hyprland=(
         "hyprland"
