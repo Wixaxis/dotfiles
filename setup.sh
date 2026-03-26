@@ -149,6 +149,10 @@ is_target_stowed() {
             if compare_directories "$source" "$target"; then
                 return 0
             fi
+            # Handle stow-managed directories with symlinked child entries
+            if compare_directory_entries "$source" "$target"; then
+                return 0
+            fi
         elif [[ -f "$target" ]] && [[ -f "$source" ]]; then
             # Compare single files by size and hash
             if compare_files "$source" "$target"; then
@@ -222,6 +226,43 @@ compare_directories() {
     return 0
 }
 
+# Detect stow-managed directories where entries are symlinked into an existing parent.
+compare_directory_entries() {
+    local source_dir="$1"
+    local target_dir="$2"
+
+    [[ -d "$source_dir" ]] || return 1
+    [[ -d "$target_dir" ]] || return 1
+
+    local source_entries target_entries
+    source_entries=$(find "$source_dir" -mindepth 1 -maxdepth 1 -exec basename {} \; | sort)
+    target_entries=$(find "$target_dir" -mindepth 1 -maxdepth 1 -exec basename {} \; | sort)
+
+    if [[ "$source_entries" != "$target_entries" ]]; then
+        return 1
+    fi
+
+    local entry
+    while IFS= read -r entry; do
+        if [[ -z "$entry" ]]; then
+            continue
+        fi
+
+        local source_entry="$source_dir/$entry"
+        local target_entry="$target_dir/$entry"
+        local source_real target_real
+
+        source_real=$(canonical_path "$source_entry") || return 1
+        target_real=$(canonical_path "$target_entry") || return 1
+
+        if [[ "$source_real" != "$target_real" ]]; then
+            return 1
+        fi
+    done <<< "$source_entries"
+
+    return 0
+}
+
 # Compare two files for equality
 compare_files() {
     local source_file="$1"
@@ -242,8 +283,16 @@ compare_files() {
 
     # Same size - compare content with md5sum
     local source_hash target_hash
-    source_hash=$(md5sum "$source_file" 2>/dev/null | cut -d' ' -f1)
-    target_hash=$(md5sum "$target_file" 2>/dev/null | cut -d' ' -f1)
+    if has_command md5sum; then
+        source_hash=$(md5sum "$source_file" 2>/dev/null | cut -d' ' -f1)
+        target_hash=$(md5sum "$target_file" 2>/dev/null | cut -d' ' -f1)
+    elif has_command md5; then
+        source_hash=$(md5 -q "$source_file" 2>/dev/null)
+        target_hash=$(md5 -q "$target_file" 2>/dev/null)
+    else
+        cmp -s "$source_file" "$target_file"
+        return $?
+    fi
 
     [[ "$source_hash" == "$target_hash" ]]
 }
@@ -302,9 +351,10 @@ stow_package() {
         mv "$target_path" "$backup_target"
     elif [[ -L "$target_path" ]]; then
         # It's a symlink - check if it's pointing to our package
-        local link_target
-        link_target=$(readlink "$target_path")
-        if [[ "$link_target" != "$dotfiles_dir/$package"* ]]; then
+        local link_real expected_real
+        link_real=$(canonical_path "$target_path") || link_real=""
+        expected_real=$(canonical_path "$dotfiles_dir/$package/$target") || expected_real=""
+        if [[ -z "$link_real" ]] || [[ "$link_real" != "$expected_real" ]]; then
             # Symlink pointing elsewhere, back it up
             local backup_target
             backup_target=$(backup_path "$target_path")
