@@ -387,6 +387,7 @@ check_stowed() {
         "starship:.config/starship.toml"
         "tmux:.config/tmux"
         "tmuxinator:.config/tmuxinator"
+        "vicinae:.config/vicinae"
         "yazi:.config/yazi"
         "zed:.config/zed"
     )
@@ -395,6 +396,7 @@ check_stowed() {
         packages=(
             "${common_stowed[@]}"
             "bash:.bashrc"
+            "nushell:.config/nushell"
         )
         if [[ "$DESKTOP" == "hyprland" ]]; then
             packages+=(
