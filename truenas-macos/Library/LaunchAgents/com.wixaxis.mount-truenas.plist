@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+  <dict>
+    <key>Label</key>
+    <string>com.wixaxis.mount-truenas</string>
+
+    <key>ProgramArguments</key>
+    <array>
+      <string>/Users/wixaxis/scripts/mount_truenas_smb.sh</string>
+    </array>
+
+    <key>RunAtLoad</key>
+    <true/>
+
+    <key>StartInterval</key>
+    <integer>120</integer>
+
+    <key>StandardOutPath</key>
+    <string>/tmp/com.wixaxis.mount-truenas.out.log</string>
+
+    <key>StandardErrorPath</key>
+    <string>/tmp/com.wixaxis.mount-truenas.err.log</string>
+  </dict>
+</plist>
