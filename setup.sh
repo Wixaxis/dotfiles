@@ -387,7 +387,6 @@ check_stowed() {
         "starship:.config/starship.toml"
         "tmux:.config/tmux"
         "tmuxinator:.config/tmuxinator"
-        "vicinae:.config/vicinae"
         "yazi:.config/yazi"
         "zed:.config/zed"
     )
@@ -397,6 +396,7 @@ check_stowed() {
             "${common_stowed[@]}"
             "bash:.bashrc"
             "nushell:.config/nushell"
+            "vicinae:.config/vicinae"
         )
         if [[ "$DESKTOP" == "hyprland" ]]; then
             packages+=(
@@ -408,7 +408,7 @@ check_stowed() {
     elif [[ "$PLATFORM" == "macos" ]]; then
         packages=(
             "${common_stowed[@]}"
-            "nushell:.config/nushell"
+            "nushell:Library/Application Support/nushell"
             "truenas-macos:Library/LaunchAgents/com.wixaxis.mount-truenas.plist"
             "zsh:.zshrc"
         )
