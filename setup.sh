@@ -775,6 +775,90 @@ check_wayland() {
 }
 
 # ============================================================================
+# CHECK ARCH-SPECIFIC SERVICES (pacman hooks, mirror updates)
+# ============================================================================
+check_arch_services() {
+    if [[ "$PLATFORM" != "arch" ]]; then
+        return 0
+    fi
+    
+    section "Checking Arch Linux Services"
+    
+    local dotfiles_dir
+    dotfiles_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+    
+    # Check and install pacman hooks
+    info "Checking pacman hooks..."
+    if [[ -f "/etc/pacman.d/hooks/pacnew.hook" ]]; then
+        success "Pacnew handler hook is installed"
+    else
+        warning "Pacnew handler hook is not installed"
+        if gum confirm "Install pacman hook to auto-handle .pacnew files?"; then
+            if [[ -f "$dotfiles_dir/arch-update/.config/pacman/hooks/pacnew.hook" ]]; then
+                sudo mkdir -p /etc/pacman.d/hooks/bin
+                sudo cp "$dotfiles_dir/arch-update/.config/pacman/hooks/pacnew.hook" /etc/pacman.d/hooks/
+                sudo cp "$dotfiles_dir/arch-update/.config/pacman/hooks.bin/pacnew-handler.sh" /etc/pacman.d/hooks/bin/
+                sudo chmod +x /etc/pacman.d/hooks/bin/pacnew-handler.sh
+                success "Pacnew handler hook installed"
+            else
+                error "Pacnew hook files not found in dotfiles"
+            fi
+        fi
+    fi
+    
+    # Check and setup reflector timer
+    info "Checking mirror update service..."
+    if systemctl list-timers reflector-update.timer &> /dev/null || \
+       systemctl list-unit-files | grep -q "reflector-update.timer"; then
+        success "Reflector timer is configured"
+        systemctl --user list-timers reflector-update.timer 2>/dev/null || \
+        systemctl list-timers reflector-update.timer 2>/dev/null || \
+        info "Timer details not available (may need to check manually)"
+    else
+        warning "Reflector timer is not configured"
+        if gum confirm "Setup automatic weekly mirror list updates?"; then
+            # Copy user service files
+            mkdir -p "$HOME/.config/systemd/user"
+            if [[ -f "$dotfiles_dir/arch-update/.config/systemd/user/reflector-update.service" ]]; then
+                cp "$dotfiles_dir/arch-update/.config/systemd/user/reflector-update.service" \
+                   "$HOME/.config/systemd/user/"
+                cp "$dotfiles_dir/arch-update/.config/systemd/user/reflector-update.timer" \
+                   "$HOME/.config/systemd/user/"
+                
+                # Reload daemon and enable timer
+                systemctl --user daemon-reload
+                systemctl --user enable reflector-update.timer
+                systemctl --user start reflector-update.timer
+                success "Reflector timer installed and started"
+                info "Mirror list will be updated weekly"
+            else
+                error "Reflector service files not found in dotfiles"
+            fi
+        fi
+    fi
+    
+    # Check if mirrorlist needs immediate update
+    if [[ -f "/etc/pacman.d/mirrorlist" ]]; then
+        local mirrorlist_age
+        mirrorlist_age=$(( ($(date +%s) - $(stat -c %Y /etc/pacman.d/mirrorlist 2>/dev/null || echo "0")) / 86400 ))
+        if [[ $mirrorlist_age -gt 30 ]]; then
+            warning "Mirror list is ${mirrorlist_age} days old"
+            if gum confirm "Update mirror list now?"; then
+                if systemctl --user is-active reflector-update.service &> /dev/null || \
+                   systemctl is-active reflector-update.service &> /dev/null 2>&1; then
+                    info "Reflector service is already running or timer is active"
+                else
+                    sudo reflector --latest 30 --protocol https --sort rate --save /etc/pacman.d/mirrorlist
+                    success "Mirror list updated"
+                fi
+            fi
+        else
+            success "Mirror list is ${mirrorlist_age} days old (up to date)"
+        fi
+    fi
+}
+
+# ============================================================================
 # CHECK GIT FILTER CONFIGURATION
 # ============================================================================
 check_git_filter() {
@@ -829,6 +913,7 @@ main() {
     check_shell
     check_git_filter
     check_wayland
+    check_arch_services
     
     section "Setup Complete"
     success "All checks completed!"

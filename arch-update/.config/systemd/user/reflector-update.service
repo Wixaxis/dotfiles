@@ -1,0 +1,10 @@
+[Unit]
+Description=Update pacman mirrorlist using reflector
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/reflector --latest 30 --protocol https --sort rate --save /etc/pacman.d/mirrorlist
+StandardOutput=journal
+StandardError=journal
