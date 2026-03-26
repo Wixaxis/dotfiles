@@ -17,7 +17,6 @@ PACKAGES=(
     "neovide:neovide"
     "nushell:nu"
     "rofi:rofi"
-    "solaar:solaar"
     "starship:starship"
     "swaync:swaync-client"
     "tmux:tmux"
