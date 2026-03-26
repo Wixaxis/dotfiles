@@ -80,6 +80,7 @@ COMMON_PACKAGES=(
   "starship"
   "tmux"
   "tmuxinator"
+  "vicinae"
   "yazi"
   "zed"
 )
