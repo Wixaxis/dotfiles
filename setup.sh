@@ -507,8 +507,8 @@ check_packages() {
         "xdg-desktop-portal"
         "flameshot"
         "papirus-icon-theme"
-        "nordzy-icon-theme-git"
-        "colloid-icon-theme-git"
+        "nordzy-icon-theme"
+        "colloid-icon-theme"
         "tela-icon-theme"
     )
     local arch_hyprland=(
