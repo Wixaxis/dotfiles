@@ -293,22 +293,34 @@ stow_package() {
     local target="$3"
     local target_path="$HOME/$target"
 
+    # If target already exists (and isn't a symlink to our package), we need to back it up first
+    if [[ -e "$target_path" ]] && [[ ! -L "$target_path" ]]; then
+        local backup_target
+        backup_target=$(backup_path "$target_path")
+        warning "Backing up existing target: $target_path -> $backup_target"
+        mkdir -p "$(dirname "$backup_target")"
+        mv "$target_path" "$backup_target"
+    elif [[ -L "$target_path" ]]; then
+        # It's a symlink - check if it's pointing to our package
+        local link_target
+        link_target=$(readlink "$target_path")
+        if [[ "$link_target" != "$dotfiles_dir/$package"* ]]; then
+            # Symlink pointing elsewhere, back it up
+            local backup_target
+            backup_target=$(backup_path "$target_path")
+            warning "Backing up existing symlink: $target_path -> $backup_target"
+            mkdir -p "$(dirname "$backup_target")"
+            mv "$target_path" "$backup_target"
+        else
+            # Already pointing to our package, nothing to do
+            return 0
+        fi
+    fi
+
+    # Now stow should work
     if stow -d "$dotfiles_dir" -t "$HOME" "$package"; then
         success "$package stowed successfully"
         return 0
-    fi
-
-    if [[ -e "$target_path" ]] || [[ -L "$target_path" ]]; then
-        local backup_target
-        backup_target=$(backup_path "$target_path")
-        warning "Backing up conflicting target: $target_path -> $backup_target"
-        mkdir -p "$(dirname "$backup_target")"
-        mv "$target_path" "$backup_target"
-
-        if stow -d "$dotfiles_dir" -t "$HOME" "$package"; then
-            success "$package stowed successfully"
-            return 0
-        fi
     fi
 
     error "Failed to stow $package"
