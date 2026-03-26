@@ -1,0 +1,10 @@
+[Trigger]
+Operation = Upgrade
+Operation = Install
+Type = Package
+Target = *
+
+[Action]
+Description = Handling pacnew files...
+When = PostTransaction
+Exec = /etc/pacman.d/hooks.bin/pacnew-handler.sh
