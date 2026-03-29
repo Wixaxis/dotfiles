@@ -2,144 +2,131 @@
 
 ## Repository Overview
 
-This is a **dotfiles repository** managed with GNU Stow. It contains configuration files for various tools (Hyprland, Ghostty, Tmux, etc.) and custom scripts (Ruby, Bash).
+This repository is a **metadata-driven dotfiles repo**.
 
-## Build/Test/Lint Commands
+- Installable config lives under `packages/shared`, `packages/linux`, and `packages/macos`
+- Each package owns its own `setup.yaml`, `is_stowed.sh`, optional `setup.sh`, optional docs, and deployable payload under `stow/`
+- The root entrypoint is `./setup.sh`
+- The actual engine is `scripts/dotfiles.rb`
+- Package-local entrypoints delegate through `scripts/package-run.sh`
 
-### Task Runner (Just)
+GNU Stow is no longer the default source of truth. The native linker defined in `scripts/dotfiles.rb` is the primary setup path, though the engine still supports `engine: stow` for packages that explicitly opt into it.
+
+## Core Commands
+
+### Setup and Inspection
+
 ```bash
-# List all available tasks
-just
+./setup.sh
+./setup.sh --dry-run
+./setup.sh --check
+./setup.sh --list
+./setup.sh --package zed
+./setup.sh --package linux/hyprland
+```
 
-# Common tasks
-just update              # Update system packages (Linux)
-just cleanup-all         # Remove unused dependencies (Linux)
-just reload-waybar       # Reload waybar config
-just reload-swaync       # Reload swaync config
-just test-notifications  # Test notification system
-just randomize-wallpaper # Change wallpaper
+### Task Runner
+
+```bash
+just
+just list
+just dry-run
+just check
+just smoke
 ```
 
 ### Code Quality
+
 ```bash
-# Shell script linting
-shellcheck *.sh scripts/scripts/*.sh
-
-# Ruby syntax check
-ruby -c scripts/scripts/*.rb
-
-# Test config syntax
-hyprctl reload --dry-run 2>&1  # Hyprland
-ghostty +validate           # Ghostty
+mise exec ruby -- ruby -c scripts/dotfiles.rb
+shellcheck setup.sh stow-platform.sh check-installed-packages.sh scripts/package-run.sh scripts/tests/smoke.sh packages/*/*/*.sh
 ```
 
-### Running Single Scripts
+### Targeted Validation
+
 ```bash
-# Ruby scripts (use mise for version management)
-mise exec ruby@latest -- ruby scripts/scripts/script_name.rb
-
-# Or directly (shebang handles mise)
-./scripts/scripts/script_name.rb
-
-# Bash scripts
-bash scripts/scripts/script_name.sh
-bash setup.sh
+bash scripts/tests/smoke.sh
+packages/shared/zed/setup.sh --dry-run
+packages/shared/zed/is_stowed.sh
 ```
+
+## File Organization
+
+### Root
+
+- `setup.sh`: thin Bash entrypoint with optional Gum styling
+- `scripts/dotfiles.rb`: metadata-driven package discovery, linking, hooks, installs, checks
+- `scripts/package-run.sh`: package-local delegator back to the root engine
+- `docs/guide`: current operational docs
+- `docs/reference`: focused references
+- `docs/history`: historical migration/audit notes that may describe old layouts
+
+### Package Shape
+
+Every package should follow this layout:
+
+```text
+packages/<scope>/<name>/
+├── setup.yaml
+├── is_stowed.sh
+├── setup.sh          # optional hook handler and package-local entrypoint
+├── README.md         # optional package notes
+├── docs/             # optional deeper package docs
+└── stow/             # deployable payload only
+```
+
+### Package Semantics
+
+- `setup.yaml` declares package state, selectors, install metadata, links, and hooks
+- `is_stowed.sh` is authoritative and must exit `0` only when the package is correctly wired for its real behavior
+- `setup.sh` should only handle package-specific side effects like `post_link` hooks; otherwise it should delegate to `scripts/package-run.sh`
+- `stow/` must contain only tracked deployable payload
+- Local machine-only files should stay out of `stow/`, usually under a gitignored `local/` directory beside the package
 
 ## Code Style Guidelines
 
-### General Principles
-- **Conciseness**: Keep code minimal and clean, remove redundancy
-- **Modularity**: Group related functionality, changes in one place
-- **Idempotency**: Scripts safe to run multiple times
-- **Platform Awareness**: Support Arch Linux (pacman/paru) and macOS (brew)
+### General
 
-### Ruby Scripts
-- Use shebang: `#!/usr/bin/env -S mise exec ruby@latest -- ruby`
-- Include: `# frozen_string_literal: true`
-- Use lambdas for functional patterns: `->(args) { ... }`
-- Load shared libraries from `/home/wixaxis/scripts/ruby/`
-- Handle errors gracefully with custom exception classes
+- Prefer small, explicit, idempotent changes
+- Keep docs aligned with the actual engine behavior in `scripts/dotfiles.rb`
+- Preserve the package contract: package-local metadata and checks should be readable without searching the whole repo
+- Prefer editing the minimum set of files necessary to keep the structure obvious
 
-### Bash Scripts
-- Always use: `set -euo pipefail`
-- Check command existence: `command -v cmd &> /dev/null`
-- Use colors for output (info, success, warning, error)
-- Platform detection: `uname -s` and environment variables
-- Make interactive when appropriate (ask before installing)
+### Ruby
 
-### Configuration Files
-- Group related settings with visual separators
-- Use clear section headers: `# === SECTION NAME ===`
-- Keep active config clean, archive unused configs
-- Mirror target filesystem structure
-- Consistent naming conventions (kebab-case for files)
+- Use `#!/usr/bin/env ruby`
+- Include `# frozen_string_literal: true`
+- Prefer clear, standard-library-first Ruby
+- Keep CLI behavior predictable and side effects explicit
 
-### File Organization
-- One package = one top-level directory
-- Use `.config/` subdirectories appropriately
-- Scripts location:
-  - Ruby: `scripts/scripts/*.rb`
-  - Bash: `scripts/scripts/*.sh` or package root
-  - Shared Ruby libs: `scripts/scripts/ruby/*.rb`
+### Bash
 
-### Git Workflow
-- Use GNU Stow for symlink management
-- Never track: API keys, passwords, sensitive data
-- Keep `.gitignore` up to date
-- Test symlinks after stowing: `ls -la ~ | grep dotfiles`
+- Always use `set -euo pipefail`
+- Make hooks idempotent
+- Respect `DOTFILES_HOME`, `DOTFILES_OS`, `DOTFILES_DISTRO`, `DOTFILES_DESKTOP`, and `DOTFILES_YES` when relevant
+- Use package-local `setup.sh` only for side effects that do not belong in generic linking
 
 ### Documentation
-- Propose changes before applying for significant modifications
-- Explain what changed and why
-- Use checkmarks (✓) for completed items
-- Update README for significant features
-- Create reference markdown files for complex topics
 
-### Sensitive Data Handling
-- **NEVER** track: Authentication tokens, API keys, passwords
-- **NEVER** track: Application-specific sensitive configs (gh hosts.yml)
-- **NEVER** track: User-specific data, large cache directories
-- Add patterns to `.gitignore` with documentation
-
-### Platform-Specific Patterns
-```bash
-# Platform detection
-OS="$(uname -s)"
-case "$OS" in
-  Linux) PLATFORM="linux" ;;
-  Darwin) PLATFORM="macos" ;;
-esac
-
-# Package management
-if command -v paru &> /dev/null; then
-  paru -S --noconfirm package
-elif command -v brew &> /dev/null; then
-  brew install package
-fi
-```
+- Current docs belong in `docs/guide` or a package-local `README.md` / `docs/`
+- Historical notes belong in `docs/history`
+- Do not describe the repo as Stow-managed unless the specific package actually uses `engine: stow`
+- If you change workflow semantics, update the canonical docs in `README.md`, `docs/README.md`, and `docs/guide/`
 
 ## Verification Checklist
 
-Before committing:
-- [ ] Test scripts work (run commands, check syntax)
-- [ ] Verify symlinks correct after stowing
-- [ ] Check for syntax errors in configs
-- [ ] Ensure platform detection works
-- [ ] No sensitive data in commits
+Before finishing substantial changes:
 
-## Tool Preferences
-
-- **Version Management**: mise (not rbenv)
-- **Task Runner**: just (justfile in repo root)
-- **AUR Helper**: paru (Arch Linux)
-- **Symlink Manager**: GNU Stow
-- **Script Languages**: Ruby (with mise), Bash
+- [ ] `mise exec ruby -- ruby -c scripts/dotfiles.rb`
+- [ ] `./setup.sh --list`
+- [ ] `./setup.sh --dry-run`
+- [ ] `./setup.sh --check` or package-local `is_stowed.sh` where appropriate
+- [ ] `bash scripts/tests/smoke.sh` for setup-flow changes
+- [ ] Any package docs you touched still match their manifest and hook behavior
 
 ## Communication
 
-- Be direct and clear
-- Show what changed (diffs when helpful)
-- Provide actionable next steps
-- When uncertain: ask rather than guess
-- Respect user decisions
+- Be direct and specific
+- Prefer file-backed facts over assumptions
+- Call out stale docs or misleading structure explicitly
+- When reviewing, focus first on correctness, reliability, readability, and maintenance risk
