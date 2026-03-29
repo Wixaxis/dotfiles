@@ -1,0 +1,21 @@
+---
+name: tmuxinator
+description: tmuxinator projects
+state: active
+engine: native
+applies_when: {}
+install:
+  arch:
+    manager: paru
+    packages:
+    - tmuxinator
+  macos:
+    manager: brew
+    formulae:
+    - tmuxinator
+links:
+- source: stow/.config
+  target: ".config"
+  mode: children
+  create_parents: true
+  backup_on_conflict: true

@@ -1,0 +1,21 @@
+---
+name: thunar
+description: Thunar bookmarks
+state: active
+engine: native
+applies_when:
+  os:
+  - linux
+  desktop:
+  - hyprland
+install:
+  arch:
+    manager: paru
+    packages:
+    - thunar
+links:
+- source: stow/.config
+  target: ".config"
+  mode: children
+  create_parents: true
+  backup_on_conflict: true

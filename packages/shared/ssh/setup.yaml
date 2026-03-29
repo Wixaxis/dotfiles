@@ -1,0 +1,15 @@
+---
+name: ssh
+description: SSH include configuration
+state: active
+engine: native
+applies_when: {}
+install: {}
+links:
+- source: stow/.ssh
+  target: ".ssh"
+  mode: children
+  create_parents: true
+  backup_on_conflict: true
+hooks:
+- post_link

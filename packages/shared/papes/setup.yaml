@@ -1,0 +1,13 @@
+---
+name: papes
+description: Wallpaper collection
+state: active
+engine: native
+applies_when: {}
+install: {}
+links:
+- source: stow/Pictures
+  target: Pictures
+  mode: children
+  create_parents: true
+  backup_on_conflict: true

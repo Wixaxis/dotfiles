@@ -1,0 +1,15 @@
+---
+name: themes
+description: GTK theme collection
+state: active
+engine: native
+applies_when:
+  os:
+  - linux
+install: {}
+links:
+- source: stow/.themes
+  target: ".themes"
+  mode: children
+  create_parents: true
+  backup_on_conflict: true

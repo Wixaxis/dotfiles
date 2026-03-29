@@ -1,0 +1,19 @@
+---
+name: flameshot
+description: Flameshot configuration
+state: active
+engine: native
+applies_when:
+  os:
+  - linux
+install:
+  arch:
+    manager: paru
+    packages:
+    - flameshot
+links:
+- source: stow/.config
+  target: ".config"
+  mode: children
+  create_parents: true
+  backup_on_conflict: true

@@ -1,0 +1,21 @@
+---
+name: wob
+description: wob configuration
+state: active
+engine: native
+applies_when:
+  os:
+  - linux
+  desktop:
+  - hyprland
+install:
+  arch:
+    manager: paru
+    packages:
+    - wob
+links:
+- source: stow/.config
+  target: ".config"
+  mode: children
+  create_parents: true
+  backup_on_conflict: true

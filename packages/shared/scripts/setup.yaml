@@ -1,0 +1,13 @@
+---
+name: scripts
+description: User home scripts
+state: active
+engine: native
+applies_when: {}
+install: {}
+links:
+- source: stow/scripts
+  target: scripts
+  mode: children
+  create_parents: true
+  backup_on_conflict: true

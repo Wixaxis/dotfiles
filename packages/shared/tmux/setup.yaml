@@ -1,0 +1,21 @@
+---
+name: tmux
+description: tmux configuration
+state: active
+engine: native
+applies_when: {}
+install:
+  arch:
+    manager: paru
+    packages:
+    - tmux
+  macos:
+    manager: brew
+    formulae:
+    - tmux
+links:
+- source: stow/.config
+  target: ".config"
+  mode: children
+  create_parents: true
+  backup_on_conflict: true
