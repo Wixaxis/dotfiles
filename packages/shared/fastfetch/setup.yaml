@@ -1,0 +1,21 @@
+---
+name: fastfetch
+description: Fastfetch configuration
+state: active
+engine: native
+applies_when: {}
+install:
+  arch:
+    manager: paru
+    packages:
+    - fastfetch
+  macos:
+    manager: brew
+    formulae:
+    - fastfetch
+links:
+- source: stow/.config
+  target: ".config"
+  mode: children
+  create_parents: true
+  backup_on_conflict: true

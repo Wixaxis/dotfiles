@@ -1,0 +1,19 @@
+---
+name: solaar
+description: Archived Solaar configuration
+state: archived
+engine: native
+applies_when:
+  os:
+  - linux
+install:
+  arch:
+    manager: paru
+    packages:
+    - solaar
+links:
+- source: stow/.config
+  target: ".config"
+  mode: children
+  create_parents: true
+  backup_on_conflict: true

@@ -1,0 +1,21 @@
+---
+name: justfile
+description: Home justfile configuration
+state: active
+engine: native
+applies_when: {}
+install:
+  arch:
+    manager: paru
+    packages:
+    - just
+  macos:
+    manager: brew
+    formulae:
+    - just
+links:
+- source: stow/justfile
+  target: justfile
+  mode: file
+  create_parents: true
+  backup_on_conflict: true

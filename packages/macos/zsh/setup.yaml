@@ -1,0 +1,29 @@
+---
+name: zsh
+description: Zsh configuration
+state: active
+engine: native
+applies_when:
+  os:
+  - macos
+install:
+  macos:
+    manager: brew
+    formulae:
+    - zsh
+links:
+- source: stow/.config
+  target: ".config"
+  mode: children
+  create_parents: true
+  backup_on_conflict: true
+- source: stow/.fzf.zsh
+  target: ".fzf.zsh"
+  mode: file
+  create_parents: true
+  backup_on_conflict: true
+- source: stow/.zshrc
+  target: ".zshrc"
+  mode: file
+  create_parents: true
+  backup_on_conflict: true

@@ -1,0 +1,22 @@
+---
+name: truenas-macos
+description: TrueNAS macOS integration
+state: active
+engine: native
+applies_when:
+  os:
+  - macos
+install: {}
+links:
+- source: stow/.config
+  target: ".config"
+  mode: children
+  create_parents: true
+  backup_on_conflict: true
+- source: stow/Library
+  target: Library
+  mode: children
+  create_parents: true
+  backup_on_conflict: true
+hooks:
+- post_link

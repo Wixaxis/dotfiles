@@ -1,0 +1,29 @@
+---
+name: nushell
+description: Nushell configuration
+state: active
+engine: native
+applies_when: {}
+install:
+  arch:
+    manager: paru
+    packages:
+    - nushell
+  macos:
+    manager: brew
+    formulae:
+    - nushell
+links:
+- source: stow/.config
+  target: ".config"
+  mode: children
+  create_parents: true
+  backup_on_conflict: true
+- source: stow/Library
+  target: Library
+  mode: children
+  create_parents: true
+  backup_on_conflict: true
+  applies_when:
+    os:
+    - macos

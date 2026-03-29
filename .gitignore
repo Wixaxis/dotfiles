@@ -1,22 +1,16 @@
-bash/.config/bash/modules/0-system/1-secret_keys.bash
-papes/Pictures/screenshots
-nushell/.config/nushell/history.txt
-nushell/Library/Application Support/nushell/history.txt
-scripts/scripts/debug.log
-truenas-macos/.config/truenas-mount/truenas-smb.env
-zed/.config/zed/prompts/
-zed/.config/zed/themes/
-zed/.config/zed/*.pre-dotfiles-*
-zed/.config/zed/*_backup.json
-ssh/.ssh/config
-ssh/.ssh/agent/
-ssh/.ssh/id_*
-ssh/.ssh/known_hosts*
+packages/linux/bash/stow/.config/bash/modules/0-system/1-secret_keys.bash
+packages/linux/papes/stow/Pictures/screenshots
+packages/shared/nushell/stow/.config/nushell/history.txt
+packages/shared/nushell/stow/Library/Application Support/nushell/history.txt
+packages/shared/scripts/stow/scripts/debug.log
+packages/shared/ssh/local/
+packages/shared/zed/local/
+packages/shared/zed/stow/.config/zed/*.pre-dotfiles-*
+packages/shared/zed/stow/.config/zed/*_backup.json
+packages/macos/truenas-macos/stow/.config/truenas-mount/truenas-smb.env
+local/
 
-# API keys and secrets - DO NOT COMMIT
-# Note: Empty placeholder files are tracked, but content is ignored via .gitattributes
-
-# macOS-specific
+# macOS
 .DS_Store
 **/.DS_Store
 *.DS_Store

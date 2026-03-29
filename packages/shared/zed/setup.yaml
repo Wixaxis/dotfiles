@@ -1,0 +1,21 @@
+---
+name: zed
+description: Zed configuration
+state: active
+engine: native
+applies_when: {}
+install:
+  arch:
+    manager: paru
+    packages:
+    - zed
+  macos:
+    manager: brew
+    casks:
+    - zed
+links:
+- source: stow/.config
+  target: ".config"
+  mode: children
+  create_parents: true
+  backup_on_conflict: true
