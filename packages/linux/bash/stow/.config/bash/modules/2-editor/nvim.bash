@@ -1,6 +1,14 @@
 # Neovim configuration
 # Ported from nushell editor.nu
 
+nvim() {
+    NVIM_APPNAME=nvim command nvim "$@"
+}
+
+nvim_old() {
+    NVIM_APPNAME=nvim_old command nvim "$@"
+}
+
 alias vim=nvim
 export EDITOR=nvim
 export VISUAL=nvim

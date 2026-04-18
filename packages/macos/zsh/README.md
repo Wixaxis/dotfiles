@@ -61,9 +61,10 @@ Language-specific configurations (currently empty, ready for future modules):
 
 ### 2-editor/ - Editor Configurations
 
-Editor and development tool configs (currently empty, ready for future modules):
+Editor and development tool configs:
 
-- Add modules here for: Neovim, Emacs, Cursor, tmux, etc.
+- `nvim.zsh` - Neovim wrappers and editor environment variables
+- Add modules here for: Emacs, Cursor, tmux, etc.
 
 ## Load Order
 
