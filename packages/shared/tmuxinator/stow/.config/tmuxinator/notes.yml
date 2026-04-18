@@ -1,8 +1,8 @@
 # /Users/wixaxis/.config/tmuxinator/notes.yml
 
 name: notes
-root: ~/Notes/Obsidian/Główny Sejf
+root: ~/Sync/Obsidian Vault
 
 windows:
-  - opencode: opencode -c
+  - codex: codex --yolo
   - editor: nvim .
