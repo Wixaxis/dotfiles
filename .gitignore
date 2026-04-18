@@ -9,10 +9,22 @@ packages/shared/zed/stow/.config/zed/*.pre-dotfiles-*
 packages/shared/zed/stow/.config/zed/*_backup.json
 packages/macos/truenas-macos/stow/.config/truenas-mount/truenas-smb.env
 local/
+archived/
+bash/
+ghostty/
+hyprland/
+icons-dms/
 nushell/
+papes/
+rofi/
+ssh/
+swaync/
 tmux/
+tmuxinator/
 truenas-macos/
+waybar/
 zed/
+zsh/
 
 # macOS
 .DS_Store
