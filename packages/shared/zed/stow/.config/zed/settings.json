@@ -7,6 +7,20 @@
 // custom settings, run `zed: open default settings` from the
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
+  "outline_panel": {
+    "dock": "left"
+  },
+  "collaboration_panel": {
+    "dock": "left"
+  },
+  "agent": {
+    "dock": "right",
+    "favorite_models": [],
+    "model_parameters": []
+  },
+  "git_panel": {
+    "dock": "left"
+  },
   "buffer_font_weight": 600.0,
   "which_key": {
     "delay_ms": 300,
@@ -25,7 +39,11 @@
   "buffer_font_features": {
     "calt": true
   },
-  "icon_theme": "Material Icon Theme",
+  "icon_theme": {
+    "mode": "light",
+    "light": "Material Icon Theme",
+    "dark": "Material Icon Theme"
+  },
   "autosave": {
     "after_delay": {
       "milliseconds": 1000,
@@ -73,6 +91,7 @@
     },
   },
   "project_panel": {
+    "dock": "left",
     "hide_gitignore": false,
     "hide_hidden": true,
     "file_icons": true,
@@ -99,7 +118,7 @@
     "custom": 1.15
   },
   "theme": {
-    "mode": "system",
+    "mode": "light",
     "light": "Nord Light",
     "dark": "OneNord Blurred",
   },
