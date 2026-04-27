@@ -42,11 +42,13 @@ PUB_KEY_FILE="${KEY_FILE}.pub"
 declare -A SERVERS=(
     ["homelab"]="wixaxis@ssh.wixaxis.dev"
     ["homelab-local"]="wixaxis@hp-mini-ubuntu-server"
+    ["agent_nest"]="wixaxis@agent-nest.local"
 )
 
 declare -A SERVER_NAMES=(
     ["homelab"]="Cloudflare Tunnel"
     ["homelab-local"]="Local Network"
+    ["agent_nest"]="TrueNAS VM (agent_nest)"
 )
 
 # ============================================================================
@@ -434,11 +436,12 @@ main() {
     choice=$(gum choose \
         "Cloudflare Tunnel (ssh.wixaxis.dev)" \
         "Local Network (hp-mini-ubuntu-server)" \
-        "Both servers" \
+        "TrueNAS VM (agent_nest)" \
+        "All servers" \
         "Test existing connections" \
         "Verify server setup" \
         "Exit")
-    
+
     case "$choice" in
         "Cloudflare Tunnel"*)
             if copy_key_to_server "homelab"; then
@@ -452,7 +455,13 @@ main() {
                 test_connection "homelab-local"
             fi
             ;;
-        "Both servers"*)
+        "TrueNAS VM"*)
+            if copy_key_to_server "agent_nest"; then
+                echo ""
+                test_connection "agent_nest"
+            fi
+            ;;
+        "All servers"*)
             if copy_key_to_server "homelab"; then
                 echo ""
                 test_connection "homelab"
@@ -462,17 +471,26 @@ main() {
                 echo ""
                 test_connection "homelab-local"
             fi
+            echo ""
+            if copy_key_to_server "agent_nest"; then
+                echo ""
+                test_connection "agent_nest"
+            fi
             ;;
         "Test existing"*)
             section "Testing Connections"
             test_connection "homelab"
             echo ""
             test_connection "homelab-local"
+            echo ""
+            test_connection "agent_nest"
             ;;
         "Verify server"*)
             verify_server_setup "homelab"
             echo ""
             verify_server_setup "homelab-local"
+            echo ""
+            verify_server_setup "agent_nest"
             ;;
         "Exit"*)
             info "Exiting..."
@@ -483,7 +501,7 @@ main() {
             exit 1
             ;;
     esac
-    
+
     echo ""
     section "Setup Complete"
     success "SSH key setup finished!"
@@ -491,6 +509,7 @@ main() {
     info "You can now connect using:"
     echo "  • ssh homelab (via Cloudflare Tunnel)"
     echo "  • ssh homelab-local (via local network)"
+    echo "  • ssh agent_nest (TrueNAS VM)"
     echo ""
     info "For Kamal deployments, SSH keys will be used automatically."
 }
