@@ -9,3 +9,6 @@ if [ -f ~/.config/zsh/zshrc ]; then
   source ~/.config/zsh/zshrc
 fi
 eval "$(mise activate zsh)"
+if [ -f ~/.config/zsh/local.zsh ]; then
+  source ~/.config/zsh/local.zsh
+fi
