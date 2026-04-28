@@ -4,11 +4,11 @@ name: prettypape
 root: ~/Projects/PrettyPape
 
 windows:
-  - opencode: opencode -c
+  - codex: codex --yolo resume
   - editor: nvim .
   - terminal:
   - server:
       layout: main-horizontal
       panes:
-        - bin/dev || bin/rails server
-        -
+        - bin/dev
+        - rails s
