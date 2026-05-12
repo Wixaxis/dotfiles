@@ -35,8 +35,10 @@ use_wallpaper = case DAEMON
                   }
                 end
 
+was_running = running?('hyprpaper')
+
 if ensure_running('hyprpaper', 'hyprctl dispatch exec hyprpaper')
-  sleep 0.5 # give hyprpaper IPC a moment to initialize
+  sleep 0.5 unless was_running # give hyprpaper IPC a moment to initialize
 
   monitors = nil
   20.times do
