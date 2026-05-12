@@ -36,6 +36,18 @@ use_wallpaper = case DAEMON
                 end
 
 if ensure_running('hyprpaper', 'hyprctl dispatch exec hyprpaper')
-  JSON.parse(`wlr-randr --json`).map { |monitor| monitor['name'] }
-      .each { |name| use_wallpaper.call(name, all_papes.call(CURR_THEME).sample) }
+  sleep 0.5 # give hyprpaper IPC a moment to initialize
+
+  monitors = nil
+  20.times do
+    begin
+      monitors = JSON.parse(`wlr-randr --json`).map { |monitor| monitor['name'] }
+      break unless monitors.empty?
+    rescue JSON::ParserError
+      # wlr-randr may output nothing briefly
+    end
+    sleep 0.2
+  end
+
+  monitors&.each { |name| use_wallpaper.call(name, all_papes.call(CURR_THEME).sample) }
 end
