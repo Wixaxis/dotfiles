@@ -31,25 +31,32 @@ use_wallpaper = case DAEMON
                   lambda { |monitor, path|
                     `hyprctl hyprpaper preload #{path}`
                     `hyprctl hyprpaper wallpaper #{monitor},#{path}`
-                    `hyprctl hyprpaper unload unused`
                   }
                 end
 
 was_running = running?('hyprpaper')
 
-if ensure_running('hyprpaper', 'hyprctl dispatch exec hyprpaper') && !was_running
-  sleep 0.5 # give hyprpaper IPC a moment to initialize
+if ensure_running('hyprpaper', 'hyprctl dispatch exec hyprpaper')
+  if was_running
+    # Reload: switch wallpaper without cleanup to avoid flicker
+    monitors = JSON.parse(`wlr-randr --json`).map { |monitor| monitor['name'] }
+    monitors.each { |name| use_wallpaper.call(name, all_papes.call(CURR_THEME).sample) }
+  else
+    # Startup: wait for monitors, set wallpaper, then cleanup old ones
+    sleep 0.5 # give hyprpaper IPC a moment to initialize
 
-  monitors = nil
-  20.times do
-    begin
-      monitors = JSON.parse(`wlr-randr --json`).map { |monitor| monitor['name'] }
-      break unless monitors.empty?
-    rescue JSON::ParserError
-      # wlr-randr may output nothing briefly
+    monitors = nil
+    20.times do
+      begin
+        monitors = JSON.parse(`wlr-randr --json`).map { |monitor| monitor['name'] }
+        break unless monitors.empty?
+      rescue JSON::ParserError
+        # wlr-randr may output nothing briefly
+      end
+      sleep 0.2
     end
-    sleep 0.2
-  end
 
-  monitors&.each { |name| use_wallpaper.call(name, all_papes.call(CURR_THEME).sample) }
+    monitors&.each { |name| use_wallpaper.call(name, all_papes.call(CURR_THEME).sample) }
+    `hyprctl hyprpaper unload unused`
+  end
 end
