@@ -11,7 +11,7 @@ file:///home/wixaxis/Documents
 file:///home/wixaxis/Downloads
 
 # TrueNAS SMB Shares
-smb://192.168.0.128 TrueNAS
-smb://192.168.0.128/Domowe%20Pliki Domowe Pliki
-smb://192.168.0.128/torrents torrents
-smb://192.168.0.128/jellyfin_videos jellyfin_videos
+smb://192.168.0.127 TrueNAS
+smb://192.168.0.127/Domowe%20Pliki Domowe Pliki
+smb://192.168.0.127/torrents torrents
+smb://192.168.0.127/jellyfin_videos jellyfin_videos
