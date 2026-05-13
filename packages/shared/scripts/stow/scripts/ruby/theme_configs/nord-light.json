@@ -16,7 +16,7 @@
 			"themeName": "nord-light-sidebar-wixaxis"
 		},
 		"wallpapers": {
-			"cmd": "$HOME/scripts/randomize_wallpaper.rb"
+			"cmd": "hyprctl eval 'randomize_wallpaper()'"
 		}
 	}
 }

@@ -1,0 +1,20 @@
+local wallpaper = require("lua.wallpaper")
+_G.randomize_wallpaper = wallpaper.randomize
+
+hl.on("hyprland.start", function()
+  hl.exec_cmd("systemctl --user enable --now hyprpolkitagent.service")
+  hl.exec_cmd("udiskie")
+  hl.exec_cmd("hypridle")
+  hl.exec_cmd("vicinae server")
+  hl.exec_cmd("waybar")
+  hl.exec_cmd("swaync")
+  hl.exec_cmd("gsettings set org.gnome.desktop.interface icon-theme 'Tela-nord'")
+  hl.exec_cmd("bash -c \"mkfifo -m 600 /tmp/wobpipe 2>/dev/null; tail -f /tmp/wobpipe | wob -c ~/.config/wob/config.ini > /dev/null 2>&1 &\"")
+  hl.exec_cmd("wl-paste --type text --watch cliphist store")
+  hl.exec_cmd("wl-paste --type image --watch cliphist store")
+  wallpaper.randomize()
+end)
+
+hl.on("config.reloaded", function()
+  wallpaper.randomize()
+end)

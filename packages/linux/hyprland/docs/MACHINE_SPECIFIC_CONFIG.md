@@ -2,79 +2,91 @@
 
 ## Overview
 
-This repository uses a simple script-based approach for device-specific configuration overrides. The script applies defaults first, then device-specific settings based on hostname detection.
+Since migrating to the Lua configuration format (Hyprland 0.55+), device-specific overrides are handled directly in Lua at config parse time. No external scripts are needed.
 
 ## Current Implementation
 
-**Script:** `~/scripts/apply-device-config.sh`
+Device-specific logic lives in two Lua modules under `~/.config/hypr/lua/`:
 
-**In `hyprland.conf`:**
-```conf
-input {
-    # Default sensitivity (device-specific overrides applied via apply-device-config.sh)
-    sensitivity = -0.6
-}
+### `input.lua`
+
+```lua
+-- Default sensitivity for all devices
+hl.config({
+    input = {
+        sensitivity = -0.6,
+    },
+})
+
+-- Device-specific overrides based on hostname
+local hostname = os.getenv("HOSTNAME") or ""
+
+if hostname == "wixaxis-minibook" then
+    -- Faster cursor speed for minibook
+    hl.config({ input = { sensitivity = 0.0 } })
+end
 ```
 
-**In `autostart.conf`:**
-```conf
-exec = bash -lc '"$HOME/scripts/apply-device-config.sh"'
+### `layouts.lua`
+
+```lua
+-- Default scrolling column width
+hl.config({
+    scrolling = {
+        column_width = 0.49,
+    },
+})
+
+-- Device-specific overrides based on hostname
+local hostname = os.getenv("HOSTNAME") or ""
+
+if hostname == "wixaxis-minibook" then
+    -- Wider windows for minibook (90% width)
+    hl.config({ scrolling = { column_width = 0.9 } })
+end
 ```
 
-**How it works:**
-1. Script runs via `exec`, so it also re-applies on Hyprland config reloads
-2. Sets default values first (applies to all devices)
-3. Detects hostname using `uname -n`
-4. Applies device-specific overrides using `hyprctl keyword`
-5. Works regardless of how Hyprland is started (shell, display manager, etc.)
+## How it works
 
-**Important:** This assumes the shared `scripts` package is also applied so `~/scripts/apply-device-config.sh` exists.
-
-**Advantages:**
-- Simple and maintainable
-- Works on every boot, regardless of startup method
-- Easy to add new devices
-- All device-specific configs in one place
+1. `os.getenv("HOSTNAME")` reads the hostname at config parse time
+2. Conditional `hl.config()` calls override the defaults for specific machines
+3. No external scripts, no `exec` hooks, no `hyprctl keyword` calls needed
+4. Overrides apply immediately on config load/reload
 
 ## Adding Device-Specific Settings
 
 ### Step 1: Determine your hostname
+
 ```bash
 uname -n
 # Example output: wixaxis-minibook
 ```
 
-### Step 2: Edit the device config script
-Open `~/scripts/apply-device-config.sh` and add your device-specific settings:
+### Step 2: Edit the relevant Lua module
 
-```bash
-case "$HOSTNAME" in
-    wixaxis-minibook)
-        # Faster cursor speed for minibook
-        hyprctl keyword input:sensitivity 0.0
-        ;;
-    your-device-name)
-        # Your device-specific settings here
-        hyprctl keyword input:sensitivity 0.5
-        hyprctl keyword general:gaps_in 8
-        ;;
-esac
+Open `~/.config/hypr/lua/input.lua` (or `layouts.lua`, `general.lua`, etc.) and add a conditional block:
+
+```lua
+local hostname = os.getenv("HOSTNAME") or ""
+
+if hostname == "your-device-name" then
+    hl.config({ input = { sensitivity = 0.5 } })
+    hl.config({ general = { gaps_in = 8 } })
+end
 ```
 
-### Step 3: Test the script
+### Step 3: Test the change
+
 ```bash
-bash ~/scripts/apply-device-config.sh
-hyprctl getoption input:sensitivity  # Verify it worked
+hyprctl reload
+# Or restart Hyprland to verify
 ```
 
-### Step 4: Restart Hyprland
-The script runs automatically on startup and on config reload. For immediate effect:
-```bash
-# Reload Hyprland, restart it, or manually run:
-bash ~/scripts/apply-device-config.sh
-```
+### Step 4: Verify it applied
 
-**Note:** Because this uses `exec`, `hyprctl reload` should re-run it. Manual execution is still the quickest way to test changes.
+```bash
+hyprctl getoption input:sensitivity
+```
 
 ## Finding Your Hostname
 
@@ -84,34 +96,8 @@ uname -n
 cat /etc/hostname
 ```
 
-## Alternative Approaches
-
-### hyprlang Conditionals
-
-Hyprland 0.6.4+ supports conditional blocks, but they require environment variables to be set **before** Hyprland parses the config. This makes them less practical for device-specific configs unless you use wrapper scripts or systemd overrides.
-
-See [Hyprlang Documentation](https://wiki.hypr.land/Hypr-Ecosystem/hyprlang/) for details.
-
-### Machine-Specific Config Files
-
-Create a machine-specific config file that's gitignored:
-
-1. Create `~/.config/hypr/machine-$(hostname).conf`
-2. Add `machine-*.conf` to `.gitignore`
-3. Source it in `hyprland.conf`:
-   ```conf
-   source = ~/.config/hypr/machine-$(hostname).conf
-   ```
-
-**Pros:**
-- Clean separation of machine-specific settings
-- Easy to manage multiple machine-specific options
-
-**Cons:**
-- Hyprland will error if the file doesn't exist (must create empty file on other machines)
-
 ## References
 
-- [Hyprlang Documentation](https://wiki.hypr.land/Hypr-Ecosystem/hyprlang/)
-- [Hyprland Configuring Docs](https://wiki.hypr.land/Configuring/Configuring-Hyprland/)
-- [Hyprland Variables Docs](https://wiki.hypr.land/Configuring/Variables/)
+- [Hyprland Lua Config Reference](HYPR_LUA_CONFIG_REFERENCE.md)
+- [Hyprland Wiki — Start Here](https://wiki.hypr.land/Configuring/Start/)
+- [Hyprland Wiki — Variables](https://wiki.hypr.land/Configuring/Basics/Variables/)
