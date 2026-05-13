@@ -1,0 +1,25 @@
+-- Environment variables
+
+-- XDG
+hl.env("XCURSOR_SIZE", "9")
+hl.env("XDG_CURRENT_DESKTOP", "Hyprland")
+hl.env("XDG_SESSION_TYPE", "wayland")
+hl.env("XDG_SESSION_DESKTOP", "Hyprland")
+
+-- QT
+hl.env("QT_AUTO_SCREEN_SCALE_FACTOR", "1")
+hl.env("QT_QPA_PLATFORM", "wayland;xcb")
+hl.env("QT_WAYLAND_DISABLE_WINDOWDECORATION", "1")
+hl.env("QT_QPA_PLATFORMTHEME", "qt6ct")
+hl.env("QT_FONT_FAMILY", "Noto Sans")
+hl.env("QT_FONT_SIZE", "18")
+
+-- GTK/GDK
+hl.env("GDK_BACKEND", "wayland, x11")
+hl.env("SDL_VIDEODRIVER", "wayland")
+
+-- NVIDIA
+hl.env("LIBVA_DRIVER_NAME", "nvidia")
+hl.env("GBM_BACKEND", "nvidia-drm")
+hl.env("NVD_BACKEND", "direct")
+hl.env("ELECTRON_OZONE_PLATFORM_HINT", "auto")

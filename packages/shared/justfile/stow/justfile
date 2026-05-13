@@ -42,10 +42,10 @@ cleanup-all:
 @dark-mode:
   #!/usr/bin/env bash
   if [[ "$OS" == "Linux" ]] || [[ -z "$OS" ]]; then
-    if [ -f "$HOME/scripts/brightness.rb" ]; then
-      "$HOME/scripts/brightness.rb" min
+    if [ -f "$HOME/scripts/brightness.sh" ]; then
+      "$HOME/scripts/brightness.sh" min
     else
-      echo "brightness.rb not found"
+      echo "brightness.sh not found"
     fi
   else
     echo "Brightness control is Linux-specific. Use macOS brightness controls."
@@ -55,10 +55,10 @@ cleanup-all:
 @light-mode:
   #!/usr/bin/env bash
   if [[ "$OS" == "Linux" ]] || [[ -z "$OS" ]]; then
-    if [ -f "$HOME/scripts/brightness.rb" ]; then
-      "$HOME/scripts/brightness.rb" max
+    if [ -f "$HOME/scripts/brightness.sh" ]; then
+      "$HOME/scripts/brightness.sh" max
     else
-      echo "brightness.rb not found"
+      echo "brightness.sh not found"
     fi
   else
     echo "Brightness control is Linux-specific. Use macOS brightness controls."
@@ -135,13 +135,13 @@ list-fonts:
     echo "fc-list is Linux-specific. Use system_profiler SPFontsDataType on macOS."
   fi
 
-# randomize wallpapers - Linux/Wayland only
+# randomize wallpapers - Linux/Wayland only (uses Hyprland Lua)
 @randomize-wallpaper:
   #!/usr/bin/env bash
-  if [ -f "$HOME/scripts/randomize_wallpaper.rb" ]; then
-    "$HOME/scripts/randomize_wallpaper.rb"
+  if command -v hyprctl &> /dev/null; then
+    hyprctl eval 'randomize_wallpaper()'
   else
-    echo "randomize_wallpaper.rb not found"
+    echo "hyprctl not found — are you running Hyprland?"
   fi
 
 # ssh into home server (optional - customize for your setup)
