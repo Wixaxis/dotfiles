@@ -1,0 +1,74 @@
+{
+  "$schema": "https://opencode.ai/theme.json",
+  "defs": {
+    "dotfiles-bg": "#1a1b26",
+    "dotfiles-fg": "#a9b1d6",
+    "dotfiles-accent": "#7aa2f7",
+    "dotfiles-muted": "#565f89",
+    "dotfiles-success": "#73daca",
+    "dotfiles-warning": "#e0af68",
+    "dotfiles-error": "#f7768e"
+  },
+  "theme": {
+    "primary": {
+      "dark": "dotfiles-accent",
+      "light": "dotfiles-accent"
+    },
+    "secondary": {
+      "dark": "dotfiles-muted",
+      "light": "dotfiles-muted"
+    },
+    "accent": {
+      "dark": "dotfiles-success",
+      "light": "dotfiles-success"
+    },
+    "error": {
+      "dark": "dotfiles-error",
+      "light": "dotfiles-error"
+    },
+    "warning": {
+      "dark": "dotfiles-warning",
+      "light": "dotfiles-warning"
+    },
+    "success": {
+      "dark": "dotfiles-success",
+      "light": "dotfiles-success"
+    },
+    "info": {
+      "dark": "dotfiles-accent",
+      "light": "dotfiles-accent"
+    },
+    "text": {
+      "dark": "dotfiles-fg",
+      "light": "dotfiles-fg"
+    },
+    "textMuted": {
+      "dark": "dotfiles-muted",
+      "light": "dotfiles-muted"
+    },
+    "background": {
+      "dark": "dotfiles-bg",
+      "light": "dotfiles-bg"
+    },
+    "backgroundPanel": {
+      "dark": "#16161e",
+      "light": "#16161e"
+    },
+    "backgroundElement": {
+      "dark": "#1f2335",
+      "light": "#1f2335"
+    },
+    "border": {
+      "dark": "dotfiles-muted",
+      "light": "dotfiles-muted"
+    },
+    "borderActive": {
+      "dark": "dotfiles-accent",
+      "light": "dotfiles-accent"
+    },
+    "borderSubtle": {
+      "dark": "#24283b",
+      "light": "#24283b"
+    }
+  }
+}

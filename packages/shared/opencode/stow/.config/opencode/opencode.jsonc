@@ -1,0 +1,10 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "shell": "zsh",
+  "permission": {
+    "skill": {
+      "*": "allow",
+      "polish-language": "allow"
+    }
+  }
+}
