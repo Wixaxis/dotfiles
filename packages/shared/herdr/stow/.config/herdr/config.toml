@@ -40,7 +40,7 @@ navigate_pane_up = "k"
 navigate_pane_right = "l"
 
 [[keys.command]]
-key = "prefix+space"
+key = "prefix+ctrl+p"
 type = "pane"
 command = "bash ~/.config/herdr/projects/launcher.sh"
 description = "project launcher"

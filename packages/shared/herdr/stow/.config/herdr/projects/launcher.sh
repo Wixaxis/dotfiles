@@ -4,6 +4,7 @@ set -euo pipefail
 PROJECTS_DIR="$HOME/.config/herdr/projects"
 
 PROJECT=$(for f in "$PROJECTS_DIR"/*.sh; do
+  [ "$(basename "$f")" = "launcher.sh" ] && continue
   [ -x "$f" ] || continue
   basename "$f" .sh
 done | sort | gum filter --placeholder "pick a project…" --prompt="▶ " 2>/dev/null)
