@@ -3,12 +3,22 @@ set -euo pipefail
 
 PROJECTS_DIR="$HOME/.config/herdr/projects"
 
-PROJECT=$(for f in "$PROJECTS_DIR"/*.sh; do
+ITEMS=()
+for f in "$PROJECTS_DIR"/*.sh; do
   [ "$(basename "$f")" = "launcher.sh" ] && continue
   [ -x "$f" ] || continue
-  basename "$f" .sh
-done | sort | gum filter --placeholder "pick a project…" --prompt="▶ " 2>/dev/null)
+  ITEMS+=("$(basename "$f" .sh)")
+done
 
-[ -z "$PROJECT" ] && exit 0
+[ ${#ITEMS[@]} -eq 0 ] && { echo "No projects found" >&2; sleep 1; exit 1; }
 
-exec bash "$PROJECTS_DIR/$PROJECT.sh"
+echo "Projects:"
+for i in "${!ITEMS[@]}"; do
+  printf "  %d) %s\n" $((i + 1)) "${ITEMS[$i]}"
+done
+echo
+read -r -p "pick a project (1-${#ITEMS[@]}): " CHOICE
+
+if [[ "$CHOICE" =~ ^[0-9]+$ ]] && [ "$CHOICE" -ge 1 ] && [ "$CHOICE" -le "${#ITEMS[@]}" ]; then
+  exec bash "$PROJECTS_DIR/${ITEMS[$((CHOICE - 1))]}.sh"
+fi
