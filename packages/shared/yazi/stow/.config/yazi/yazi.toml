@@ -17,5 +17,5 @@ prepend_previewers = [
 	{ mime = "application/x-7z-compressed", run = "ouch" },
 	{ mime = "application/x-rar",           run = "ouch" },
 	{ mime = "application/x-xz",            run = "ouch" },
-	{ name = "*.md",                        run = "glow" },
+	{ url = "*.md",                         run = 'piper -- CLICOLOR_FORCE=1 glow -w=$w -s=dark "$1"' },
 ]
