@@ -1,0 +1,115 @@
+# herdr configuration (~/.config/herdr/config.toml)
+# Generated from: herdr --default-config
+
+# onboarding = true
+
+[theme]
+# name = "catppuccin"
+# auto_switch = false
+# dark_name = "catppuccin"
+# light_name = "catppuccin-latte"
+# [theme.custom]
+# panel_bg = "reset"
+# accent = "#f5c2e7"
+
+[terminal]
+# default_shell = ""
+# shell_mode = "auto"
+# new_cwd = "follow"
+
+[update]
+# channel = "stable"
+# version_check = true
+# manifest_check = true
+
+[keys]
+# prefix = "ctrl+b"
+# help = "prefix+?"
+# settings = "prefix+s"
+# detach = "prefix+q"
+# reload_config = "prefix+shift+r"
+# open_notification_target = "prefix+o"
+# workspace_picker = "prefix+w"
+# goto = "prefix+g"
+# new_workspace = "prefix+shift+n"
+# new_worktree = "prefix+shift+g"
+# rename_workspace = "prefix+shift+w"
+# close_workspace = "prefix+shift+d"
+# new_tab = "prefix+c"
+# rename_tab = "prefix+shift+t"
+# previous_tab = "prefix+p"
+# next_tab = "prefix+n"
+# switch_tab = "prefix+1..9"
+# close_tab = "prefix+shift+x"
+# rename_pane = "prefix+shift+p"
+# edit_scrollback = "prefix+e"
+# focus_pane_left = "prefix+h"
+# focus_pane_down = "prefix+j"
+# focus_pane_up = "prefix+k"
+# focus_pane_right = "prefix+l"
+# cycle_pane_next = "prefix+tab"
+# cycle_pane_previous = "prefix+shift+tab"
+# split_vertical = "prefix+v"
+# split_horizontal = "prefix+minus"
+# close_pane = "prefix+x"
+# zoom = "prefix+z"
+# resize_mode = "prefix+r"
+# toggle_sidebar = "prefix+b"
+# remote_image_paste = "ctrl+v"
+# navigate_workspace_up = "up"
+# navigate_workspace_down = "down"
+# navigate_pane_left = "h"
+# navigate_pane_down = "j"
+# navigate_pane_up = "k"
+# navigate_pane_right = "l"
+
+[ui]
+# sidebar_width = 26
+# sidebar_min_width = 18
+# sidebar_max_width = 36
+# sidebar_collapsed_mode = "compact"
+# mobile_width_threshold = 64
+# mouse_capture = true
+# host_cursor = "auto"
+# redraw_on_focus_gained = true
+# mouse_scroll_lines = 3
+# confirm_close = true
+# prompt_new_tab_name = true
+# pane_borders = true
+# pane_gaps = true
+# show_agent_labels_on_pane_borders = false
+# hide_tab_bar_when_single_tab = false
+# agent_panel_sort = "spaces"
+# accent = "cyan"
+
+[ui.toast]
+# delivery = "off"
+# delay_seconds = 1
+
+[ui.toast.herdr]
+# position = "bottom-right"
+
+[ui.toast.clipboard]
+# enabled = true
+# position = "bottom-center"
+
+[ui.sound]
+# enabled = true
+
+[session]
+# resume_agents_on_restore = true
+
+[remote]
+# manage_ssh_config = true
+
+[experimental]
+# allow_nested = false
+# kitty_graphics = false
+# pane_history = false
+# switch_ascii_input_source_in_prefix = false
+# reveal_hidden_cursor_for_cjk_ime = false
+# cjk_ime_agents = []
+# cjk_ime_cursor_shape = "steady_block"
+
+[advanced]
+# scrollback_limit_bytes = 10000000
