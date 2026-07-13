@@ -8,18 +8,18 @@
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
   "outline_panel": {
-    "dock": "left"
+    "dock": "right"
   },
   "collaboration_panel": {
-    "dock": "left"
+    "dock": "right"
   },
   "agent": {
-    "dock": "right",
+    "dock": "left",
     "favorite_models": [],
     "model_parameters": []
   },
   "git_panel": {
-    "dock": "left"
+    "dock": "right"
   },
   "buffer_font_weight": 600.0,
   "which_key": {
@@ -40,7 +40,7 @@
     "calt": true
   },
   "icon_theme": {
-    "mode": "light",
+    "mode": "dark",
     "light": "Material Icon Theme",
     "dark": "Material Icon Theme"
   },
@@ -91,7 +91,7 @@
     },
   },
   "project_panel": {
-    "dock": "left",
+    "dock": "right",
     "hide_gitignore": false,
     "hide_hidden": true,
     "file_icons": true,
@@ -118,9 +118,9 @@
     "custom": 1.15
   },
   "theme": {
-    "mode": "light",
+    "mode": "dark",
     "light": "Nord Light",
-    "dark": "OneNord Blurred",
+    "dark": "Nordfox - blurred",
   },
   "terminal": {
     "font_family": "Hack Nerd Font Mono",
