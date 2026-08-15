@@ -6,6 +6,7 @@ This document describes the actual workflow implemented by `./setup.sh` and `scr
 
 - `./setup.sh`: root shell entrypoint with optional Gum styling
 - `scripts/dotfiles.rb`: metadata-driven engine
+- `scripts/omarchy-setup.rb`: idempotent personal preferences used on Omarchy
 - `scripts/package-run.sh`: package-local delegator back to the root engine
 - `packages/<scope>/<name>/setup.sh`: optional package-local entrypoint and hook handler
 
@@ -18,6 +19,9 @@ For normal use, start at the root:
 ./setup.sh --package zed
 ./setup.sh --package linux/hyprland
 ```
+
+On Omarchy, `./setup.sh` dispatches to the lean Omarchy setup instead of the
+package linker. `DOTFILES_DISTRO` can override detection for tests.
 
 For package-local use, run the package entrypoint:
 

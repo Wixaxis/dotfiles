@@ -2,6 +2,9 @@
 
 This repository separates current operational docs from reference material and historical notes.
 
+`./setup.sh` is the single entrypoint: it runs the Omarchy preference setup on
+Omarchy and the metadata-driven package engine elsewhere.
+
 ## Read In This Order
 
 1. [guide/SETUP_GUIDE.md](guide/SETUP_GUIDE.md)

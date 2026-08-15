@@ -4,6 +4,9 @@ This repository is a metadata-driven dotfiles system. Deployable config lives un
 
 The shell entrypoint is `./setup.sh`. The actual setup engine is `scripts/dotfiles.rb`.
 
+On Omarchy, the same entrypoint runs `scripts/omarchy-setup.rb` instead. That
+script applies the small set of personal Omarchy preferences idempotently.
+
 ## Start Here
 
 ```bash

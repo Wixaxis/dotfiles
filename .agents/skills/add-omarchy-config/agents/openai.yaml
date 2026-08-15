@@ -1,0 +1,4 @@
+interface:
+  display_name: "Add Omarchy Config"
+  short_description: "Add Omarchy preferences the supported way"
+  default_prompt: "Use $add-omarchy-config to add this Omarchy preference to my dotfiles setup."
