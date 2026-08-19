@@ -1,0 +1,24 @@
+---
+name: ferdium
+description: Ferdium desktop service aggregator
+state: active
+engine: native
+applies_when:
+  os:
+  - macos
+install:
+  macos:
+    manager: brew
+    casks:
+    - ferdium
+links:
+- source: stow/Library/Application Support/Ferdium/config/settings.json
+  target: Library/Application Support/Ferdium/config/settings.json
+  mode: file
+  create_parents: true
+  backup_on_conflict: true
+- source: stow/Library/Application Support/Ferdium/config/shortcuts.json
+  target: Library/Application Support/Ferdium/config/shortcuts.json
+  mode: file
+  create_parents: true
+  backup_on_conflict: true

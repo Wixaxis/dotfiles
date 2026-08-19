@@ -1,0 +1,20 @@
+---
+name: raycast
+description: Raycast AI provider configuration
+state: active
+engine: native
+applies_when:
+  os:
+  - macos
+install: {}
+links:
+- source: stow/scripts/raycast-opencode-go-proxy.rb
+  target: scripts/raycast-opencode-go-proxy.rb
+  mode: file
+  create_parents: true
+  backup_on_conflict: true
+- source: stow/Library/LaunchAgents/com.wixaxis.raycast-opencode-go-proxy.plist
+  target: Library/LaunchAgents/com.wixaxis.raycast-opencode-go-proxy.plist
+  mode: file
+  create_parents: true
+  backup_on_conflict: true

@@ -1,0 +1,61 @@
+{
+  "username": "Ferdium",
+  "mail": "internal@ferdium.org",
+  "services": [
+    {
+      "serviceId": "3f193d82-edb3-46ac-872b-adf317390a71",
+      "name": "Discord",
+      "recipeId": "discord",
+      "settings": "{\"recipeId\":\"discord\",\"isEnabled\":true,\"isHibernationEnabled\":true,\"isWakeUpEnabled\":true,\"isNotificationEnabled\":true,\"isBadgeEnabled\":true,\"isMediaBadgeEnabled\":true,\"trapLinkClicks\":false,\"useFavicon\":false,\"isMuted\":false,\"customIcon\":null,\"isDarkModeEnabled\":false,\"isProgressbarEnabled\":false,\"spellcheckerLanguage\":null,\"userAgentPref\":null,\"name\":\"Discord\",\"isIndirectMessageBadgeEnabled\":false,\"darkReaderSettings\":{\"brightness\":100,\"contrast\":90,\"sepia\":10},\"order\":3}"
+    },
+    {
+      "serviceId": "92225e3c-924f-4e80-9f31-5787828139cb",
+      "name": "Messenger",
+      "recipeId": "messenger",
+      "settings": "{\"recipeId\":\"messenger\",\"isEnabled\":true,\"isHibernationEnabled\":true,\"isWakeUpEnabled\":true,\"isNotificationEnabled\":true,\"isBadgeEnabled\":true,\"isMediaBadgeEnabled\":false,\"trapLinkClicks\":false,\"useFavicon\":false,\"isMuted\":false,\"customIcon\":null,\"isDarkModeEnabled\":false,\"isProgressbarEnabled\":false,\"spellcheckerLanguage\":null,\"userAgentPref\":null,\"name\":\"Messenger\",\"darkReaderSettings\":{\"brightness\":100,\"contrast\":90,\"sepia\":10},\"order\":4}"
+    },
+    {
+      "serviceId": "53382c57-493c-44e5-a8d4-2d3c856b04b6",
+      "name": "Proton Mail",
+      "recipeId": "proton-mail",
+      "settings": "{\"recipeId\":\"proton-mail\",\"isEnabled\":true,\"isHibernationEnabled\":true,\"isWakeUpEnabled\":true,\"isNotificationEnabled\":true,\"isBadgeEnabled\":true,\"isMediaBadgeEnabled\":false,\"trapLinkClicks\":false,\"useFavicon\":false,\"isMuted\":false,\"customIcon\":null,\"isDarkModeEnabled\":false,\"isProgressbarEnabled\":false,\"spellcheckerLanguage\":null,\"userAgentPref\":null,\"name\":\"Proton Mail\",\"darkReaderSettings\":{\"brightness\":100,\"contrast\":90,\"sepia\":10},\"order\":1}"
+    },
+    {
+      "serviceId": "b93862c5-24c7-43d8-b22d-b2b9f9eca3b2",
+      "name": "Gmail",
+      "recipeId": "gmail",
+      "settings": "{\"recipeId\":\"gmail\",\"isEnabled\":true,\"isHibernationEnabled\":true,\"isWakeUpEnabled\":true,\"isNotificationEnabled\":true,\"isBadgeEnabled\":true,\"isMediaBadgeEnabled\":false,\"trapLinkClicks\":false,\"useFavicon\":false,\"isMuted\":false,\"customIcon\":null,\"isDarkModeEnabled\":false,\"isProgressbarEnabled\":false,\"spellcheckerLanguage\":null,\"userAgentPref\":null,\"name\":\"Gmail\",\"darkReaderSettings\":{\"brightness\":100,\"contrast\":90,\"sepia\":10},\"order\":0}"
+    },
+    {
+      "serviceId": "2eb04422-3b9d-41af-9a4a-e7dd136a0597",
+      "name": "Telegram",
+      "recipeId": "telegram",
+      "settings": "{\"recipeId\":\"telegram\",\"isEnabled\":true,\"isHibernationEnabled\":true,\"isWakeUpEnabled\":true,\"isNotificationEnabled\":true,\"isBadgeEnabled\":true,\"isMediaBadgeEnabled\":false,\"trapLinkClicks\":false,\"useFavicon\":false,\"isMuted\":false,\"customIcon\":null,\"isDarkModeEnabled\":false,\"isProgressbarEnabled\":false,\"spellcheckerLanguage\":null,\"userAgentPref\":null,\"name\":\"Telegram\",\"darkReaderSettings\":{\"brightness\":100,\"contrast\":90,\"sepia\":10},\"order\":2}"
+    },
+    {
+      "serviceId": "7d688cd7-ca0b-4705-ac6f-a94bb1c1e01c",
+      "name": "GPChaT",
+      "recipeId": "chatgpt",
+      "settings": "{\"recipeId\":\"chatgpt\",\"isEnabled\":true,\"isHibernationEnabled\":true,\"isWakeUpEnabled\":true,\"isNotificationEnabled\":true,\"isBadgeEnabled\":true,\"isMediaBadgeEnabled\":false,\"trapLinkClicks\":false,\"useFavicon\":false,\"isMuted\":false,\"customIcon\":null,\"isDarkModeEnabled\":true,\"isProgressbarEnabled\":false,\"spellcheckerLanguage\":null,\"userAgentPref\":null,\"name\":\"GPChaT\",\"darkReaderSettings\":{\"brightness\":100,\"contrast\":90,\"sepia\":10},\"order\":5}"
+    },
+    {
+      "serviceId": "883affd1-1ca1-4872-a851-64fc5909da0c",
+      "name": "Proton Drive",
+      "recipeId": "proton-drive",
+      "settings": "{\"recipeId\":\"proton-drive\",\"isEnabled\":true,\"isHibernationEnabled\":true,\"isWakeUpEnabled\":true,\"isNotificationEnabled\":true,\"isBadgeEnabled\":true,\"isMediaBadgeEnabled\":false,\"trapLinkClicks\":false,\"useFavicon\":false,\"isMuted\":false,\"customIcon\":null,\"isDarkModeEnabled\":false,\"isProgressbarEnabled\":false,\"spellcheckerLanguage\":null,\"userAgentPref\":null,\"name\":\"Proton Drive\",\"darkReaderSettings\":{\"brightness\":100,\"contrast\":90,\"sepia\":10},\"order\":7}"
+    },
+    {
+      "serviceId": "441d8136-12fa-4aac-9f8f-fc63878bc020",
+      "name": "Proton Pass",
+      "recipeId": "proton-pass",
+      "settings": "{\"recipeId\":\"proton-pass\",\"isEnabled\":true,\"isHibernationEnabled\":true,\"isWakeUpEnabled\":true,\"isNotificationEnabled\":true,\"isBadgeEnabled\":true,\"isMediaBadgeEnabled\":false,\"trapLinkClicks\":false,\"useFavicon\":false,\"isMuted\":false,\"customIcon\":null,\"isDarkModeEnabled\":false,\"isProgressbarEnabled\":false,\"spellcheckerLanguage\":null,\"userAgentPref\":null,\"name\":\"Proton Pass\",\"darkReaderSettings\":{\"brightness\":100,\"contrast\":90,\"sepia\":10},\"order\":6}"
+    },
+    {
+      "serviceId": "6c4ad754-2bb2-44ac-98b8-d6ad908e5824",
+      "name": "Google Drive",
+      "recipeId": "google-drive",
+      "settings": "{\"recipeId\":\"google-drive\",\"isEnabled\":true,\"isHibernationEnabled\":true,\"isWakeUpEnabled\":true,\"isNotificationEnabled\":true,\"isBadgeEnabled\":true,\"isMediaBadgeEnabled\":false,\"trapLinkClicks\":false,\"useFavicon\":false,\"isMuted\":false,\"customIcon\":null,\"isDarkModeEnabled\":false,\"isProgressbarEnabled\":false,\"spellcheckerLanguage\":null,\"userAgentPref\":null,\"name\":\"Google Drive\",\"darkReaderSettings\":{\"brightness\":100,\"contrast\":90,\"sepia\":10},\"order\":8}"
+    }
+  ],
+  "workspaces": []
+}
