@@ -1,0 +1,14 @@
+---
+name: t3-code
+description: T3 Code desktop app
+state: active
+engine: native
+applies_when:
+  os:
+  - macos
+install:
+  macos:
+    manager: brew
+    casks:
+    - t3-code
+links: []

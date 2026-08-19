@@ -12,3 +12,6 @@ eval "$(mise activate zsh)"
 if [ -f ~/.config/zsh/local.zsh ]; then
   source ~/.config/zsh/local.zsh
 fi
+
+# sentry
+fpath=("/Users/wixaxis/.local/share/zsh/site-functions" $fpath)
