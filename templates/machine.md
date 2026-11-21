@@ -2,7 +2,7 @@
 
 ## Tożsamość i rola
 
-<!-- Jak rozpoznać tę maszynę i do czego służy? -->
+<!-- Jak rozpoznać tę maszynę, do czego służy i czy jest prywatna czy służbowa? -->
 
 ## System i środowisko
 

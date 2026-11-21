@@ -1,0 +1,32 @@
+/* Nord palette for Zen UI; based on tinted-zen's variable mappings. */
+:root {
+  --zen-primary-color: #88c0d0 !important;
+  --zen-colors-primary: #2e3440 !important;
+  --zen-colors-secondary: #3b4252 !important;
+  --zen-colors-tertiary: #2e3440 !important;
+  --zen-colors-hover-bg: #434c5e !important;
+  --zen-colors-primary-foreground: #d8dee9 !important;
+  --zen-colors-border: #81a1c1 !important;
+  --zen-colors-input-bg: #3b4252 !important;
+  --zen-main-browser-background: #2e3440 !important;
+  --zen-dialog-background: #3b4252 !important;
+  --zen-themed-toolbar-bg: #2e3440 !important;
+  --zen-urlbar-background: #3b4252 !important;
+  --toolbar-bgcolor: #2e3440 !important;
+  --toolbar-color: #d8dee9 !important;
+  --toolbox-bgcolor-inactive: #2e3440 !important;
+  --toolbox-textcolor: #d8dee9 !important;
+  --toolbarbutton-icon-fill: #88c0d0 !important;
+  --toolbarbutton-hover-background: #434c5e !important;
+  --tab-selected-bgcolor: #434c5e !important;
+  --tab-selected-color: #eceff4 !important;
+  --arrowpanel-background: #3b4252 !important;
+  --arrowpanel-color: #eceff4 !important;
+  --lwt-sidebar-background-color: #2e3440 !important;
+  --lwt-sidebar-text-color: #d8dee9 !important;
+  --lwt-text-color: #d8dee9 !important;
+}
+#navigator-toolbox, #zen-tabbox-wrapper, #zen-sidebar-splitter,
+#zen-appcontent-navbar-container, #TabsToolbar, hbox#titlebar {
+  background-color: #2e3440 !important;
+}
